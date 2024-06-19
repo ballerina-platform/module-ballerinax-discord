@@ -73,4 +73,3 @@ Execute the commands below to build from the source.
    ```bash
    ./gradlew clean build -PpublishToCentral=true
    ```
-# module-ballerinax-discord
