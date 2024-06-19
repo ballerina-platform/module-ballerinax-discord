@@ -61,7 +61,7 @@ allprojects {
 def moduleVersion = project.version.replace("-SNAPSHOT", "")
 
 task build {
-    dependsOn(':BAL_PACKAGE_NAME-ballerina:build')
+    dependsOn(':Discord-ballerina:build')
 }
 
 release {

@@ -1,13 +1,10 @@
 [package]
-distribution = "2201.8.6"
-org = "ballerinax"
-name = "discord"
-version = "0.1.0"
-license = ["Apache-2.0"]
+distribution = "2201.3.0"
+org= "ballerinax"
+name= "discord"
+version= "3.1.0"
+license= ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = ["Communications/Disocord","Cost/Free","Vendor/Disocord"]
+keywords = ["Communication/Discord", "Cost/Free"]
 icon = "icon.png"
 repository = "https://github.com/HussainLatiff/module-ballerinax-discord"
-
-[build-options]
-observabilityIncluded = true

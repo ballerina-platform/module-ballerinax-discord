@@ -22,9 +22,9 @@ plugins {
     id 'io.ballerina.plugin'
 }
 
-description = 'BAL_PACKAGE_NAME - Ballerina'
+description = 'Discord - Ballerina'
 
-def packageName = "BAL_PACKAGE_NAME"
+def packageName = "Discord"
 def packageOrg = "ballerinax"
 def tomlVersion = stripBallerinaExtensionVersion("${project.version}")
 def ballerinaTomlFilePlaceHolder = new File("${project.rootDir}/build-config/resources/Ballerina.toml")
