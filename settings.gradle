@@ -30,11 +30,11 @@ plugins {
     id "com.gradle.enterprise" version "3.2"
 }
 
-rootProject.name = 'module-ballerinax-Discord'
+rootProject.name = 'module-ballerinax-discord'
 
-include ':Discord-ballerina'
+include ':discord-ballerina'
 
-project(':Discord-ballerina').projectDir = file("ballerina")
+project(':discord-ballerina').projectDir = file("ballerina")
 
 gradleEnterprise {
     buildScan {

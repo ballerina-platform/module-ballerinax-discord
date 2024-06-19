@@ -12,5 +12,5 @@ jobs:
     uses: ballerina-platform/ballerina-library/.github/workflows/release-package-connector-template.yml@main
     secrets: inherit
     with:
-      package-name: Discord
+      package-name: discord
       package-org: ballerinax

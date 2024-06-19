@@ -1,6 +1,6 @@
 [package]
 org = "ballerinax"
-name = "Discord"
+name = "discord"
 version = "0.1.0"
 distribution = "2201.8.6"
 
