@@ -5,7 +5,7 @@ name = "discord"
 version = "0.1.0"
 license = ["Apache-2.0"]
 authors = ["Ballerina"]
-keywords = ["test-keywords"]
+keywords = ["Communications/Disocord","Cost/Free","Vendor/Disocord"]
 icon = "icon.png"
 repository = "https://github.com/HussainLatiff/module-ballerinax-discord"
 
