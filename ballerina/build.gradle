@@ -22,7 +22,7 @@ plugins {
     id 'io.ballerina.plugin'
 }
 
-description = 'discord - Ballerina'
+description = 'Discord - Ballerina'
 
 def packageName = "discord"
 def packageOrg = "ballerinax"
