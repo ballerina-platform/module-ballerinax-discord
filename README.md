@@ -1,4 +1,4 @@
-## mdoule-balerinax-discord
+## module-balerinax-discord
 
 ### Prerequisites
 
