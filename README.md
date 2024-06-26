@@ -1,11 +1,16 @@
 ## module-balerinax-discord
 [Discord](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) is a popular communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions over the internet.
 
-The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
+The ``Ballerina Discord connector`` offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
 
 ## Setup guide
 
 Follow these steps to create a discord developer account
+
+
+If you do not have a discord account already, [**create** a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord Developer Page.
+
+<img src= "https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true">
 
 ### Step 1: Login to Discord Develper's Page
 
