@@ -12,7 +12,9 @@ If you do not have a discord account already, [**create** a new discord account]
 
 <img src= "https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true">
 
-### Step 1: Login to Discord Develper's Page
+Complete the account creation process by including the relavant information in the given fields.
+
+### Step 1: Login to Discord Developer's Page
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
 
