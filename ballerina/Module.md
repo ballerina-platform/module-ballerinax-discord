@@ -1,7 +1,8 @@
-## module-balerinax-discord
+## Overview
+
 [Discord](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) is a popular communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions over the internet.
 
-The ``Ballerina Discord connector`` offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
+The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
 
 ## Setup guide
 
@@ -31,7 +32,7 @@ Once in the discord developer portal is open, click on the `New Application` but
 
 1. Proceed by giving the Discord Application a name and click on the terms of service.
 
-2. Finally complete the naming process by clicking on the `next` button
+2. Finally complete the naming process by clicking on the `next` button.
 
 ### Step 4: Obtain the Client ID and Client Secret
 
