@@ -7,18 +7,17 @@ The ``Ballerina Discord connector`` offers APIs to connect and interact with the
 
 Follow these steps to create a discord developer account
 
+### Step 1: Login to Discord Developer's Page
+
+<img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
+
+Visit the [Discord website for developers](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
 
 If you do not have a discord account already, [**create** a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord Developer Page.
 
 <img src= "https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true">
 
 Complete the account creation process by including the relavant information in the given fields.
-
-### Step 1: Login to Discord Developer's Page
-
-<img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
-
-Visit the [Discord website for developers](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. If you do not have a discord account register for one first.
 
 ### Step 2: Make a New Discord Application
 
