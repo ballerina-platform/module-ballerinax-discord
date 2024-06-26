@@ -5,8 +5,9 @@ _Edition_: Swan Lake
 # Sanitation for OpenAPI specification
 This document records the sanitation done on top of the official OpenAPI specification from Discord. The OpenAPI specification is obtained from the [Discord OpenAPI repository](https://github.com/discord/discord-api-spec).
 
-1. These changes are done in order to improve the overall usability, and as workarounds for some known language limitations.
-This records the sanitization done when converting OAS from version 3.1.0 to 3.0.0 using APIMatic's conversion tool. These sanitation's are done to reduce the errors which occur when generating the client.
+These changes are done in order to improve the overall usability, and as workarounds for some known language limitations.
+
+1. Since the Ballerina OpenAPI tool has limited support for OpenAPI 3.1.x versions, the Discord specification has been converted to OpenAPI 3.0.0.
 
     The following changes were made:
 
