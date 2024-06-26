@@ -40,6 +40,56 @@ Once in the discord developer portal is open, click on the `New Application` but
 
 Under the `OAuth2` section found on the left-sided list, locate the Client's Information as shown on the screen. To implement the functionalities provided by Discord's API, you will need the Client ID and Client Secret.
 
+## Quickstart
+
+To use the `discord` connector in your Ballerina application, modify the `.bal` file as follows:
+
+### Step 1: Import the module
+
+Import the `discord` module.
+
+```ballerina
+import ballerinax/discord;
+```
+
+### Step 2: Instantiate a new connector
+
+Create a `discord:ConnectionConfig` with the obtained OAuth2.0 Client Credentials and initialize the connector with it.
+
+Apps must receive approval from users installing them to perform actions within Discord. To enable these functions, specific scopes must be defined. These scopes are outlined in the [OAuth2 Scopes documentation](https://discord.com/developers/docs/topics/oauth2#shared-resources-oauth2-scopes).
+
+```ballerina
+configurable string clientId = ?;
+configurable string clientSecret = ?;
+string[*] scopes = ?;
+
+
+discord:Client cl = check new({
+    auth: {
+            clientId,
+            clientSecret,
+            scopes
+        }
+});
+```
+
+
+### Step 3: Invoke the connector operation
+Now, utilize the available connector operations
+
+### Return linked third-party accounts of the user
+
+```ballerina
+ var s = check cl->/users/\@me/connections();
+````
+
+### Step 4: Run the Ballerina application
+
+```bash
+bal run
+```
+## Build from the source
+
 ### Prerequisites
 
 1. Download and install Java SE Development Kit (JDK) version 17. You can download it from either of the following sources:
