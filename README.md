@@ -1,7 +1,7 @@
 ## module-balerinax-discord
 [Discord](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) is a popular communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions over the internet.
 
-The `ballerina-platform/module-ballerinax-discord` package offers APIs to connect and interact with the [Discord API](https://discord.com/developers/docs/reference)
+The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
 
 ## Setup guide
 
