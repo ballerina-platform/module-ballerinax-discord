@@ -26,6 +26,7 @@ These changes are done in order to improve the overall usability, and as workaro
     * `webhook_id`
     * `webhook_token`
     * `role_id`
+    * `command_id`
   
 ## OpenAPI cli command
 

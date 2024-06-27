@@ -66,7 +66,7 @@ public isolated client class Client {
     # delete_application_command
     #
     # + application_id - Application ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_application_command 
     resource isolated function delete applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -99,7 +99,7 @@ public isolated client class Client {
     #
     # + application_id - Application ID
     # + guild_id - Guild ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_application_command 
     resource isolated function delete applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -590,7 +590,7 @@ public isolated client class Client {
     # get_application_command
     #
     # + application_id - Application ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_application_command 
     resource isolated function get applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
@@ -659,7 +659,7 @@ public isolated client class Client {
     #
     # + application_id - Application ID
     # + guild_id - Guild ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_application_command 
     resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
@@ -676,7 +676,7 @@ public isolated client class Client {
     #
     # + application_id - Application ID
     # + guild_id - Guild ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_application_command_permissions 
     resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id]/permissions(map<string|string[]> headers = {}) returns CommandPermissionsResponse|error {
@@ -1686,7 +1686,7 @@ public isolated client class Client {
     # update_application_command
     #
     # + application_id - Application ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_application_command 
@@ -1707,7 +1707,7 @@ public isolated client class Client {
     #
     # + application_id - Application ID
     # + guild_id - Guild ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild_application_command 
@@ -2759,7 +2759,7 @@ public isolated client class Client {
     #
     # + application_id - Application ID
     # + guild_id - Guild ID
-    # + command_id -
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for set_guild_application_command_permissions 

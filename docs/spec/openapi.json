@@ -1110,7 +1110,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -1192,7 +1192,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -1985,7 +1985,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -2067,7 +2067,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -2143,7 +2143,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -4831,7 +4831,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -4902,7 +4902,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
@@ -4967,7 +4967,7 @@
           {
             "name": "command_id",
             "in": "path",
-            "description": "",
+            "description": "Command ID",
             "required": true,
             "style": "simple",
             "schema": {
