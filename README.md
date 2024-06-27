@@ -61,8 +61,7 @@ Apps must receive approval from users installing them to perform actions within 
 ```ballerina
 configurable string clientId = ?;
 configurable string clientSecret = ?;
-string[*] scopes = ?;
-
+configurable string[] scopes = ?;
 
 discord:Client cl = check new({
     auth: {
