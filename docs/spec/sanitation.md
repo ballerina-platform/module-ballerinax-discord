@@ -17,7 +17,16 @@ These changes are done in order to improve the overall usability, and as workaro
 
 2. Renamed the `config.auth` variable into `httpClientConfig.auth`. This is done as a workaround for this issue. [Authorization issues in the generated client](https://github.com/ballerina-platform/ballerina-library/issues/6655)
 
-
+3. Added descriptions to the following parameter names throughout the specification:
+   
+    * `guild_id`
+    * `application_id`
+    * `channel_id`
+    * `message_id`
+    * `webhook_id`
+    * `webhook_token`
+    * `role_id`
+  
 ## OpenAPI cli command
 
 The following command was used to generate the Ballerina client from the OpenAPI specification. The command should be executed from the repository root directory.
