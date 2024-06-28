@@ -12,7 +12,7 @@ Follow these steps to create a discord developer account.
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
 
-Visit the [Discord website for developers](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
+Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
 
 If you do not have a discord account already, [**create** a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord Developer Page.
 
