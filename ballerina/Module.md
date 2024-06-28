@@ -63,8 +63,7 @@ configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string[] scopes = ?;
 
-
-discord:Client cl = check new({
+discord:Client discord = check new({
     auth: {
             clientId,
             clientSecret,
