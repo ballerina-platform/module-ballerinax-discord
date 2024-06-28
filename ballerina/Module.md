@@ -24,7 +24,7 @@ Complete the account creation process by including the relavant information in t
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true">
 
-Once in the discord developer portal is open, click on the `New Application` button as displayed above to start the process.
+Once in the Discord developer portal is open, click on the `New Application` button as displayed above to start the process.
 
 ### Step 3: Name the Discord Application 
 
