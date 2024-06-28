@@ -8,7 +8,7 @@ The Ballerina Discord connector offers APIs to connect and interact with the [Di
 
 Follow these steps to create a discord developer account.
 
-### Step 1: Login to Discord Developer's Page
+### Step 1: Login to Discord developer page
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
 
