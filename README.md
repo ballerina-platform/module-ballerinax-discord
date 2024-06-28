@@ -2,29 +2,29 @@
 
 [Discord](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) is a popular communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions over the internet.
 
-The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference)
+The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference).
 
 ## Setup guide
 
-Follow these steps to create a discord developer account
+Follow these steps to create a discord developer account.
 
-### Step 1: Login to Discord Developer's Page
+### Step 1: Login to Discord developer page
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
 
-Visit the [Discord website for developers](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
+Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
 
-If you do not have a discord account already, [**create** a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord Developer Page.
+If you do not have a Discord account already, [create a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord developer page.
 
 <img src= "https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true">
 
 Complete the account creation process by including the relavant information in the given fields.
 
-### Step 2: Make a New Discord Application
+### Step 2: Make a new Discord application
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true">
 
-Once in the discord developer portal is open, click on the `New Application` button as displayed above to start the process.
+Once in the Discord developer portal is open, click on the `New Application` button as displayed above to start the process.
 
 ### Step 3: Name the Discord Application 
 
@@ -74,11 +74,12 @@ discord:Client discord = check new({
 
 
 ### Step 3: Invoke the connector operation
-Now, utilize the available connector operations
+Now, utilize the available connector operations.
 
+### Return linked third-party accounts of the user
 
 ```ballerina
- var s = check cl->/users/\@me/connections();
+ ConnectedAccountResponse[] connectedAccounts = check cl->/users/\@me/connections();
 ````
 
 ### Step 4: Run the Ballerina application
