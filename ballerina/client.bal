@@ -65,8 +65,8 @@ public isolated client class Client {
 
     # delete_application_command
     #
-    # + application_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_application_command 
     resource isolated function delete applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -81,7 +81,7 @@ public isolated client class Client {
 
     # delete_entitlement
     #
-    # + application_id -
+    # + application_id - Application ID
     # + entitlement_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_entitlement 
@@ -97,9 +97,9 @@ public isolated client class Client {
 
     # delete_guild_application_command
     #
-    # + application_id -
-    # + guild_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_application_command 
     resource isolated function delete applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -114,7 +114,7 @@ public isolated client class Client {
 
     # delete_channel
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for delete_channel 
     resource isolated function delete channels/[string channel_id](map<string|string[]> headers = {}) returns inline_response_200_6|error {
@@ -129,8 +129,8 @@ public isolated client class Client {
 
     # delete_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_message 
     resource isolated function delete channels/[string channel_id]/messages/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -145,8 +145,8 @@ public isolated client class Client {
 
     # delete_all_message_reactions
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_all_message_reactions 
     resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions(map<string|string[]> headers = {}) returns http:Response|error {
@@ -161,8 +161,8 @@ public isolated client class Client {
 
     # delete_all_message_reactions_by_emoji
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + emoji_name -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_all_message_reactions_by_emoji 
@@ -178,10 +178,10 @@ public isolated client class Client {
 
     # delete_user_message_reaction
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + emoji_name -
-    # + user_id -
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_user_message_reaction 
     resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name]/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -206,7 +206,7 @@ public isolated client class Client {
 
     # delete_channel_permission_overwrite
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + overwrite_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_channel_permission_overwrite 
@@ -222,8 +222,8 @@ public isolated client class Client {
 
     # unpin_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for unpin_message 
     resource isolated function delete channels/[string channel_id]/pins/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -238,8 +238,8 @@ public isolated client class Client {
 
     # delete_group_dm_user
     #
-    # + channel_id -
-    # + user_id -
+    # + channel_id - Channel ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_group_dm_user 
     resource isolated function delete channels/[string channel_id]/recipients/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -254,8 +254,8 @@ public isolated client class Client {
 
     # delete_thread_member
     #
-    # + channel_id -
-    # + user_id -
+    # + channel_id - Channel ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_thread_member 
     resource isolated function delete channels/[string channel_id]/thread\-members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -280,7 +280,7 @@ public isolated client class Client {
 
     # delete_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild 
     resource isolated function delete guilds/[string guild_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -295,7 +295,7 @@ public isolated client class Client {
 
     # delete_auto_moderation_rule
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + rule_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_auto_moderation_rule 
@@ -311,8 +311,8 @@ public isolated client class Client {
 
     # unban_user_from_guild
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for unban_user_from_guild 
     resource isolated function delete guilds/[string guild_id]/bans/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -327,7 +327,7 @@ public isolated client class Client {
 
     # delete_guild_emoji
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + emoji_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_emoji 
@@ -343,7 +343,7 @@ public isolated client class Client {
 
     # delete_guild_integration
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + integration_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_integration 
@@ -359,8 +359,8 @@ public isolated client class Client {
 
     # delete_guild_member
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_member 
     resource isolated function delete guilds/[string guild_id]/members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -375,9 +375,9 @@ public isolated client class Client {
 
     # delete_guild_member_role
     #
-    # + guild_id -
-    # + user_id -
-    # + role_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + role_id - Role ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_member_role 
     resource isolated function delete guilds/[string guild_id]/members/[string user_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -392,8 +392,8 @@ public isolated client class Client {
 
     # delete_guild_role
     #
-    # + guild_id -
-    # + role_id -
+    # + guild_id - Guild ID
+    # + role_id - Role ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_role 
     resource isolated function delete guilds/[string guild_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -408,7 +408,7 @@ public isolated client class Client {
 
     # delete_guild_scheduled_event
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + guild_scheduled_event_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_scheduled_event 
@@ -424,7 +424,7 @@ public isolated client class Client {
 
     # delete_guild_sticker
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + sticker_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_guild_sticker 
@@ -440,7 +440,7 @@ public isolated client class Client {
 
     # delete_guild_template
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + code -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for delete_guild_template 
@@ -481,7 +481,7 @@ public isolated client class Client {
 
     # leave_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for leave_guild 
     resource isolated function delete users/\@me/guilds/[string guild_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -496,7 +496,7 @@ public isolated client class Client {
 
     # delete_webhook
     #
-    # + webhook_id -
+    # + webhook_id - Webhook ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_webhook 
     resource isolated function delete webhooks/[string webhook_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -511,8 +511,8 @@ public isolated client class Client {
 
     # delete_webhook_by_token
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + return - 204 response for delete_webhook_by_token 
     resource isolated function delete webhooks/[string webhook_id]/[string webhook_token](map<string|string[]> headers = {}) returns http:Response|error {
@@ -527,9 +527,9 @@ public isolated client class Client {
 
     # delete_webhook_message
     #
-    # + webhook_id -
-    # + webhook_token -
-    # + message_id -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 204 response for delete_webhook_message 
@@ -557,7 +557,7 @@ public isolated client class Client {
 
     # get_application
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_application 
     resource isolated function get applications/[string application_id](map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
@@ -572,7 +572,7 @@ public isolated client class Client {
 
     # list_application_commands
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for list_application_commands 
@@ -589,8 +589,8 @@ public isolated client class Client {
 
     # get_application_command
     #
-    # + application_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_application_command 
     resource isolated function get applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
@@ -605,7 +605,7 @@ public isolated client class Client {
 
     # get_entitlements
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for get_entitlements 
@@ -623,7 +623,7 @@ public isolated client class Client {
 
     # get_entitlement
     #
-    # + application_id -
+    # + application_id - Application ID
     # + entitlement_id -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_entitlement 
@@ -639,8 +639,8 @@ public isolated client class Client {
 
     # list_guild_application_commands
     #
-    # + application_id -
-    # + guild_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for list_guild_application_commands 
@@ -657,9 +657,9 @@ public isolated client class Client {
 
     # get_guild_application_command
     #
-    # + application_id -
-    # + guild_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_application_command 
     resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
@@ -674,9 +674,9 @@ public isolated client class Client {
 
     # get_guild_application_command_permissions
     #
-    # + application_id -
-    # + guild_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_application_command_permissions 
     resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id]/permissions(map<string|string[]> headers = {}) returns CommandPermissionsResponse|error {
@@ -691,8 +691,8 @@ public isolated client class Client {
 
     # list_guild_application_command_permissions
     #
-    # + application_id -
-    # + guild_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_application_command_permissions 
     resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/permissions(map<string|string[]> headers = {}) returns CommandPermissionsResponse[]|error {
@@ -707,7 +707,7 @@ public isolated client class Client {
 
     # get_application_role_connections_metadata
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_application_role_connections_metadata 
     resource isolated function get applications/[string application_id]/role\-connections/metadata(map<string|string[]> headers = {}) returns ApplicationRoleConnectionsMetadataItemResponse[]|error {
@@ -732,7 +732,7 @@ public isolated client class Client {
 
     # get_channel
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_channel 
     resource isolated function get channels/[string channel_id](map<string|string[]> headers = {}) returns inline_response_200_6|error {
@@ -747,7 +747,7 @@ public isolated client class Client {
 
     # list_channel_invites
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_channel_invites 
     resource isolated function get channels/[string channel_id]/invites(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -762,7 +762,7 @@ public isolated client class Client {
 
     # list_messages
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for list_messages 
@@ -779,8 +779,8 @@ public isolated client class Client {
 
     # get_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_message 
     resource isolated function get channels/[string channel_id]/messages/[string message_id](map<string|string[]> headers = {}) returns MessageResponse|error {
@@ -795,8 +795,8 @@ public isolated client class Client {
 
     # list_message_reactions_by_emoji
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + emoji_name -
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -814,7 +814,7 @@ public isolated client class Client {
 
     # list_pinned_messages
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_pinned_messages 
     resource isolated function get channels/[string channel_id]/pins(map<string|string[]> headers = {}) returns MessageResponse[]|error {
@@ -840,8 +840,8 @@ public isolated client class Client {
 
     # get_thread_member
     #
-    # + channel_id -
-    # + user_id -
+    # + channel_id - Channel ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for get_thread_member 
@@ -891,7 +891,7 @@ public isolated client class Client {
 
     # list_channel_webhooks
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_channel_webhooks 
     resource isolated function get channels/[string channel_id]/webhooks(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -934,7 +934,7 @@ public isolated client class Client {
 
     # get_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for get_guild 
@@ -962,7 +962,7 @@ public isolated client class Client {
 
     # list_auto_moderation_rules
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_auto_moderation_rules 
     resource isolated function get guilds/[string guild_id]/auto\-moderation/rules(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -977,7 +977,7 @@ public isolated client class Client {
 
     # get_auto_moderation_rule
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + rule_id -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_auto_moderation_rule 
@@ -993,7 +993,7 @@ public isolated client class Client {
 
     # list_guild_bans
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for list_guild_bans 
@@ -1010,8 +1010,8 @@ public isolated client class Client {
 
     # get_guild_ban
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_ban 
     resource isolated function get guilds/[string guild_id]/bans/[string user_id](map<string|string[]> headers = {}) returns GuildBanResponse|error {
@@ -1026,7 +1026,7 @@ public isolated client class Client {
 
     # list_guild_channels
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_channels 
     resource isolated function get guilds/[string guild_id]/channels(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -1041,7 +1041,7 @@ public isolated client class Client {
 
     # list_guild_emojis
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_emojis 
     resource isolated function get guilds/[string guild_id]/emojis(map<string|string[]> headers = {}) returns EmojiResponse[]|error {
@@ -1056,7 +1056,7 @@ public isolated client class Client {
 
     # get_guild_emoji
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + emoji_id -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_emoji 
@@ -1072,7 +1072,7 @@ public isolated client class Client {
 
     # list_guild_integrations
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_integrations 
     resource isolated function get guilds/[string guild_id]/integrations(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -1087,7 +1087,7 @@ public isolated client class Client {
 
     # list_guild_invites
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_invites 
     resource isolated function get guilds/[string guild_id]/invites(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -1102,7 +1102,7 @@ public isolated client class Client {
 
     # list_guild_members
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for list_guild_members 
@@ -1119,8 +1119,8 @@ public isolated client class Client {
 
     # get_guild_member
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_member 
     resource isolated function get guilds/[string guild_id]/members/[string user_id](map<string|string[]> headers = {}) returns GuildMemberResponse|error {
@@ -1135,7 +1135,7 @@ public isolated client class Client {
 
     # search_guild_members
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for search_guild_members 
@@ -1162,7 +1162,7 @@ public isolated client class Client {
 
     # get_guilds_onboarding
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guilds_onboarding 
     resource isolated function get guilds/[string guild_id]/onboarding(map<string|string[]> headers = {}) returns UserGuildOnboardingResponse|error {
@@ -1177,7 +1177,7 @@ public isolated client class Client {
 
     # get_guild_preview
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_preview 
     resource isolated function get guilds/[string guild_id]/preview(map<string|string[]> headers = {}) returns GuildPreviewResponse|error {
@@ -1192,7 +1192,7 @@ public isolated client class Client {
 
     # preview_prune_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for preview_prune_guild 
@@ -1210,7 +1210,7 @@ public isolated client class Client {
 
     # list_guild_voice_regions
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_voice_regions 
     resource isolated function get guilds/[string guild_id]/regions(map<string|string[]> headers = {}) returns VoiceRegionResponse[]|error {
@@ -1225,7 +1225,7 @@ public isolated client class Client {
 
     # list_guild_roles
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_roles 
     resource isolated function get guilds/[string guild_id]/roles(map<string|string[]> headers = {}) returns GuildRoleResponse[]|error {
@@ -1251,7 +1251,7 @@ public isolated client class Client {
 
     # get_guild_scheduled_event
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + guild_scheduled_event_id -
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -1269,7 +1269,7 @@ public isolated client class Client {
 
     # list_guild_scheduled_event_users
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + guild_scheduled_event_id -
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
@@ -1287,7 +1287,7 @@ public isolated client class Client {
 
     # list_guild_stickers
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_stickers 
     resource isolated function get guilds/[string guild_id]/stickers(map<string|string[]> headers = {}) returns GuildStickerResponse[]|error {
@@ -1302,7 +1302,7 @@ public isolated client class Client {
 
     # get_guild_sticker
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + sticker_id -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_sticker 
@@ -1318,7 +1318,7 @@ public isolated client class Client {
 
     # list_guild_templates
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for list_guild_templates 
     resource isolated function get guilds/[string guild_id]/templates(map<string|string[]> headers = {}) returns GuildTemplateResponse[]|error {
@@ -1333,7 +1333,7 @@ public isolated client class Client {
 
     # get_active_guild_threads
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_active_guild_threads 
     resource isolated function get guilds/[string guild_id]/threads/active(map<string|string[]> headers = {}) returns ThreadsResponse|error {
@@ -1358,7 +1358,7 @@ public isolated client class Client {
 
     # get_guild_webhooks
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_webhooks 
     resource isolated function get guilds/[string guild_id]/webhooks(map<string|string[]> headers = {}) returns anydata[]|error {
@@ -1383,7 +1383,7 @@ public isolated client class Client {
 
     # get_guild_widget_settings
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_guild_widget_settings 
     resource isolated function get guilds/[string guild_id]/widget(map<string|string[]> headers = {}) returns WidgetSettingsResponse|error {
@@ -1521,7 +1521,7 @@ public isolated client class Client {
 
     # get_user
     #
-    # + user_id -
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_user 
     resource isolated function get users/[string user_id](map<string|string[]> headers = {}) returns UserResponse|error {
@@ -1581,7 +1581,7 @@ public isolated client class Client {
 
     # get_my_guild_member
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_my_guild_member 
     resource isolated function get users/\@me/guilds/[string guild_id]/member(map<string|string[]> headers = {}) returns PrivateGuildMemberResponse|error {
@@ -1605,7 +1605,7 @@ public isolated client class Client {
 
     # get_webhook
     #
-    # + webhook_id -
+    # + webhook_id - Webhook ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_webhook 
     resource isolated function get webhooks/[string webhook_id](map<string|string[]> headers = {}) returns inline_response_200_4|error {
@@ -1620,8 +1620,8 @@ public isolated client class Client {
 
     # get_webhook_by_token
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + return - 200 response for get_webhook_by_token 
     resource isolated function get webhooks/[string webhook_id]/[string webhook_token](map<string|string[]> headers = {}) returns inline_response_200_4|error {
@@ -1636,9 +1636,9 @@ public isolated client class Client {
 
     # get_webhook_message
     #
-    # + webhook_id -
-    # + webhook_token -
-    # + message_id -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for get_webhook_message 
@@ -1666,7 +1666,7 @@ public isolated client class Client {
 
     # update_application
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_application 
@@ -1685,8 +1685,8 @@ public isolated client class Client {
 
     # update_application_command
     #
-    # + application_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_application_command 
@@ -1705,9 +1705,9 @@ public isolated client class Client {
 
     # update_guild_application_command
     #
-    # + application_id -
-    # + guild_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild_application_command 
@@ -1739,7 +1739,7 @@ public isolated client class Client {
 
     # update_channel
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_channel 
@@ -1758,8 +1758,8 @@ public isolated client class Client {
 
     # update_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for update_message 
     resource isolated function patch channels/[string channel_id]/messages/[string message_id](Update_messageHeaders headers, messages_message_id_body payload) returns MessageResponse|error {
@@ -1777,7 +1777,7 @@ public isolated client class Client {
 
     # update_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild 
@@ -1796,7 +1796,7 @@ public isolated client class Client {
 
     # update_auto_moderation_rule
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + rule_id -
     # + headers - Headers to be sent with the request 
     # + payload -
@@ -1816,7 +1816,7 @@ public isolated client class Client {
 
     # bulk_update_guild_channels
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 204 response for bulk_update_guild_channels 
@@ -1835,7 +1835,7 @@ public isolated client class Client {
 
     # update_guild_emoji
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + emoji_id -
     # + headers - Headers to be sent with the request 
     # + payload -
@@ -1855,8 +1855,8 @@ public isolated client class Client {
 
     # update_guild_member
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild_member 
@@ -1888,7 +1888,7 @@ public isolated client class Client {
 
     # bulk_update_guild_roles
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for bulk_update_guild_roles 
@@ -1907,8 +1907,8 @@ public isolated client class Client {
 
     # update_guild_role
     #
-    # + guild_id -
-    # + role_id -
+    # + guild_id - Guild ID
+    # + role_id - Role ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild_role 
@@ -1927,8 +1927,8 @@ public isolated client class Client {
 
     # update_voice_state
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 204 response for update_voice_state 
@@ -1947,7 +1947,7 @@ public isolated client class Client {
 
     # update_guild_sticker
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + sticker_id -
     # + headers - Headers to be sent with the request 
     # + payload -
@@ -1967,7 +1967,7 @@ public isolated client class Client {
 
     # update_guild_template
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + code -
     # + headers - Headers to be sent with the request 
     # + payload -
@@ -1987,8 +1987,8 @@ public isolated client class Client {
 
     # update_voice_state
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 204 response for update_voice_state 
@@ -2033,7 +2033,7 @@ public isolated client class Client {
 
     # update_guild_widget_settings
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_guild_widget_settings 
@@ -2078,7 +2078,7 @@ public isolated client class Client {
 
     # update_webhook
     #
-    # + webhook_id -
+    # + webhook_id - Webhook ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_webhook 
@@ -2097,8 +2097,8 @@ public isolated client class Client {
 
     # update_webhook_by_token
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_webhook_by_token 
@@ -2117,9 +2117,9 @@ public isolated client class Client {
 
     # update_webhook_message
     #
-    # + webhook_id -
-    # + webhook_token -
-    # + message_id -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for update_webhook_message 
@@ -2153,7 +2153,7 @@ public isolated client class Client {
 
     # create_application_command
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_application_command 
@@ -2172,7 +2172,7 @@ public isolated client class Client {
 
     # create_entitlement
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_entitlement 
@@ -2191,7 +2191,7 @@ public isolated client class Client {
 
     # consume_entitlement
     #
-    # + application_id -
+    # + application_id - Application ID
     # + entitlement_id -
     # + headers - Headers to be sent with the request 
     # + return - 204 response for consume_entitlement 
@@ -2208,8 +2208,8 @@ public isolated client class Client {
 
     # create_guild_application_command
     #
-    # + application_id -
-    # + guild_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_guild_application_command 
@@ -2228,7 +2228,7 @@ public isolated client class Client {
 
     # follow_channel
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for follow_channel 
@@ -2247,7 +2247,7 @@ public isolated client class Client {
 
     # create_channel_invite
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_channel_invite 
@@ -2266,7 +2266,7 @@ public isolated client class Client {
 
     # create_message
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for create_message 
     resource isolated function post channels/[string channel_id]/messages(Create_messageHeaders headers, channel_id_messages_body payload) returns MessageResponse|error {
@@ -2284,8 +2284,8 @@ public isolated client class Client {
 
     # crosspost_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for crosspost_message 
     resource isolated function post channels/[string channel_id]/messages/[string message_id]/crosspost(map<string|string[]> headers = {}) returns MessageResponse|error {
@@ -2301,8 +2301,8 @@ public isolated client class Client {
 
     # create_thread_from_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for create_thread_from_message 
@@ -2334,7 +2334,7 @@ public isolated client class Client {
 
     # create_thread
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for create_thread 
@@ -2353,7 +2353,7 @@ public isolated client class Client {
 
     # trigger_typing_indicator
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + return - 200 response for trigger_typing_indicator 
     resource isolated function post channels/[string channel_id]/typing(map<string|string[]> headers = {}) returns record {}|error {
@@ -2369,7 +2369,7 @@ public isolated client class Client {
 
     # create_webhook
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_webhook 
@@ -2406,7 +2406,7 @@ public isolated client class Client {
 
     # create_auto_moderation_rule
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_auto_moderation_rule 
@@ -2438,7 +2438,7 @@ public isolated client class Client {
 
     # create_guild_channel
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for create_guild_channel 
@@ -2457,7 +2457,7 @@ public isolated client class Client {
 
     # create_guild_emoji
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for create_guild_emoji 
@@ -2476,7 +2476,7 @@ public isolated client class Client {
 
     # set_guild_mfa_level
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for set_guild_mfa_level 
@@ -2495,7 +2495,7 @@ public isolated client class Client {
 
     # prune_guild
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for prune_guild 
@@ -2514,7 +2514,7 @@ public isolated client class Client {
 
     # create_guild_role
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_guild_role 
@@ -2546,7 +2546,7 @@ public isolated client class Client {
 
     # create_guild_sticker
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + return - 201 response for create_guild_sticker 
     resource isolated function post guilds/[string guild_id]/stickers(guild_id_stickers_body payload, map<string|string[]> headers = {}) returns GuildStickerResponse|error {
@@ -2564,7 +2564,7 @@ public isolated client class Client {
 
     # create_guild_template
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for create_guild_template 
@@ -2653,8 +2653,8 @@ public isolated client class Client {
 
     # execute_webhook
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + payload -
@@ -2675,8 +2675,8 @@ public isolated client class Client {
 
     # execute_github_compatible_webhook
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + payload -
@@ -2697,8 +2697,8 @@ public isolated client class Client {
 
     # execute_slack_compatible_webhook
     #
-    # + webhook_id -
-    # + webhook_token -
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
     # + headers - Headers to be sent with the request 
     # + queries - Queries to be sent with the request 
     # + return - 200 response for execute_slack_compatible_webhook 
@@ -2718,7 +2718,7 @@ public isolated client class Client {
 
     # bulk_set_application_commands
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for bulk_set_application_commands 
@@ -2737,8 +2737,8 @@ public isolated client class Client {
 
     # bulk_set_guild_application_commands
     #
-    # + application_id -
-    # + guild_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for bulk_set_guild_application_commands 
@@ -2757,9 +2757,9 @@ public isolated client class Client {
 
     # set_guild_application_command_permissions
     #
-    # + application_id -
-    # + guild_id -
-    # + command_id -
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for set_guild_application_command_permissions 
@@ -2778,7 +2778,7 @@ public isolated client class Client {
 
     # update_application_role_connections_metadata
     #
-    # + application_id -
+    # + application_id - Application ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for update_application_role_connections_metadata 
@@ -2808,7 +2808,7 @@ public isolated client class Client {
 
     # set_channel_permission_overwrite
     #
-    # + channel_id -
+    # + channel_id - Channel ID
     # + overwrite_id -
     # + headers - Headers to be sent with the request 
     # + payload -
@@ -2828,8 +2828,8 @@ public isolated client class Client {
 
     # pin_message
     #
-    # + channel_id -
-    # + message_id -
+    # + channel_id - Channel ID
+    # + message_id - Message ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for pin_message 
     resource isolated function put channels/[string channel_id]/pins/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -2845,8 +2845,8 @@ public isolated client class Client {
 
     # add_group_dm_user
     #
-    # + channel_id -
-    # + user_id -
+    # + channel_id - Channel ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for add_group_dm_user 
@@ -2865,8 +2865,8 @@ public isolated client class Client {
 
     # add_thread_member
     #
-    # + channel_id -
-    # + user_id -
+    # + channel_id - Channel ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for add_thread_member 
     resource isolated function put channels/[string channel_id]/thread\-members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -2893,8 +2893,8 @@ public isolated client class Client {
 
     # ban_user_from_guild
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 204 response for ban_user_from_guild 
@@ -2913,8 +2913,8 @@ public isolated client class Client {
 
     # add_guild_member
     #
-    # + guild_id -
-    # + user_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 201 response for add_guild_member 
@@ -2933,9 +2933,9 @@ public isolated client class Client {
 
     # add_guild_member_role
     #
-    # + guild_id -
-    # + user_id -
-    # + role_id -
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + role_id - Role ID
     # + headers - Headers to be sent with the request 
     # + return - 204 response for add_guild_member_role 
     resource isolated function put guilds/[string guild_id]/members/[string user_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
@@ -2951,7 +2951,7 @@ public isolated client class Client {
 
     # put_guilds_onboarding
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + headers - Headers to be sent with the request 
     # + payload -
     # + return - 200 response for put_guilds_onboarding 
@@ -2970,7 +2970,7 @@ public isolated client class Client {
 
     # sync_guild_template
     #
-    # + guild_id -
+    # + guild_id - Guild ID
     # + code -
     # + headers - Headers to be sent with the request 
     # + return - 200 response for sync_guild_template 
