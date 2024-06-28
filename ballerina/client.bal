@@ -16,3 +16,2980 @@
 // KIND, either express or implied.  See the License for the
 // specific language governing permissions and limitations
 // under the License.
+
+import ballerina/http;
+import ballerina/mime;
+
+# Preview of the Discord v10 HTTP API specification. See https://discord.com/developers/docs for more details.
+public isolated client class Client {
+    final http:Client clientEp;
+    final readonly & ApiKeysConfig? apiKeyConfig;
+    # Gets invoked to initialize the `connector`.
+    #
+    # + config - The configurations to be used when initializing the `connector` 
+    # + serviceUrl - URL of the target service 
+    # + return - An error if connector initialization failed 
+    public isolated function init(ConnectionConfig config, string serviceUrl = "https://discord.com/api/v10") returns error? {
+        http:ClientConfiguration httpClientConfig = {httpVersion: config.httpVersion, timeout: config.timeout, forwarded: config.forwarded, poolConfig: config.poolConfig, compression: config.compression, circuitBreaker: config.circuitBreaker, retryConfig: config.retryConfig, validation: config.validation};
+        do {
+            if config.http1Settings is ClientHttp1Settings {
+                ClientHttp1Settings settings = check config.http1Settings.ensureType(ClientHttp1Settings);
+                httpClientConfig.http1Settings = {...settings};
+            }
+            if config.http2Settings is http:ClientHttp2Settings {
+                httpClientConfig.http2Settings = check config.http2Settings.ensureType(http:ClientHttp2Settings);
+            }
+            if config.cache is http:CacheConfig {
+                httpClientConfig.cache = check config.cache.ensureType(http:CacheConfig);
+            }
+            if config.responseLimits is http:ResponseLimitConfigs {
+                httpClientConfig.responseLimits = check config.responseLimits.ensureType(http:ResponseLimitConfigs);
+            }
+            if config.secureSocket is http:ClientSecureSocket {
+                httpClientConfig.secureSocket = check config.secureSocket.ensureType(http:ClientSecureSocket);
+            }
+            if config.proxy is http:ProxyConfig {
+                httpClientConfig.proxy = check config.proxy.ensureType(http:ProxyConfig);
+            }
+        }
+        if config.auth is ApiKeysConfig {
+            self.apiKeyConfig = (<ApiKeysConfig>config.auth).cloneReadOnly();
+        } else {
+            httpClientConfig.auth = <OAuth2ClientCredentialsGrantConfig|http:BearerTokenConfig|OAuth2RefreshTokenGrantConfig>config.auth;
+            self.apiKeyConfig = ();
+        }
+        http:Client httpEp = check new (serviceUrl, httpClientConfig);
+        self.clientEp = httpEp;
+        return;
+    }
+
+    # delete_application_command
+    #
+    # + application_id - Application ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_application_command 
+    resource isolated function delete applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_entitlement
+    #
+    # + application_id - Application ID
+    # + entitlement_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_entitlement 
+    resource isolated function delete applications/[string application_id]/entitlements/[string entitlement_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/entitlements/${getEncodedUri(entitlement_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_application_command
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_application_command 
+    resource isolated function delete applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_channel
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for delete_channel 
+    resource isolated function delete channels/[string channel_id](map<string|string[]> headers = {}) returns inline_response_200_6|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_message 
+    resource isolated function delete channels/[string channel_id]/messages/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_all_message_reactions
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_all_message_reactions 
+    resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_all_message_reactions_by_emoji
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + emoji_name -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_all_message_reactions_by_emoji 
+    resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions/${getEncodedUri(emoji_name)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_user_message_reaction
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + emoji_name -
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_user_message_reaction 
+    resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name]/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions/${getEncodedUri(emoji_name)}/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    resource isolated function delete channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name]/\@me(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions/${getEncodedUri(emoji_name)}/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_channel_permission_overwrite
+    #
+    # + channel_id - Channel ID
+    # + overwrite_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_channel_permission_overwrite 
+    resource isolated function delete channels/[string channel_id]/permissions/[string overwrite_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/permissions/${getEncodedUri(overwrite_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # unpin_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for unpin_message 
+    resource isolated function delete channels/[string channel_id]/pins/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/pins/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_group_dm_user
+    #
+    # + channel_id - Channel ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_group_dm_user 
+    resource isolated function delete channels/[string channel_id]/recipients/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/recipients/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_thread_member
+    #
+    # + channel_id - Channel ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_thread_member 
+    resource isolated function delete channels/[string channel_id]/thread\-members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    resource isolated function delete channels/[string channel_id]/thread\-members/\@me(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild 
+    resource isolated function delete guilds/[string guild_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_auto_moderation_rule
+    #
+    # + guild_id - Guild ID
+    # + rule_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_auto_moderation_rule 
+    resource isolated function delete guilds/[string guild_id]/auto\-moderation/rules/[string rule_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/auto-moderation/rules/${getEncodedUri(rule_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # unban_user_from_guild
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for unban_user_from_guild 
+    resource isolated function delete guilds/[string guild_id]/bans/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/bans/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_emoji
+    #
+    # + guild_id - Guild ID
+    # + emoji_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_emoji 
+    resource isolated function delete guilds/[string guild_id]/emojis/[string emoji_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/emojis/${getEncodedUri(emoji_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_integration
+    #
+    # + guild_id - Guild ID
+    # + integration_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_integration 
+    resource isolated function delete guilds/[string guild_id]/integrations/[string integration_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/integrations/${getEncodedUri(integration_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_member
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_member 
+    resource isolated function delete guilds/[string guild_id]/members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_member_role
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + role_id - Role ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_member_role 
+    resource isolated function delete guilds/[string guild_id]/members/[string user_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}/roles/${getEncodedUri(role_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_role
+    #
+    # + guild_id - Guild ID
+    # + role_id - Role ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_role 
+    resource isolated function delete guilds/[string guild_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/roles/${getEncodedUri(role_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_scheduled_event
+    #
+    # + guild_id - Guild ID
+    # + guild_scheduled_event_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_scheduled_event 
+    resource isolated function delete guilds/[string guild_id]/scheduled\-events/[string guild_scheduled_event_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events/${getEncodedUri(guild_scheduled_event_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_sticker
+    #
+    # + guild_id - Guild ID
+    # + sticker_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_guild_sticker 
+    resource isolated function delete guilds/[string guild_id]/stickers/[string sticker_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/stickers/${getEncodedUri(sticker_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_guild_template
+    #
+    # + guild_id - Guild ID
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for delete_guild_template 
+    resource isolated function delete guilds/[string guild_id]/templates/[string code](map<string|string[]> headers = {}) returns GuildTemplateResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/templates/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # invite_revoke
+    #
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for invite_revoke 
+    resource isolated function delete invites/[string code](map<string|string[]> headers = {}) returns inline_response_200_2|error {
+        string resourcePath = string `/invites/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    resource isolated function delete stage\-instances/[string channel_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/stage-instances/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # leave_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for leave_guild 
+    resource isolated function delete users/\@me/guilds/[string guild_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/users/@me/guilds/${getEncodedUri(guild_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_webhook 
+    resource isolated function delete webhooks/[string webhook_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_webhook_by_token
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_webhook_by_token 
+    resource isolated function delete webhooks/[string webhook_id]/[string webhook_token](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # delete_webhook_message
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 204 response for delete_webhook_message 
+    resource isolated function delete webhooks/[string webhook_id]/[string webhook_token]/messages/[string message_id](map<string|string[]> headers = {}, *Delete_webhook_messageQueries queries) returns http:Response|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    resource isolated function delete webhooks/[string webhook_id]/[string webhook_token]/messages/\@original(map<string|string[]> headers = {}, *Delete_original_webhook_messageQueries queries) returns http:Response|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/@original`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->delete(resourcePath, headers = httpHeaders);
+    }
+
+    # get_application
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_application 
+    resource isolated function get applications/[string application_id](map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_application_commands
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_application_commands 
+    resource isolated function get applications/[string application_id]/commands(map<string|string[]> headers = {}, *List_application_commandsQueries queries) returns ApplicationCommandResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_application_command
+    #
+    # + application_id - Application ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_application_command 
+    resource isolated function get applications/[string application_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_entitlements
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_entitlements 
+    resource isolated function get applications/[string application_id]/entitlements(map<string|string[]> headers = {}, *Get_entitlementsQueries queries) returns EntitlementResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/entitlements`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<Encoding> queryParamEncoding = {"sku_ids": {style: FORM, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queries, queryParamEncoding);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_entitlement
+    #
+    # + application_id - Application ID
+    # + entitlement_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_entitlement 
+    resource isolated function get applications/[string application_id]/entitlements/[string entitlement_id](map<string|string[]> headers = {}) returns EntitlementResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/entitlements/${getEncodedUri(entitlement_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_application_commands
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_application_commands 
+    resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands(map<string|string[]> headers = {}, *List_guild_application_commandsQueries queries) returns ApplicationCommandResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_application_command
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_application_command 
+    resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_application_command_permissions
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_application_command_permissions 
+    resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id]/permissions(map<string|string[]> headers = {}) returns CommandPermissionsResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/${getEncodedUri(command_id)}/permissions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_application_command_permissions
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_application_command_permissions 
+    resource isolated function get applications/[string application_id]/guilds/[string guild_id]/commands/permissions(map<string|string[]> headers = {}) returns CommandPermissionsResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/permissions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_application_role_connections_metadata
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_application_role_connections_metadata 
+    resource isolated function get applications/[string application_id]/role\-connections/metadata(map<string|string[]> headers = {}) returns ApplicationRoleConnectionsMetadataItemResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/role-connections/metadata`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get applications/\@me(map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
+        string resourcePath = string `/applications/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_channel
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_channel 
+    resource isolated function get channels/[string channel_id](map<string|string[]> headers = {}) returns inline_response_200_6|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_channel_invites
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_channel_invites 
+    resource isolated function get channels/[string channel_id]/invites(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/invites`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_messages
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_messages 
+    resource isolated function get channels/[string channel_id]/messages(map<string|string[]> headers = {}, *List_messagesQueries queries) returns MessageResponse[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_message 
+    resource isolated function get channels/[string channel_id]/messages/[string message_id](map<string|string[]> headers = {}) returns MessageResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_message_reactions_by_emoji
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + emoji_name -
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_message_reactions_by_emoji 
+    resource isolated function get channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name](map<string|string[]> headers = {}, *List_message_reactions_by_emojiQueries queries) returns UserResponse[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions/${getEncodedUri(emoji_name)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_pinned_messages
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_pinned_messages 
+    resource isolated function get channels/[string channel_id]/pins(map<string|string[]> headers = {}) returns MessageResponse[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/pins`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get channels/[string channel_id]/thread\-members(map<string|string[]> headers = {}, *List_thread_membersQueries queries) returns ThreadMemberResponse[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_thread_member
+    #
+    # + channel_id - Channel ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_thread_member 
+    resource isolated function get channels/[string channel_id]/thread\-members/[string user_id](map<string|string[]> headers = {}, *Get_thread_memberQueries queries) returns ThreadMemberResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get channels/[string channel_id]/threads/archived/'private(map<string|string[]> headers = {}, *List_private_archived_threadsQueries queries) returns ThreadsResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/threads/archived/private`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get channels/[string channel_id]/threads/archived/'public(map<string|string[]> headers = {}, *List_public_archived_threadsQueries queries) returns ThreadsResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/threads/archived/public`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get channels/[string channel_id]/users/\@me/threads/archived/'private(map<string|string[]> headers = {}, *List_my_private_archived_threadsQueries queries) returns ThreadsResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/users/@me/threads/archived/private`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_channel_webhooks
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_channel_webhooks 
+    resource isolated function get channels/[string channel_id]/webhooks(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/webhooks`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_gateway
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_gateway 
+    resource isolated function get gateway(map<string|string[]> headers = {}) returns GatewayResponse|error {
+        string resourcePath = string `/gateway`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_bot_gateway
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_bot_gateway 
+    resource isolated function get gateway/bot(map<string|string[]> headers = {}) returns GatewayBotResponse|error {
+        string resourcePath = string `/gateway/bot`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_guild 
+    resource isolated function get guilds/[string guild_id](map<string|string[]> headers = {}, *Get_guildQueries queries) returns GuildWithCountsResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/audit\-logs(map<string|string[]> headers = {}, *List_guild_audit_log_entriesQueries queries) returns GuildAuditLogResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/audit-logs`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_auto_moderation_rules
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_auto_moderation_rules 
+    resource isolated function get guilds/[string guild_id]/auto\-moderation/rules(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/auto-moderation/rules`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_auto_moderation_rule
+    #
+    # + guild_id - Guild ID
+    # + rule_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_auto_moderation_rule 
+    resource isolated function get guilds/[string guild_id]/auto\-moderation/rules/[string rule_id](map<string|string[]> headers = {}) returns inline_response_200_1|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/auto-moderation/rules/${getEncodedUri(rule_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_bans
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_bans 
+    resource isolated function get guilds/[string guild_id]/bans(map<string|string[]> headers = {}, *List_guild_bansQueries queries) returns GuildBanResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/bans`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_ban
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_ban 
+    resource isolated function get guilds/[string guild_id]/bans/[string user_id](map<string|string[]> headers = {}) returns GuildBanResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/bans/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_channels
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_channels 
+    resource isolated function get guilds/[string guild_id]/channels(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/channels`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_emojis
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_emojis 
+    resource isolated function get guilds/[string guild_id]/emojis(map<string|string[]> headers = {}) returns EmojiResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/emojis`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_emoji
+    #
+    # + guild_id - Guild ID
+    # + emoji_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_emoji 
+    resource isolated function get guilds/[string guild_id]/emojis/[string emoji_id](map<string|string[]> headers = {}) returns EmojiResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/emojis/${getEncodedUri(emoji_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_integrations
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_integrations 
+    resource isolated function get guilds/[string guild_id]/integrations(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/integrations`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_invites
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_invites 
+    resource isolated function get guilds/[string guild_id]/invites(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/invites`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_members
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_members 
+    resource isolated function get guilds/[string guild_id]/members(map<string|string[]> headers = {}, *List_guild_membersQueries queries) returns GuildMemberResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_member
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_member 
+    resource isolated function get guilds/[string guild_id]/members/[string user_id](map<string|string[]> headers = {}) returns GuildMemberResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # search_guild_members
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for search_guild_members 
+    resource isolated function get guilds/[string guild_id]/members/search(map<string|string[]> headers = {}, *Search_guild_membersQueries queries) returns GuildMemberResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/search`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/new\-member\-welcome(map<string|string[]> headers = {}) returns GuildHomeSettingsResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/new-member-welcome`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guilds_onboarding
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guilds_onboarding 
+    resource isolated function get guilds/[string guild_id]/onboarding(map<string|string[]> headers = {}) returns UserGuildOnboardingResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/onboarding`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_preview
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_preview 
+    resource isolated function get guilds/[string guild_id]/preview(map<string|string[]> headers = {}) returns GuildPreviewResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/preview`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # preview_prune_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for preview_prune_guild 
+    resource isolated function get guilds/[string guild_id]/prune(map<string|string[]> headers = {}, *Preview_prune_guildQueries queries) returns GuildPruneResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/prune`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<Encoding> queryParamEncoding = {"include_roles": {style: FORM, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queries, queryParamEncoding);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_voice_regions
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_voice_regions 
+    resource isolated function get guilds/[string guild_id]/regions(map<string|string[]> headers = {}) returns VoiceRegionResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/regions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_roles
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_roles 
+    resource isolated function get guilds/[string guild_id]/roles(map<string|string[]> headers = {}) returns GuildRoleResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/roles`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/scheduled\-events(map<string|string[]> headers = {}, *List_guild_scheduled_eventsQueries queries) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_scheduled_event
+    #
+    # + guild_id - Guild ID
+    # + guild_scheduled_event_id -
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_guild_scheduled_event 
+    resource isolated function get guilds/[string guild_id]/scheduled\-events/[string guild_scheduled_event_id](map<string|string[]> headers = {}, *Get_guild_scheduled_eventQueries queries) returns inline_response_200_3|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events/${getEncodedUri(guild_scheduled_event_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_scheduled_event_users
+    #
+    # + guild_id - Guild ID
+    # + guild_scheduled_event_id -
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_scheduled_event_users 
+    resource isolated function get guilds/[string guild_id]/scheduled\-events/[string guild_scheduled_event_id]/users(map<string|string[]> headers = {}, *List_guild_scheduled_event_usersQueries queries) returns ScheduledEventUserResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events/${getEncodedUri(guild_scheduled_event_id)}/users`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_stickers
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_stickers 
+    resource isolated function get guilds/[string guild_id]/stickers(map<string|string[]> headers = {}) returns GuildStickerResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/stickers`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_sticker
+    #
+    # + guild_id - Guild ID
+    # + sticker_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_sticker 
+    resource isolated function get guilds/[string guild_id]/stickers/[string sticker_id](map<string|string[]> headers = {}) returns GuildStickerResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/stickers/${getEncodedUri(sticker_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_guild_templates
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_guild_templates 
+    resource isolated function get guilds/[string guild_id]/templates(map<string|string[]> headers = {}) returns GuildTemplateResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/templates`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_active_guild_threads
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_active_guild_threads 
+    resource isolated function get guilds/[string guild_id]/threads/active(map<string|string[]> headers = {}) returns ThreadsResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/threads/active`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/vanity\-url(map<string|string[]> headers = {}) returns VanityURLResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/vanity-url`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_webhooks
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_webhooks 
+    resource isolated function get guilds/[string guild_id]/webhooks(map<string|string[]> headers = {}) returns anydata[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/webhooks`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/welcome\-screen(map<string|string[]> headers = {}) returns GuildWelcomeScreenResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/welcome-screen`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_widget_settings
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_widget_settings 
+    resource isolated function get guilds/[string guild_id]/widget(map<string|string[]> headers = {}) returns WidgetSettingsResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/widget`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/widget\.json(map<string|string[]> headers = {}) returns WidgetResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/widget.json`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get guilds/[string guild_id]/widget\.png(map<string|string[]> headers = {}, *Get_guild_widget_pngQueries queries) returns byte[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/widget.png`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<Encoding> queryParamEncoding = {"style": {style: FORM, explode: true}};
+        resourcePath = resourcePath + check getPathForQueryParam(queries, queryParamEncoding);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_guild_template
+    #
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_template 
+    resource isolated function get guilds/templates/[string code](map<string|string[]> headers = {}) returns GuildTemplateResponse|error {
+        string resourcePath = string `/guilds/templates/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # invite_resolve
+    #
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for invite_resolve 
+    resource isolated function get invites/[string code](map<string|string[]> headers = {}, *Invite_resolveQueries queries) returns inline_response_200_2|error {
+        string resourcePath = string `/invites/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get oauth2/\@me(map<string|string[]> headers = {}) returns OAuth2GetAuthorizationResponse|error {
+        string resourcePath = string `/oauth2/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get oauth2/applications/\@me(map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
+        string resourcePath = string `/oauth2/applications/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_public_keys
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_public_keys 
+    resource isolated function get oauth2/keys(map<string|string[]> headers = {}) returns OAuth2GetKeys|error {
+        string resourcePath = string `/oauth2/keys`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get stage\-instances/[string channel_id](map<string|string[]> headers = {}) returns StageInstanceResponse|error {
+        string resourcePath = string `/stage-instances/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get sticker\-packs(map<string|string[]> headers = {}) returns StickerPackCollectionResponse|error {
+        string resourcePath = string `/sticker-packs`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_sticker
+    #
+    # + sticker_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_sticker 
+    resource isolated function get stickers/[string sticker_id](map<string|string[]> headers = {}) returns inline_response_200_5|error {
+        string resourcePath = string `/stickers/${getEncodedUri(sticker_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_user
+    #
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_user 
+    resource isolated function get users/[string user_id](map<string|string[]> headers = {}) returns UserResponse|error {
+        string resourcePath = string `/users/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get users/\@me(map<string|string[]> headers = {}) returns UserPIIResponse|error {
+        string resourcePath = string `/users/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get users/\@me/applications/[string application_id]/role\-connection(map<string|string[]> headers = {}) returns ApplicationUserRoleConnectionResponse|error {
+        string resourcePath = string `/users/@me/applications/${getEncodedUri(application_id)}/role-connection`;
+        return self.clientEp->get(resourcePath, headers);
+    }
+
+    # list_my_connections
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_my_connections 
+    resource isolated function get users/\@me/connections(map<string|string[]> headers = {}) returns ConnectedAccountResponse[]|error {
+        string resourcePath = string `/users/@me/connections`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # list_my_guilds
+    #
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_my_guilds 
+    resource isolated function get users/\@me/guilds(map<string|string[]> headers = {}, *List_my_guildsQueries queries) returns MyGuildResponse[]|error {
+        string resourcePath = string `/users/@me/guilds`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_my_guild_member
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_my_guild_member 
+    resource isolated function get users/\@me/guilds/[string guild_id]/member(map<string|string[]> headers = {}) returns PrivateGuildMemberResponse|error {
+        string resourcePath = string `/users/@me/guilds/${getEncodedUri(guild_id)}/member`;
+        return self.clientEp->get(resourcePath, headers);
+    }
+
+    # list_voice_regions
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_voice_regions 
+    resource isolated function get voice/regions(map<string|string[]> headers = {}) returns VoiceRegionResponse[]|error {
+        string resourcePath = string `/voice/regions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_webhook 
+    resource isolated function get webhooks/[string webhook_id](map<string|string[]> headers = {}) returns inline_response_200_4|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_webhook_by_token
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_webhook_by_token 
+    resource isolated function get webhooks/[string webhook_id]/[string webhook_token](map<string|string[]> headers = {}) returns inline_response_200_4|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # get_webhook_message
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_webhook_message 
+    resource isolated function get webhooks/[string webhook_id]/[string webhook_token]/messages/[string message_id](map<string|string[]> headers = {}, *Get_webhook_messageQueries queries) returns MessageResponse|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    resource isolated function get webhooks/[string webhook_id]/[string webhook_token]/messages/\@original(map<string|string[]> headers = {}, *Get_original_webhook_messageQueries queries) returns MessageResponse|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/@original`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        return self.clientEp->get(resourcePath, httpHeaders);
+    }
+
+    # update_application
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_application 
+    resource isolated function patch applications/[string application_id](ApplicationFormPartial payload, map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_application_command
+    #
+    # + application_id - Application ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_application_command 
+    resource isolated function patch applications/[string application_id]/commands/[string command_id](ApplicationCommandPatchRequestPartial payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_application_command
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_application_command 
+    resource isolated function patch applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id](ApplicationCommandPatchRequestPartial payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/${getEncodedUri(command_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch applications/\@me(ApplicationFormPartial payload, map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
+        string resourcePath = string `/applications/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_channel
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_channel 
+    resource isolated function patch channels/[string channel_id](channels_channel_id_body payload, map<string|string[]> headers = {}) returns inline_response_200_6|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for update_message 
+    resource isolated function patch channels/[string channel_id]/messages/[string message_id](Update_messageHeaders headers, messages_message_id_body payload) returns MessageResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        string encodedRequestBody = createFormURLEncodedRequestBody(payload);
+        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild 
+    resource isolated function patch guilds/[string guild_id](GuildPatchRequestPartial payload, map<string|string[]> headers = {}) returns GuildResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_auto_moderation_rule
+    #
+    # + guild_id - Guild ID
+    # + rule_id -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_auto_moderation_rule 
+    resource isolated function patch guilds/[string guild_id]/auto\-moderation/rules/[string rule_id](rules_rule_id_body payload, map<string|string[]> headers = {}) returns inline_response_200_1|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/auto-moderation/rules/${getEncodedUri(rule_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # bulk_update_guild_channels
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for bulk_update_guild_channels 
+    resource isolated function patch guilds/[string guild_id]/channels(GuildsChannelsRequest[] payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/channels`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_emoji
+    #
+    # + guild_id - Guild ID
+    # + emoji_id -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_emoji 
+    resource isolated function patch guilds/[string guild_id]/emojis/[string emoji_id](GuildsEmojisRequest payload, map<string|string[]> headers = {}) returns EmojiResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/emojis/${getEncodedUri(emoji_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_member
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_member 
+    resource isolated function patch guilds/[string guild_id]/members/[string user_id](GuildsMembersRequest1 payload, map<string|string[]> headers = {}) returns GuildMemberResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch guilds/[string guild_id]/members/\@me(GuildsMembersMeRequest payload, map<string|string[]> headers = {}) returns PrivateGuildMemberResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # bulk_update_guild_roles
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for bulk_update_guild_roles 
+    resource isolated function patch guilds/[string guild_id]/roles(GuildsRolesRequest2[] payload, map<string|string[]> headers = {}) returns GuildRoleResponse[]|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/roles`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_role
+    #
+    # + guild_id - Guild ID
+    # + role_id - Role ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_role 
+    resource isolated function patch guilds/[string guild_id]/roles/[string role_id](GuildsRolesRequest payload, map<string|string[]> headers = {}) returns GuildRoleResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/roles/${getEncodedUri(role_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_voice_state
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for update_voice_state 
+    resource isolated function patch guilds/[string guild_id]/scheduled\-events/[string guild_scheduled_event_id](scheduledevents_guild_scheduled_event_id_body payload, map<string|string[]> headers = {}) returns inline_response_200_3|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events/${getEncodedUri(guild_scheduled_event_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_sticker
+    #
+    # + guild_id - Guild ID
+    # + sticker_id -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_sticker 
+    resource isolated function patch guilds/[string guild_id]/stickers/[string sticker_id](GuildsStickersRequest payload, map<string|string[]> headers = {}) returns GuildStickerResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/stickers/${getEncodedUri(sticker_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_template
+    #
+    # + guild_id - Guild ID
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_template 
+    resource isolated function patch guilds/[string guild_id]/templates/[string code](GuildsTemplatesRequest1 payload, map<string|string[]> headers = {}) returns GuildTemplateResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/templates/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_voice_state
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for update_voice_state 
+    resource isolated function patch guilds/[string guild_id]/voice\-states/[string user_id](GuildsVoiceStatesRequest payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/voice-states/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch guilds/[string guild_id]/voice\-states/\@me(GuildsVoiceStatesMeRequest payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/voice-states/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch guilds/[string guild_id]/welcome\-screen(WelcomeScreenPatchRequestPartial payload, map<string|string[]> headers = {}) returns GuildWelcomeScreenResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/welcome-screen`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_guild_widget_settings
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_widget_settings 
+    resource isolated function patch guilds/[string guild_id]/widget(GuildsWidgetRequest payload, map<string|string[]> headers = {}) returns WidgetSettingsResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/widget`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch stage\-instances/[string channel_id](StageInstancesRequest1 payload, map<string|string[]> headers = {}) returns StageInstanceResponse|error {
+        string resourcePath = string `/stage-instances/${getEncodedUri(channel_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch users/\@me(BotAccountPatchRequest payload, map<string|string[]> headers = {}) returns UserPIIResponse|error {
+        string resourcePath = string `/users/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_webhook 
+    resource isolated function patch webhooks/[string webhook_id](WebhooksRequest2 payload, map<string|string[]> headers = {}) returns inline_response_200_4|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_webhook_by_token
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_webhook_by_token 
+    resource isolated function patch webhooks/[string webhook_id]/[string webhook_token](WebhooksRequest1 payload, map<string|string[]> headers = {}) returns inline_response_200_4|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # update_webhook_message
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for update_webhook_message 
+    resource isolated function patch webhooks/[string webhook_id]/[string webhook_token]/messages/[string message_id](Update_webhook_messageHeaders headers, messages_message_id_body_1 payload, *Update_webhook_messageQueries queries) returns MessageResponse|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        string encodedRequestBody = createFormURLEncodedRequestBody(payload);
+        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function patch webhooks/[string webhook_id]/[string webhook_token]/messages/\@original(messages_original_body payload, Update_original_webhook_messageHeaders headers, *Update_original_webhook_messageQueries queries) returns MessageResponse|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/messages/@original`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        string encodedRequestBody = createFormURLEncodedRequestBody(payload);
+        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
+        return self.clientEp->patch(resourcePath, request, httpHeaders);
+    }
+
+    # create_application_command
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_application_command 
+    resource isolated function post applications/[string application_id]/commands(ApplicationCommandCreateRequest payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_entitlement
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_entitlement 
+    resource isolated function post applications/[string application_id]/entitlements(CreateEntitlementRequestData payload, map<string|string[]> headers = {}) returns EntitlementResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/entitlements`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # consume_entitlement
+    #
+    # + application_id - Application ID
+    # + entitlement_id -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for consume_entitlement 
+    resource isolated function post applications/[string application_id]/entitlements/[string entitlement_id]/consume(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/entitlements/${getEncodedUri(entitlement_id)}/consume`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_application_command
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_guild_application_command 
+    resource isolated function post applications/[string application_id]/guilds/[string guild_id]/commands(ApplicationCommandCreateRequest payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # follow_channel
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for follow_channel 
+    resource isolated function post channels/[string channel_id]/followers(ChannelsFollowersRequest payload, map<string|string[]> headers = {}) returns ChannelFollowerResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/followers`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_channel_invite
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_channel_invite 
+    resource isolated function post channels/[string channel_id]/invites(channel_id_invites_body payload, map<string|string[]> headers = {}) returns inline_response_200_2|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/invites`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_message
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for create_message 
+    resource isolated function post channels/[string channel_id]/messages(Create_messageHeaders headers, channel_id_messages_body payload) returns MessageResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        string encodedRequestBody = createFormURLEncodedRequestBody(payload);
+        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # crosspost_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for crosspost_message 
+    resource isolated function post channels/[string channel_id]/messages/[string message_id]/crosspost(map<string|string[]> headers = {}) returns MessageResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/crosspost`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_thread_from_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_thread_from_message 
+    resource isolated function post channels/[string channel_id]/messages/[string message_id]/threads(CreateTextThreadWithMessageRequest payload, map<string|string[]> headers = {}) returns ThreadResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/threads`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function post channels/[string channel_id]/messages/bulk\-delete(ChannelsMessagesBulkDeleteRequest payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/bulk-delete`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_thread
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_thread 
+    resource isolated function post channels/[string channel_id]/threads(channel_id_threads_body payload, map<string|string[]> headers = {}) returns CreatedThreadResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/threads`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # trigger_typing_indicator
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for trigger_typing_indicator 
+    resource isolated function post channels/[string channel_id]/typing(map<string|string[]> headers = {}) returns record {}|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/typing`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_webhook
+    #
+    # + channel_id - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_webhook 
+    resource isolated function post channels/[string channel_id]/webhooks(ChannelsWebhooksRequest payload, map<string|string[]> headers = {}) returns GuildIncomingWebhookResponse|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/webhooks`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_guild 
+    resource isolated function post guilds(GuildCreateRequest payload, map<string|string[]> headers = {}) returns GuildResponse|error {
+        string resourcePath = string `/guilds`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_auto_moderation_rule
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_auto_moderation_rule 
+    resource isolated function post guilds/[string guild_id]/auto\-moderation/rules(automoderation_rules_body payload, map<string|string[]> headers = {}) returns inline_response_200_1|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/auto-moderation/rules`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function post guilds/[string guild_id]/bulk\-ban(GuildsBulkBanRequest payload, map<string|string[]> headers = {}) returns BulkBanUsersResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/bulk-ban`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_channel
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_guild_channel 
+    resource isolated function post guilds/[string guild_id]/channels(CreateGuildChannelRequest payload, map<string|string[]> headers = {}) returns GuildChannelResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/channels`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_emoji
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_guild_emoji 
+    resource isolated function post guilds/[string guild_id]/emojis(GuildsEmojisRequest1 payload, map<string|string[]> headers = {}) returns EmojiResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/emojis`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # set_guild_mfa_level
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for set_guild_mfa_level 
+    resource isolated function post guilds/[string guild_id]/mfa(GuildMFALevelResponse payload, map<string|string[]> headers = {}) returns GuildMFALevelResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/mfa`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # prune_guild
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for prune_guild 
+    resource isolated function post guilds/[string guild_id]/prune(GuildsPruneRequest payload, map<string|string[]> headers = {}) returns GuildPruneResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/prune`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_role
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_guild_role 
+    resource isolated function post guilds/[string guild_id]/roles(GuildsRolesRequest payload, map<string|string[]> headers = {}) returns GuildRoleResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/roles`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function post guilds/[string guild_id]/scheduled\-events(guild_id_scheduledevents_body payload, map<string|string[]> headers = {}) returns inline_response_200_3|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/scheduled-events`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_sticker
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 201 response for create_guild_sticker 
+    resource isolated function post guilds/[string guild_id]/stickers(guild_id_stickers_body payload, map<string|string[]> headers = {}) returns GuildStickerResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/stickers`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        mime:Entity[] bodyParts = check createBodyParts(payload);
+        request.setBodyParts(bodyParts);
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_template
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_guild_template 
+    resource isolated function post guilds/[string guild_id]/templates(GuildsTemplatesRequest2 payload, map<string|string[]> headers = {}) returns GuildTemplateResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/templates`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_guild_from_template
+    #
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for create_guild_from_template 
+    resource isolated function post guilds/templates/[string code](GuildsTemplatesRequest payload, map<string|string[]> headers = {}) returns GuildResponse|error {
+        string resourcePath = string `/guilds/templates/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_interaction_response
+    #
+    # + interaction_id -
+    # + interaction_token -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for create_interaction_response 
+    resource isolated function post interactions/[string interaction_id]/[string interaction_token]/callback(interaction_token_callback_body payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/interactions/${getEncodedUri(interaction_id)}/${getEncodedUri(interaction_token)}/callback`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function post stage\-instances(StageInstancesRequest payload, map<string|string[]> headers = {}) returns StageInstanceResponse|error {
+        string resourcePath = string `/stage-instances`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # create_dm
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_dm 
+    resource isolated function post users/\@me/channels(CreatePrivateChannelRequest payload, map<string|string[]> headers = {}) returns inline_response_200|error {
+        string resourcePath = string `/users/@me/channels`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # execute_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + payload -
+    # + return - 200 response for execute_webhook 
+    resource isolated function post webhooks/[string webhook_id]/[string webhook_token](webhook_id_webhook_token_body payload, map<string|string[]> headers = {}, *Execute_webhookQueries queries) returns MessageResponse|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # execute_github_compatible_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + payload -
+    # + return - 204 response for execute_github_compatible_webhook 
+    resource isolated function post webhooks/[string webhook_id]/[string webhook_token]/github(GithubWebhook payload, map<string|string[]> headers = {}, *Execute_github_compatible_webhookQueries queries) returns http:Response|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/github`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # execute_slack_compatible_webhook
+    #
+    # + webhook_id - Webhook ID
+    # + webhook_token - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for execute_slack_compatible_webhook 
+    resource isolated function post webhooks/[string webhook_id]/[string webhook_token]/slack(Execute_slack_compatible_webhookHeaders headers, webhook_token_slack_body payload, *Execute_slack_compatible_webhookQueries queries) returns string?|error {
+        string resourcePath = string `/webhooks/${getEncodedUri(webhook_id)}/${getEncodedUri(webhook_token)}/slack`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        resourcePath = resourcePath + check getPathForQueryParam(queries);
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        string encodedRequestBody = createFormURLEncodedRequestBody(payload);
+        request.setPayload(encodedRequestBody, "application/x-www-form-urlencoded");
+        return self.clientEp->post(resourcePath, request, httpHeaders);
+    }
+
+    # bulk_set_application_commands
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for bulk_set_application_commands 
+    resource isolated function put applications/[string application_id]/commands(ApplicationCommandUpdateRequest[] payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # bulk_set_guild_application_commands
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for bulk_set_guild_application_commands 
+    resource isolated function put applications/[string application_id]/guilds/[string guild_id]/commands(ApplicationCommandUpdateRequest[] payload, map<string|string[]> headers = {}) returns ApplicationCommandResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # set_guild_application_command_permissions
+    #
+    # + application_id - Application ID
+    # + guild_id - Guild ID
+    # + command_id - Command ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for set_guild_application_command_permissions 
+    resource isolated function put applications/[string application_id]/guilds/[string guild_id]/commands/[string command_id]/permissions(ApplicationsGuildsCommandsCommandIdPermissionsRequest payload, map<string|string[]> headers = {}) returns CommandPermissionsResponse|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/guilds/${getEncodedUri(guild_id)}/commands/${getEncodedUri(command_id)}/permissions`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # update_application_role_connections_metadata
+    #
+    # + application_id - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_application_role_connections_metadata 
+    resource isolated function put applications/[string application_id]/role\-connections/metadata(ApplicationRoleConnectionsMetadataItemRequest[] payload, map<string|string[]> headers = {}) returns ApplicationRoleConnectionsMetadataItemResponse[]|error {
+        string resourcePath = string `/applications/${getEncodedUri(application_id)}/role-connections/metadata`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function put channels/[string channel_id]/messages/[string message_id]/reactions/[string emoji_name]/\@me(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/messages/${getEncodedUri(message_id)}/reactions/${getEncodedUri(emoji_name)}/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # set_channel_permission_overwrite
+    #
+    # + channel_id - Channel ID
+    # + overwrite_id -
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for set_channel_permission_overwrite 
+    resource isolated function put channels/[string channel_id]/permissions/[string overwrite_id](ChannelsPermissionsRequest payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/permissions/${getEncodedUri(overwrite_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # pin_message
+    #
+    # + channel_id - Channel ID
+    # + message_id - Message ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for pin_message 
+    resource isolated function put channels/[string channel_id]/pins/[string message_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/pins/${getEncodedUri(message_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # add_group_dm_user
+    #
+    # + channel_id - Channel ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for add_group_dm_user 
+    resource isolated function put channels/[string channel_id]/recipients/[string user_id](ChannelsRecipientsRequest payload, map<string|string[]> headers = {}) returns inline_response_200|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/recipients/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # add_thread_member
+    #
+    # + channel_id - Channel ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for add_thread_member 
+    resource isolated function put channels/[string channel_id]/thread\-members/[string user_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function put channels/[string channel_id]/thread\-members/\@me(map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/channels/${getEncodedUri(channel_id)}/thread-members/@me`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # ban_user_from_guild
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for ban_user_from_guild 
+    resource isolated function put guilds/[string guild_id]/bans/[string user_id](GuildsBansRequest payload, map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/bans/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # add_guild_member
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 201 response for add_guild_member 
+    resource isolated function put guilds/[string guild_id]/members/[string user_id](GuildsMembersRequest payload, map<string|string[]> headers = {}) returns GuildMemberResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # add_guild_member_role
+    #
+    # + guild_id - Guild ID
+    # + user_id - User ID
+    # + role_id - Role ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for add_guild_member_role 
+    resource isolated function put guilds/[string guild_id]/members/[string user_id]/roles/[string role_id](map<string|string[]> headers = {}) returns http:Response|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/members/${getEncodedUri(user_id)}/roles/${getEncodedUri(role_id)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # put_guilds_onboarding
+    #
+    # + guild_id - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for put_guilds_onboarding 
+    resource isolated function put guilds/[string guild_id]/onboarding(UpdateGuildOnboardingRequest payload, map<string|string[]> headers = {}) returns GuildOnboardingResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/onboarding`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    # sync_guild_template
+    #
+    # + guild_id - Guild ID
+    # + code -
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for sync_guild_template 
+    resource isolated function put guilds/[string guild_id]/templates/[string code](map<string|string[]> headers = {}) returns GuildTemplateResponse|error {
+        string resourcePath = string `/guilds/${getEncodedUri(guild_id)}/templates/${getEncodedUri(code)}`;
+        map<anydata> headerValues = {...headers};
+        if self.apiKeyConfig is ApiKeysConfig {
+            headerValues["Authorization"] = self.apiKeyConfig?.Authorization;
+        }
+        map<string|string[]> httpHeaders = getMapForHeaders(headerValues);
+        http:Request request = new;
+        return self.clientEp->put(resourcePath, request, httpHeaders);
+    }
+
+    resource isolated function put users/\@me/applications/[string application_id]/role\-connection(UsersMeApplicationsRoleConnectionRequest payload, map<string|string[]> headers = {}) returns ApplicationUserRoleConnectionResponse|error {
+        string resourcePath = string `/users/@me/applications/${getEncodedUri(application_id)}/role-connection`;
+        http:Request request = new;
+        json jsonBody = payload.toJson();
+        request.setPayload(jsonBody, "application/json");
+        return self.clientEp->put(resourcePath, request, headers);
+    }
+}
