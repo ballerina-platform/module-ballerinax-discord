@@ -76,7 +76,6 @@ discord:Client discord = check new({
 ### Step 3: Invoke the connector operation
 Now, utilize the available connector operations
 
-### Return linked third-party accounts of the user
 
 ```ballerina
  var s = check cl->/users/\@me/connections();
