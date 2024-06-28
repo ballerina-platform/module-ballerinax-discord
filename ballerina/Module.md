@@ -20,7 +20,7 @@ If you do not have a Discord account already, [create a new discord account](htt
 
 Complete the account creation process by including the relavant information in the given fields.
 
-### Step 2: Make a New Discord Application
+### Step 2: Make a new Discord application
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true">
 
