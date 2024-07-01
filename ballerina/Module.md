@@ -6,15 +6,15 @@ The Ballerina Discord connector offers APIs to connect and interact with the [Di
 
 ## Setup guide
 
-Follow these steps to create a discord developer account.
+Follow these steps to create a Discord developer account.
 
 ### Step 1: Login to Discord developer page
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true">
 
-Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your discord account. 
+Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your Discord account. 
 
-If you do not have a discord account already, [create a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord developer page.
+If you do not have a Discord account already, [create a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord developer page.
 
 <img src= "https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true">
 
@@ -24,13 +24,13 @@ Complete the account creation process by including the relavant information in t
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true">
 
-Once in the discord developer portal is open, click on the `New Application` button as displayed above to start the process.
+Once in the Discord developer portal is open, click on the `New Application` button as displayed above to start the process.
 
 ### Step 3: Name the Discord Application 
 
 <img src="https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/docs/setup/resources/create-app.png?raw=true">
 
-1. Proceed by giving the discord Application a name and click on the terms of service.
+1. Proceed by giving the Discord Application a name and click on the terms of service.
 
 2. Finally complete the naming process by clicking on the `next` button.
 
@@ -70,20 +70,4 @@ discord:Client discord = check new({
             scopes
         }
 });
-```
-
-
-### Step 3: Invoke the connector operation
-Now, utilize the available connector operations.
-
-### Return linked third-party accounts of the user
-
-```ballerina
- ConnectedAccountResponse[] connectedAccounts = check cl->/users/\@me/connections();
-````
-
-### Step 4: Run the Ballerina application
-
-```bash
-bal run
 ```
