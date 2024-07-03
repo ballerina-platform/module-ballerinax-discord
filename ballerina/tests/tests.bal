@@ -19,8 +19,6 @@ import ballerina/test;
 configurable string clientId = "Client ID";
 configurable string clientSecret = "Client Secret";
 configurable string[] scopes = ?;
-
-// Test case for the endpoint for exchanging authorization code for tokens
 @test:Config{}
 function testGetToken() returns error? {
     Client discord =check new({
@@ -34,11 +32,10 @@ function testGetToken() returns error? {
     OAuth2GetKeys getToken = check discord->/oauth2/keys(); 
 }
 
-// Test case for the endpoint to retrieve details about a specific user
 @test:Config{}
 function testGetUser() returns error? {
     string user_id = "User ID";	
-    Client discord =check new({
+    Client discord = check new({  
         auth: {
             clientId: clientId,
             clientSecret: clientSecret,
@@ -53,7 +50,7 @@ function testGetUser() returns error? {
 @test:Config{}
 function testGetGuild() returns error? {
     string guild_id = "Guild ID";	
-    Client discord =check new({
+    Client discord = check new({  
         auth: {
             clientId: clientId,
             clientSecret: clientSecret,
@@ -69,7 +66,7 @@ function testGetGuild() returns error? {
 function testGetChannel() returns error? {
     string channel_id = "Text Channel ID";
     string message_id = "Message ID";	
-    Client discord =check new({
+    Client discord = check new({  
         auth: {
             clientId: clientId,
             clientSecret: clientSecret,
@@ -84,7 +81,7 @@ function testGetChannel() returns error? {
 @test:Config{}
 function testGetVoiceChannel() returns error? {
     string channel_id = "Voice Channel ID";	
-    Client discord =check new({
+    Client discord = check new({  
         auth: {
             clientId: clientId,
             clientSecret: clientSecret,
@@ -92,5 +89,5 @@ function testGetVoiceChannel() returns error? {
         }
     });
 
-    var getVoiceChannelInfo = check discord->/channels/[channel_id]/invites();
+    anydata getVoiceChannelInfo = check discord->/channels/[channel_id]/invites();
 }
