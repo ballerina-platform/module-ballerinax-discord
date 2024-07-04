@@ -1,5 +1,5 @@
 [package]
 org = "wso2"
-name = "discord_automated_event_announcements"
+name = "discord_automated_event_reminders"
 version = "0.1.0"
 distribution = "2201.9.1"
