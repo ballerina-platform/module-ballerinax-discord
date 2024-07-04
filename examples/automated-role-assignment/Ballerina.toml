@@ -1,0 +1,15 @@
+[package]
+org = "kamalika_seneviratne"
+name = "automated_role_assignment"
+version = "0.1.0"
+distribution = "2201.9.0"
+
+[build-options]
+observabilityIncluded = true
+
+
+[[dependency]]
+org = "discordconnector"
+name = "discord"
+version = "0.1.0"
+repository = "local"
