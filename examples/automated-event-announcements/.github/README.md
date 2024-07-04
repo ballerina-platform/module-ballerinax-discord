@@ -1,0 +1,1 @@
+../Discord automated event reminders.md
