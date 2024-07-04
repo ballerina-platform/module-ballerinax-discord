@@ -2,7 +2,7 @@
 
 The `ballerinax/discord` connector provides practical examples illustrating usage in various scenarios. Explore the below examples, covering use cases like automated event announcements and automated role assignment based on reactions.
 
-1. [Automated Event Reminders](/examples/automated-event-announcements/Discord%20automated%20event%20reminders.md)
+1. [Automated Event Reminders](/examples/automated-event-reminders/Discord%20automated%20event%20reminders.md)
 
 ## Prerequisites
 
