@@ -14,35 +14,39 @@
 // specific language governing permissions and limitations
 // under the License.
 
-import ballerina/test;
 import ballerina/os;
+import ballerina/test;
 
 configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
-configurable string CliId = isLiveServer ? os:getEnv("Client_ID") : "test";
-configurable string CliScre = isLiveServer ? os:getEnv("Client_Secret") : "test";
+configurable string clientId = isLiveServer ? os:getEnv("Client_ID") : "test";
+configurable string clientSecret = isLiveServer ? os:getEnv("Client_Secret") : "test";
 configurable string serviceUrl = isLiveServer ? os:getEnv("DISCORD_URL") : "http://localhost:9090/";
-ConnectionConfig config = {auth:{
-    token: "BearerToken"
-}};
+
+ConnectionConfig config = {
+    auth: {
+        token: "BearerToken"
+    }
+};
+
 final Client discord = check new Client(config, serviceUrl);
 
-@test:Config{}
+@test:Config {}
 function testGetUser() returns error? {
-    string user_id = "User Id";	  
+    string user_id = "User Id";
     UserResponse getUserInfo = check discord->/users/[user_id]();
-    test:assertTrue((getUserInfo.length()> 0));
+    test:assertTrue((getUserInfo.length() > 0));
 }
 
-@test:Config{}
+@test:Config {}
 function testGetVoiceChannel() returns error? {
-    string channel_id = "Voice Channel ID";	
+    string channel_id = "Voice Channel ID";
     anydata getVoiceChannelInfo = check discord->/channels/[channel_id]/invites();
-    test:assertTrue((getVoiceChannelInfo.count()> 0));
+    test:assertTrue((getVoiceChannelInfo.count() > 0));
 }
 
-@test:Config{}
+@test:Config {}
 function testGetWebhook() returns error? {
-    string channel_id = "Channel ID";	
+    string channel_id = "Channel ID";
     anydata getWebhookInfo = check discord->/channels/[channel_id]/webhooks();
-    test:assertTrue((getWebhookInfo.count()> 0));	
+    test:assertTrue((getWebhookInfo.count() > 0));
 }
