@@ -1800,7 +1800,7 @@ public type UserResponse record {
     string? avatar?;
     string discriminator;
     int:Signed32 public_flags;
-    @constraint:Int {minValue: 1, maxValue: -1}
+    @constraint:Int {minValue: -1, maxValue: 1}
     int flags;
     boolean? bot?;
     boolean? system?;
