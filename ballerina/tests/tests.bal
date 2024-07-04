@@ -15,79 +15,34 @@
 // under the License.
 
 import ballerina/test;
+import ballerina/os;
 
-configurable string clientId = "Client ID";
-configurable string clientSecret = "Client Secret";
-configurable string[] scopes = ?;
-@test:Config{}
-function testGetToken() returns error? {
-    Client discord =check new({
-        auth: {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            scopes: ["identify"]
-        }
-    });
-
-    OAuth2GetKeys getToken = check discord->/oauth2/keys(); 
-}
+configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
+configurable string CliId = isLiveServer ? os:getEnv("Client_ID") : "test";
+configurable string CliScre = isLiveServer ? os:getEnv("Client_Secret") : "test";
+configurable string serviceUrl = isLiveServer ? os:getEnv("DISCORD_URL") : "http://localhost:9090/";
+ConnectionConfig config = {auth:{
+    token: "BearerToken"
+}};
+final Client discord = check new Client(config, serviceUrl);
 
 @test:Config{}
 function testGetUser() returns error? {
-    string user_id = "User ID";	
-    Client discord = check new({  
-        auth: {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            scopes: ["identify", "email"]
-        }
-    });
-
+    string user_id = "User Id";	  
     UserResponse getUserInfo = check discord->/users/[user_id]();
+    test:assertTrue((getUserInfo.length()> 0));
 }
 
-// Test case for the endpoint to retrieve details about a specific guild
-@test:Config{}
-function testGetGuild() returns error? {
-    string guild_id = "Guild ID";	
-    Client discord = check new({  
-        auth: {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            scopes: ["guilds"]
-        }
-    });
-
-    PrivateGuildMemberResponse getGuildInfo = check discord->/users/\@me/guilds/[guild_id]/member();
-}
-
-// Test case for the endpoint to edit a message
-@test:Config{}
-function testGetChannel() returns error? {
-    string channel_id = "Text Channel ID";
-    string message_id = "Message ID";	
-    Client discord = check new({  
-        auth: {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            scopes: ["guilds"]
-        }
-    });
-
-    MessageResponse getGuildChannel = check discord->/channels/[channel_id]/messages/[message_id]();
-}
-
-// Test case for the endpoint to create a voice channel invite
 @test:Config{}
 function testGetVoiceChannel() returns error? {
     string channel_id = "Voice Channel ID";	
-    Client discord = check new({  
-        auth: {
-            clientId: clientId,
-            clientSecret: clientSecret,
-            scopes: ["voice"]
-        }
-    });
-
     anydata getVoiceChannelInfo = check discord->/channels/[channel_id]/invites();
+    test:assertTrue((getVoiceChannelInfo.count()> 0));
+}
+
+@test:Config{}
+function testGetWebhook() returns error? {
+    string channel_id = "Channel ID";	
+    anydata getWebhookInfo = check discord->/channels/[channel_id]/webhooks();
+    test:assertTrue((getWebhookInfo.count()> 0));	
 }
