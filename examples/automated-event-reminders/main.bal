@@ -49,7 +49,6 @@ discord:ConnectionConfig discordConfig = {
 discord:Client discord = check new (discordConfig);
 
 public function main() returns error? {
-
     // Registers the scheduled event.
     discord:guild_id_scheduledevents_body payload = {
         name: "Community Meeting",
@@ -64,7 +63,7 @@ public function main() returns error? {
     };
 
     Event|error eventResponse = discord->/guilds/[guildId]/scheduled\-events.post(payload);
-    if (eventResponse is error) {
+    if eventResponse is error {
         log:printError("Error creating the scheduled event: ", eventResponse);
         return;
     }
@@ -75,10 +74,9 @@ public function main() returns error? {
 
 # A Ballerina scheduled job that sends a given event reminder message to a list of Discord channels.
 class EventReminderJob {
-
     *task:Job;
 
-    string eventName;
+    private final string eventName;
 
     public function init(string eventName) {
         self.eventName = eventName;
@@ -91,7 +89,7 @@ class EventReminderJob {
             return;
         }
 
-        Channel[]|error channelsResult = <Channel[]>channelsResponse;
+        Channel[]|error channelsResult = channelsResponse.ensureType();
         if channelsResult is error {
             log:printError("Error getting the channels: ", channelsResult);
             return;
