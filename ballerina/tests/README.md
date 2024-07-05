@@ -47,7 +47,6 @@ Create a `Config.toml` file in the tests directory and add your authentication c
 isTestOnLiveServer = true
 token = "<your-discord-bearer-token>"
 userId = "<your-discord-user-id>"
-serviceUrl = "<your-discord-subdomain-service-url>"
 ```
 
 #### Using Environment Variables
@@ -58,7 +57,6 @@ Alternatively, you can set your authentication credentials as environment variab
 export IS_LIVE_SERVER=true
 export TOKEN="<your-discord-bearer-token>"
 export DISCORD_USER_ID="<your-discord-user-id>"
-export DISCORD_URL="<your-discord-subdomain-service-url>"
 ```
 
 Then, run the following command to run the tests:

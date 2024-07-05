@@ -19,7 +19,7 @@ import ballerina/test;
 
 configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
 configurable string token = isLiveServer ? os:getEnv("TOKEN") : "z4HhmDy5ghijpIRL1YFzhCeVFabcdef";
-configurable string serviceUrl = isLiveServer ? os:getEnv("DISCORD_URL") : "http://localhost:9090";
+configurable string serviceUrl = isLiveServer ? "https://discord.com/api/v10" : "http://localhost:9090";
 configurable string userId = isLiveServer ? os:getEnv("DISCORD_USER_ID") :"688069266636800112";
 
 string voiceChannelId = "1160951610135019725";
