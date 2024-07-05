@@ -19,6 +19,7 @@ import ballerina/mime;
 import ballerina/task;
 import ballerinax/discord;
 import ballerina/http;
+import ballerina/time;
 
 const string CHANNEL_ID = "YOUR_CHANNEL_ID";
 const string GUILD_ID = "YOUR_GUILD_ID";
@@ -50,7 +51,9 @@ public function main() returns error? {
         return;
     }
 
-    task:JobId _ = check task:scheduleJobRecurByFrequency(new RoleAssignmentJob(createMessageResponse.id), 60 * 60 * 24);
+    // schedule a task to be executed after 24 hours
+    time:Utc scheduledTime = time:utcAddSeconds(time:utcNow(), 86400);
+    task:JobId _ = check task:scheduleOneTimeJob(new RoleAssignmentJob(createMessageResponse.id), time:utcToCivil(scheduledTime));
 }
 
 class RoleAssignmentJob {
@@ -62,7 +65,6 @@ class RoleAssignmentJob {
         "🔵": "ROLE_ID_2",
         "🟢": "ROLE_ID_3"
     };
-    private final string[] roleAssignedUsers = [];
 
     public function init(string messageId) {
         self.messageId = messageId;
@@ -99,12 +101,7 @@ class RoleAssignmentJob {
                 return;
             }
 
-            foreach discord:UserResponse user in reactedUsers {
-                string userRoleKey = string `${user.id}-${role}`;
-                if self.roleAssignedUsers.indexOf(userRoleKey) !is () {
-                    continue;
-                }
-            
+            foreach discord:UserResponse user in reactedUsers {            
                 http:Response|error roleAssignedResponse = discord->/guilds/[GUILD_ID]/members/[user.id]/roles/[role].put();
                 if roleAssignedResponse is error {
                     log:printError("Error occurred while assigning roles to the user: ", roleAssignedResponse);
@@ -114,7 +111,6 @@ class RoleAssignmentJob {
                 int responseStatus = roleAssignedResponse.statusCode;
                 if responseStatus == http:STATUS_NO_CONTENT {
                     log:printInfo("User role update is successful");
-                    self.roleAssignedUsers.push(userRoleKey);
                 }
             }
         }
