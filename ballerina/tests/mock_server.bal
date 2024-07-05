@@ -17,14 +17,12 @@
 import ballerina/http;
 import ballerina/log;
 
-listener http:Listener httpServer = new(9090);
+listener http:Listener httpServer = new (9090);
 
+http:Service mockService = service object {
 
-http:Service mockService = service object  {
-    
-resource function get users/[string user_id]() returns UserResponse|http:Response {
-    UserResponse response = {
-        id: "688069266636800112",
+    resource function get users/[string userId]() returns UserResponse|http:Response => {
+        id: userId,
         username: "exampleUser",
         discriminator: "1234",
         public_flags: 0,
@@ -36,25 +34,18 @@ resource function get users/[string user_id]() returns UserResponse|http:Respons
         accent_color: 16777215,
         global_name: "globalExampleUser"
     };
-    return response;
-}
-resource function get channels/[string channel_id]/invites() returns anydata {
-    anydata response = [1, "string", true];
-    return response;
-    }
 
-resource function get channels/[string channel_id]/webhooks() returns anydata {
-    anydata response = [1, "string", true];
-    return response;
-    }
+    resource function get channels/[string channelId]/invites() returns anydata => ["Invite1", "Invite2"];
 
+    resource function get channels/[string channelId]/webhooks() returns anydata => ["Webhook1", "Webhook2"];
 };
 
- function init() returns error? {
+function init() returns error? {
     if isLiveServer {
         log:printInfo("Skiping mock server initialization as the tests are running on live server");
         return;
     }
+
     log:printInfo("Initiating mock server");
     check httpServer.attach(mockService, "/");
     check httpServer.'start();
