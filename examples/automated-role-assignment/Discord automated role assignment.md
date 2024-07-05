@@ -1,27 +1,27 @@
 # Discord automated role assignment
 
-This example demonstrates how using the Discord API how to automatically assign roles based on the reactions to a message. The Ballerina program sends a message to the users in a channel stating to react to that message with the emoji representing the role they require. The emoji reactions are retrieved and according to each user's emoji, each role is assigned to each user.
+This example demonstrates how to use the Discord API to automatically assign roles based on reactions to a message. The Ballerina program sends a message to users in a channel, instructing them to react with an emoji representing the role they desire. The program then retrieves the emoji reactions and assigns roles to each user according to their chosen emoji.
 
 ## Prerequisites
 
-### 1. Setup Discord API
+### 1. Setup Discord account
 
-Refer to the [Setup Guide](https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/ballerina/Module.md) for necessary credentials (client ID, secret and tokens).
+Refer to the [Setup guide](https://central.ballerina.io/ballerinax/discord/latest#setup-guide) to set up your Discord account, if you do not have one.
 
 ### 2. Configuration
 
 Create a `Config.toml` file in the example root directory and update your Discord account related configurations as follows:
 
 ```toml
-clientId="<Client ID>"
-clientSecret="<Client Secret>"
-scopes="<Scopes>"
+clientId = "<YOUR_CLIENT_ID>"
+clientSecret = "<YOUR_CLIENT_SECRET>"
+scopes = ["<YOUR>", "<REQUIRED>", "<SCOPES>"]
 ```
 
-## Run the Ballerina Example
+## Run the example
 
 Execute the following command to run the example:
 
-```bash
+```ballerina
 bal run
 ```
