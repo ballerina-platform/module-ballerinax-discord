@@ -4,24 +4,24 @@ This example demonstrates how to use the Discord API to automatically assign rol
 
 ## Prerequisites
 
-### 1. Setup Discord API
+### 1. Setup Discord account
 
-Refer to the [Setup Guide](https://github.com/HussainLatiff/module-ballerinax-discord/blob/main/ballerina/Module.md) for necessary credentials (client ID, secret and tokens).
+Refer to the [Setup guide](https://central.ballerina.io/ballerinax/discord/latest#setup-guide) to set up your Discord account, if you do not have one.
 
 ### 2. Configuration
 
-Create the `Config.toml` file and onfigure Discord API credentials in `Config.toml` in the example directory:
+Create a `Config.toml` file in the example root directory and update your Discord account related configurations as follows:
 
 ```toml
-clientId="<Client ID>"
-clientSecret="<Client Secret>"
-scopes="<Scopes>"
+clientId = "<YOUR_CLIENT_ID>"
+clientSecret = "<YOUR_CLIENT_SECRET>"
+scopes = ["<YOUR>", "<REQUIRED>", "<SCOPES>"]
 ```
 
-## Run the Ballerina Example
+## Run the example
 
 Execute the following command to run the example:
 
-```bash
+```ballerina
 bal run
 ```
