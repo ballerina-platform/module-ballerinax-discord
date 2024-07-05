@@ -18,18 +18,16 @@ import ballerina/os;
 import ballerina/test;
 
 configurable boolean isLiveServer = os:getEnv("IS_LIVE_SERVER") == "true";
-configurable string token = isLiveServer ? os:getEnv("TOKEN") : "token";
-configurable string clientId = isLiveServer ? os:getEnv("CLIENT_ID") : "test";
-configurable string clientSecret = isLiveServer ? os:getEnv("CLIENT_SECRET") : "test";
+configurable string token = isLiveServer ? os:getEnv("TOKEN") : "z4HhmDy5ghijpIRL1YFzhCeVFabcdef";
 configurable string serviceUrl = isLiveServer ? os:getEnv("DISCORD_URL") : "http://localhost:9090";
 
-string userId = "User Id";
-string voiceChannelId = "Voice Channel ID";
-string channelId = "Channel ID";
+configurable string userId = "688069266636800112";
+string voiceChannelId = "1160951610135019725";
+string channelId = "893493941398294611";
 
 ConnectionConfig config = {
     auth: {
-        token: "BearerToken"
+        token
     }
 };
 
