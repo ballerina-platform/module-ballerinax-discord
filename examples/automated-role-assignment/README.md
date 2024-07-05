@@ -1,6 +1,6 @@
 # Automated Role Assignment Based on Reactions
 
-This example demonstrates how using the Discord API how to automatically assign roles based on the reactions to a message. The Ballerina programme sends a message to the users in a channel stating to react to that message with the emoji representing the role they require. The emoji reactions are retrieved and according to each user's emoji, each role is assigned to each user.
+This example demonstrates how to use the Discord API to automatically assign roles based on reactions to a message. The Ballerina program sends a message to users in a channel, instructing them to react with an emoji representing the role they desire. The program then retrieves the emoji reactions and assigns roles to each user according to their chosen emoji.
 
 ## Prerequisites
 
