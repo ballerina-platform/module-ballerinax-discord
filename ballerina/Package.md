@@ -86,3 +86,9 @@ Now, utilize the available connector operations.
 ```bash
 bal run
 ```
+
+## Examples
+
+The `Discord` connector provides practical examples illustrating usage in various scenarios. Explore these [examples](https://github.com/ballerina-platform/module-ballerinax-discord/tree/main/examples/), covering the following use cases:
+
+1. [Automated Event Reminders](https://github.com/ballerina-platform/module-ballerinax-discord/tree/main/examples/automated-event-reminders)
