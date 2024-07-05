@@ -46,7 +46,7 @@ public function main() returns error? {
 
     discord:MessageResponse|error createMessageResponse = discord->/channels/[CHANNEL_ID]/messages.post(headers, payload);
     if createMessageResponse is error {
-        log:printError("Error creating a message: ", createMessageResponse);
+        log:printError("Error sending the message: ", createMessageResponse);
         return;
     }
 
