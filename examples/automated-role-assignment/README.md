@@ -10,7 +10,7 @@ Refer to the [Setup Guide](https://github.com/HussainLatiff/module-ballerinax-di
 
 ### 2. Configuration
 
-Configure Discord API credentials in `Config.toml` in the example directory:
+Create the `Config.toml` file and onfigure Discord API credentials in `Config.toml` in the example directory:
 
 ```toml
 clientId="<Client ID>"
