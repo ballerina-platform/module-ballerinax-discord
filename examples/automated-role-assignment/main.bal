@@ -14,85 +14,109 @@
 // specific language governing permissions and limitations
 // under the License.
 
+import ballerina/log;
+import ballerina/mime;
+import ballerina/task;
+import ballerinax/discord;
 import ballerina/http;
-import ballerina/io;
+
+const string CHANNEL_ID = "YOUR_CHANNEL_ID";
+const string GUILD_ID = "YOUR_GUILD_ID";
+
+configurable string clientId = ?;
+configurable string clientSecret = ?;
+configurable string[] scopes = ?;
+
+discord:ConnectionConfig discordConfig = {
+    auth: {
+        clientId,
+        clientSecret,
+        scopes
+    }
+};
+final discord:Client discord = check new (discordConfig);
 
 public function main() returns error? {
-    check sendRoleAssignmentMessage();
-    check addReactionsToMessage();
-    check startRoleAssignmentListener();
-}
-
-function sendRoleAssignmentMessage() returns error? {
-    http:Client discord = check new ("https://discord.com/api/v9");
-
-    json message = {
-        "content": "React to this message with the following emojis to get your roles:\n\n🔴 - Role1\n🔵 - Role2\n🟢 - Role3"
+    discord:Create_messageHeaders headers = {
+        Content\-Type: mime:APPLICATION_FORM_URLENCODED
+    };
+    discord:channel_id_messages_body payload = {
+        content: "React to this message with the following emojis to get your roles:\n\n🔴 - Role1\n🔵 - Role2\n🟢 - Role3"
     };
 
-    http:Request request = new;
-    request.setPayload(message);
-    request.addHeader("Authorization", "Bot BOT_TOKEN");
-    request.addHeader("Content-Type", "application/json");
-
-    http:Response response = check discord->post("/channels/762316177417961504/messages", request);
-    io:println("Role Assignment Message Sent: ", response.getJsonPayload());
-}
-
-function addReactionsToMessage() returns error? {
-    http:Client discord = check new ("https://discord.com/api/v9");
-
-    string messageId = "YOUR_MESSAGE_ID"; 
-
-    string[] emojis = ["🔴", "🔵", "🟢"];
-    foreach var emoji in emojis {
-        string url = string `"/channels/762316177417961504/messages/${messageId}/reactions/${emoji}/@me"`;
-        http:Request request = new;
-        request.addHeader("Authorization", "Bot BOT_TOKEN");
-
-        http:Response|anydata put = check discord->put(url,request);
+    discord:MessageResponse|error createMessageResponse = discord->/channels/[CHANNEL_ID]/messages.post(headers, payload);
+    if createMessageResponse is error {
+        log:printError("Error creating a message: ", createMessageResponse);
+        return;
     }
-    io:println("Reactions Added to Message");
+
+    task:JobId _ = check task:scheduleJobRecurByFrequency(new RoleAssignmentJob(createMessageResponse.id), 60 * 60 * 24);
 }
 
-function startRoleAssignmentListener() returns error? {
-    listener http:Listener discordListener = new(9090);
+class RoleAssignmentJob {
+    *task:Job;
 
-    service / on discordListener {
-        resource function post reactions(http:Caller caller, http:Request req) returns error? {
-            json payload = check req.getJsonPayload();
+    private final string messageId;
+    private final map<string> roles = {
+        "🔴": "ROLE_ID_1",
+        "🔵": "ROLE_ID_2",
+        "🟢": "ROLE_ID_3"
+    };
+    private final string[] roleAssignedUsers = [];
 
-            string eventType = check payload["t"].toString();
-            if eventType == "MESSAGE_REACTION_ADD" {
-                json d = check payload["d"];
-                string userId = check d["688069266636800112"].toString();
-                string emoji = check d["emoji"]["name"].toString();
+    public function init(string messageId) {
+        self.messageId = messageId;
+    }
 
-                // Map emojis to role IDs
-                map<string> roleMap = {
-                    "🔴": "ROLE_ID_1",
-                    "🔵": "ROLE_ID_2",
-                    "🟢": "ROLE_ID_3"
-                };
+    public function execute() {
+        discord:MessageResponse|error messageResponse = discord->/channels/[CHANNEL_ID]/messages/[self.messageId];
+        if messageResponse is error {
+            log:printError("Error occurred while retrieving the message: ", messageResponse);
+            return;
+        }
 
-                if (roleMap.hasKey(emoji)) {
-                    string roleId = roleMap[emoji] ?: "";
-                    check assignRoleToUser(userId, roleId);
-                }
+        discord:MessageReactionResponse[]? reactions = messageResponse?.reactions;
+        if reactions is () {
+            log:printWarn("No reactions found for the message");
+            return;
+        }
+
+        foreach discord:MessageReactionResponse reaction in reactions {
+            string? emoji = reaction.emoji?.name;
+            if emoji is () {
+                continue;
+            }
+            
+            string? role = self.roles[emoji];
+            if role is () {
+                log:printWarn("Could not find the role for the emoji");
+                continue;
             }
 
-            check caller->respond("OK");
+            discord:UserResponse[]|error reactedUsers = discord->/channels/[CHANNEL_ID]/messages/[self.messageId]/reactions/[emoji];
+            if reactedUsers is error {
+                log:printError("Error occurred while retrieving the reacted users: ", reactedUsers);
+                return;
+            }
+
+            foreach discord:UserResponse user in reactedUsers {
+                string userRoleKey = string `${user.id}-${role}`;
+                if self.roleAssignedUsers.indexOf(userRoleKey) !is () {
+                    continue;
+                }
+            
+                http:Response|error roleAssignedResponse = discord->/guilds/[GUILD_ID]/members/[user.id]/roles/[role].put();
+                if roleAssignedResponse is error {
+                    log:printError("Error occurred while assigning roles to the user: ", roleAssignedResponse);
+                    return;
+                }
+
+                int responseStatus = roleAssignedResponse.statusCode;
+                if responseStatus == http:STATUS_NO_CONTENT {
+                    log:printInfo("User role update is successful");
+                    self.roleAssignedUsers.push(userRoleKey);
+                }
+            }
         }
     }
-}
-
-function assignRoleToUser(string userId, string roleId) returns error? {
-    http:Client discord = check new ("https://discord.com/api/v9");
-
-    http:Request request = new;
-    request.addHeader("Authorization", "Bot BOT_TOKEN");
-
-    string url = string `"/guilds/YOUR_GUILD_ID/members/${userId}/roles/${roleId}"`;
-    http:Response|anydata put = check discord->put(url, request);
-    io:println("Role Assigned to User");
 }
