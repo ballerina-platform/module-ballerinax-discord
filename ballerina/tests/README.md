@@ -41,7 +41,7 @@ Then, run the following command to run the tests:
 
 #### Using a Config.toml File
 
-Create a `Config.toml` file in the tests directory and add your authentication credentials a
+Create a `Config.toml` file in the tests directory and add your authentication credentials, to create a [Discord bearer token use this guide](https://github.com/discord-net/Discord.Net/blob/dev/docs/guides/bearer_token/bearer_token_guide.md). 
 
 ```toml
 isTestOnLiveServer = true
