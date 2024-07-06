@@ -20,6 +20,7 @@ Follow these steps to create a Discord developer account.
 ### Step 1: Login to Discord developer page
 <br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true" alt="Discord Dev Page" style="width: 70%;">
+
 <br/>
 
 Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your Discord account. 
@@ -28,6 +29,7 @@ If you do not have a Discord account already, [create a new discord account](htt
 
 <br/>
 <img src= "https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true" alt="Create Discord Account" style="width: 70%;">
+
 <br/>
 
 Complete the account creation process by including the relevant information in the given fields.
@@ -54,6 +56,7 @@ Once in the Discord developer portal is open, click on the `New Application` but
 ### Step 4: Obtain the Client ID and Client Secret
 <br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/obtain-client-id.png?raw=true" alt="Obtain Client ID and Secret" style="width: 70%;">
+
 <br/>
 
 Under the `OAuth2` section found on the left-sided list, locate the Client's Information as shown on the screen. To implement the functionalities provided by Discord's API, you will need the Client ID and Client Secret.
