@@ -79,7 +79,7 @@ Now, utilize the available connector operations.
 
 ```ballerina
 public function main() returns error? {
-    ConnectedAccountResponse[] connectedAccounts = check cl->/users/\@me/connections();
+    ConnectedAccountResponse[] connectedAccounts = check discord->/users/\@me/connections();
 }
 ````
 
