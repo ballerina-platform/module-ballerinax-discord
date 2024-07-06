@@ -21,8 +21,8 @@ import ballerinax/discord;
 import ballerina/http;
 import ballerina/time;
 
-const string CHANNEL_ID = "YOUR_CHANNEL_ID";
-const string GUILD_ID = "YOUR_GUILD_ID";
+const CHANNEL_ID = "YOUR_CHANNEL_ID";
+const GUILD_ID = "YOUR_GUILD_ID";
 
 configurable string clientId = ?;
 configurable string clientSecret = ?;
