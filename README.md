@@ -20,20 +20,20 @@ Follow these steps to create a Discord developer account.
 ### Step 1: Login to Discord developer page
 <br/><br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true" alt="Discord Dev Page" style="width: 70%;">
-<br/><br/><br/>
+<br/><br/>
 
 Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your Discord account. 
 
 If you do not have a Discord account already, [create a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord developer page.
 
 <img src= "https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true" alt="Create Discord Account" style="width: 70%;">
-
+<br/><br/>
 Complete the account creation process by including the relavant information in the given fields.
 
 ### Step 2: Make a new Discord application
-
+<br/><br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true" alt="Make New Application" style="width: 70%;">
-
+<br/><br/>
 Once in the Discord developer portal is open, click on the `New Application` button as displayed above to start the process.
 
 ### Step 3: Name the Discord Application 
