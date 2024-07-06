@@ -20,6 +20,7 @@ Follow these steps to create a Discord developer account.
 ### Step 1: Login to Discord developer page
 
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/discord-dev-page.png?raw=true" alt="Discord Dev Page" style="width: 70%;">
+<br/><br/>
 
 Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelopers) by logging into your Discord account. 
 
