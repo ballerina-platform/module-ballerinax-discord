@@ -26,27 +26,35 @@ Visit [Discord developer portal](https://discord.com/login?redirect_to=%2Fdevelo
 
 If you do not have a Discord account already, [create a new discord account](https://discord.com/login) by clicking on the `Register` hyperlink below the `Log In` button when opening the Discord developer page.
 
+<br/><br/>
 <img src= "https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/create-acc.png?raw=true" alt="Create Discord Account" style="width: 70%;">
 <br/><br/>
-Complete the account creation process by including the relavant information in the given fields.
+
+Complete the account creation process by including the relevant information in the given fields.
 
 ### Step 2: Make a new Discord application
 <br/><br/>
+
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/make-new-app.png?raw=true" alt="Make New Application" style="width: 70%;">
+
 <br/><br/>
+
 Once in the Discord developer portal is open, click on the `New Application` button as displayed above to start the process.
 
 ### Step 3: Name the Discord Application 
-
+<br/><br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/create-app.png?raw=true" alt="Name and Create the App" style="width: 70%;">
+
+<br/><br/>
 
 1. Proceed by giving the Discord Application a name and click on the terms of service.
 
 2. Finally complete the naming process by clicking on the `next` button.
 
 ### Step 4: Obtain the Client ID and Client Secret
-
+<br/><br/>
 <img src="https://github.com/ballerina-platform/module-ballerinax-discord/blob/main/docs/setup/resources/obtain-client-id.png?raw=true" alt="Obtain Client ID and Secret" style="width: 70%;">
+<br/><br/>
 
 Under the `OAuth2` section found on the left-sided list, locate the Client's Information as shown on the screen. To implement the functionalities provided by Discord's API, you will need the Client ID and Client Secret.
 
