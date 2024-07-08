@@ -22,7 +22,7 @@ configurable string clientId = ?;
 configurable string clientSecret = ?;
 configurable string[] scopes = ?;
 
-const guildId = "YOUR_GUILD_ID";
+const GUILD_ID = "YOUR_GUILD_ID";
 
 # Represents a Discord Channel.
 public type Channel record {
