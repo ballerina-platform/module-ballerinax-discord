@@ -62,7 +62,7 @@ public function main() returns error? {
         }
     };
 
-    Event|error eventResponse = discord->/guilds/[guildId]/scheduled\-events.post(payload);
+    Event|error eventResponse = discord->/guilds/[GUILD_ID]/scheduled\-events.post(payload);
     if eventResponse is error {
         log:printError("Error creating the scheduled event: ", eventResponse);
         return;
@@ -83,7 +83,7 @@ class EventReminderJob {
     }
 
     public function execute() {
-        anydata[]|error channelsResponse = discord->/guilds/[guildId]/channels();
+        anydata[]|error channelsResponse = discord->/guilds/[GUILD_ID]/channels();
         if channelsResponse is error {
             log:printError("Error getting the channels: ", channelsResponse);
             return;
