@@ -18,29 +18,31 @@
 // under the License.
 
 import ballerina/constraint;
+import ballerina/data.jsondata;
 import ballerina/http;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type KeywordUpsertRequestPartialExemptrolesItemsString string;
 
-# members will receive notifications for all messages by default
-public type ALL_MESSAGES 0;
+public type VOICECHANNELSTATUSCREATE 192;
 
-# Represents the Queries record for the operation: list_message_reactions_by_emoji
-public type List_message_reactions_by_emojiQueries record {
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
+# the metadata value (ISO8601 string) is greater than or equal to the guild's configured value (integer; days before current date)
+public type DATETIMEGREATERTHANEQUAL 6;
+
+# Represents the Headers record for the operation: update_webhook_message
+public type UpdateWebhookMessageHeaders record {
+    #
+    @http:Header {name: "Content-Type"}
+    "application/x-www-form-urlencoded" contentType;
 };
 
+# The zh-CN locale
+public type ZhCN "zh-CN";
+
 public type CommandPermissionResponse record {
+    boolean permission;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     ApplicationCommandPermissionType 'type;
-    boolean permission;
 };
 
 public type PrivateChannelRequestPartial record {
@@ -49,255 +51,334 @@ public type PrivateChannelRequestPartial record {
 };
 
 public type GuildCreateRequest record {
+    @jsondata:Name {value: "preferred_locale"}
+    anydata preferredLocale?;
+    @jsondata:Name {value: "default_message_notifications"}
+    anydata defaultMessageNotifications?;
+    #
+    CreateGuildRequestRoleItem[]? roles?;
+    @jsondata:Name {value: "system_channel_flags"}
+    int:Signed32? systemChannelFlags?;
+    record {byte[] fileContent; string fileName;}? icon?;
     string? description?;
+    @jsondata:Name {value: "system_channel_id"}
+    anydata systemChannelId?;
+    @jsondata:Name {value: "afk_timeout"}
+    anydata afkTimeout?;
+    @jsondata:Name {value: "verification_level"}
+    anydata verificationLevel?;
+    @jsondata:Name {value: "explicit_content_filter"}
+    anydata explicitContentFilter?;
+    #
+    CreateGuildRequestChannelItem[]? channels?;
+    @jsondata:Name {value: "afk_channel_id"}
+    anydata afkChannelId?;
     @constraint:String {maxLength: 100, minLength: 2}
     string name;
     string? region?;
-    record {byte[] fileContent; string fileName;}? icon?;
-    anydata verification_level?;
-    anydata default_message_notifications?;
-    anydata explicit_content_filter?;
-    anydata preferred_locale?;
-    anydata afk_timeout?;
-    # 
-    CreateGuildRequestRoleItem[]? roles?;
-    # 
-    CreateGuildRequestChannelItem[]? channels?;
-    anydata afk_channel_id?;
-    anydata system_channel_id?;
-    int:Signed32? system_channel_flags?;
 };
 
-# guild has enabled the welcome screen
-public type WELCOME_SCREEN_ENABLED "WELCOME_SCREEN_ENABLED";
+public type INVITEUPDATE 41;
 
 public type GithubCheckSuite record {
     string? conclusion?;
-    string? head_branch?;
-    @constraint:String {maxLength: 152133}
-    string head_sha;
-    # 
-    GithubCheckPullRequest[]? pull_requests?;
     GithubCheckApp app;
+    #
+    @jsondata:Name {value: "pull_requests"}
+    GithubCheckPullRequest[]? pullRequests?;
+    @jsondata:Name {value: "head_branch"}
+    string? headBranch?;
+    @jsondata:Name {value: "head_sha"}
+    string headSha;
 };
 
-public type CHANNEL_MESSAGE_WITH_SOURCE 4;
+public type GuildAuditLogResponseIntegrations PartialDiscordIntegrationResponse|PartialExternalConnectionIntegrationResponse|PartialGuildSubscriptionIntegrationResponse;
 
-# media content sent by all members will be scanned
-public type ALL_MEMBERS 2;
+public type PurchaseType GUILDPRODUCT;
 
-public type PurchaseType GUILD_PRODUCT;
+public type ROLEDELETE 32;
 
 public type UserSelect record {
-    5 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    #
+    @jsondata:Name {value: "default_values"}
+    UserSelectDefaultValue[]? defaultValues?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
-    # 
-    UserSelectDefaultValue[]? default_values?;
+    string? placeholder?;
+    5 'type;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type WelcomeMessageResponseAuthoridsItemsString string;
 
-@constraint:String {maxLength: 152133}
 public type CreatePrivateChannelRequestAccesstokensItemsString string;
 
-public type HOME_SETTINGS_CREATE 190;
+public type OptionsOneOf101 anydata?;
 
-public type ONBOARDING_PROMPT_DELETE 165;
+public type THREADUPDATE 111;
+
+# Check if content contains more unique mentions than allowed
+public type MENTIONSPAM 5;
+
+public type EMOJICREATE 60;
+
+public type HOMESETTINGSUPDATE 191;
 
 public type ApplicationCommandStringOptionResponse record {
-    3 'type;
-    string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     boolean? autocomplete?;
-    # 
+    @jsondata:Name {value: "min_length"}
+    int:Signed32? minLength?;
+    string name;
+    string description;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    3 'type;
+    #
     ApplicationCommandOptionStringChoiceResponse[]? choices?;
-    int:Signed32? min_length?;
-    int:Signed32? max_length?;
+    boolean? required?;
+    @jsondata:Name {value: "max_length"}
+    int:Signed32? maxLength?;
 };
 
 public type ConnectedAccountGuildResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
     string name;
     string? icon?;
-};
-
-public type interaction_token_callback_body ApplicationCommandAutocompleteCallbackRequest|CreateMessageInteractionCallbackRequest|ModalInteractionCallbackRequest|PongInteractionCallbackRequest|UpdateMessageInteractionCallbackRequest;
-
-public type STAGE_SPEAKER 29;
-
-public type ExternalScheduledEventResponse record {
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    string? description?;
-    anydata channel_id?;
-    anydata creator_id?;
-    anydata creator?;
+};
+
+# The sv-SE locale
+public type SvSE "sv-SE";
+
+public type APPLICATIONCOMMANDAUTOCOMPLETERESULT 8;
+
+public type ExternalScheduledEventResponse record {
     string? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
+    anydata creator?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
+    @jsondata:Name {value: "entity_metadata"}
+    EntityMetadataExternalResponse entityMetadata;
+    string? description?;
+    @jsondata:Name {value: "entity_id"}
+    anydata entityId?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
+    @jsondata:Name {value: "entity_type"}
+    3 entityType;
+    @jsondata:Name {value: "user_rsvp"}
+    anydata userRsvp?;
+    @jsondata:Name {value: "user_count"}
+    int:Signed32? userCount?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    @jsondata:Name {value: "creator_id"}
+    anydata creatorId?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
     GuildScheduledEventStatuses status;
-    3 entity_type;
-    anydata entity_id?;
-    int:Signed32? user_count?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    anydata user_rsvp?;
-    EntityMetadataExternalResponse entity_metadata;
 };
 
-# Represents the Queries record for the operation: list_messages
-public type List_messagesQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string around?;
-};
+public type GuildsMembersRequestRoles RolesOneOf13|RolesRolesOneOf132?;
 
-# for local rpc server access, this allows you to receive notifications pushed out to the user - requires Discord approval
-public type RPC_NOTIFICATIONS_READ "rpc.notifications.read";
+public type GUILDHOMEREMOVEITEM 172;
 
 public type DOMAIN "domain";
 
 public type INSTAGRAM "instagram";
 
-public type CHANNEL_DELETE 12;
-
 public type InviteGuildResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    #
+    GuildFeatures[] features;
+    @jsondata:Name {value: "verification_level"}
+    anydata verificationLevel?;
+    boolean? nsfw?;
+    @jsondata:Name {value: "vanity_url_code"}
+    string? vanityUrlCode?;
     string name;
-    string? splash?;
+    string? icon?;
     string? banner?;
     string? description?;
-    string? icon?;
-    # 
-    GuildFeatures[] features;
-    anydata verification_level?;
-    string? vanity_url_code?;
-    anydata nsfw_level?;
-    boolean? nsfw?;
-    int:Signed32? premium_subscription_count?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "premium_subscription_count"}
+    int:Signed32? premiumSubscriptionCount?;
+    @jsondata:Name {value: "nsfw_level"}
+    anydata nsfwLevel?;
+    string? splash?;
 };
 
-public type es\-419 "es-419";
+# guild has paused invites, preventing new users from joining
+public type INVITESDISABLED "INVITES_DISABLED";
 
 public type MLSpamUpsertRequest record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    3 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    AutomodEventType event_type;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MLSpamUpsertRequestExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MLSpamUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
+    #
+    MLSpamUpsertRequestActions[]? actions?;
     boolean? enabled?;
-    # 
-    MLSpamUpsertRequestExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MLSpamUpsertRequestExemptchannelsItemsString[]? exempt_channels?;
-    3 trigger_type;
-    anydata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
 };
 
-public type GuildScheduledEventEntityTypes NONE|STAGE_INSTANCE|VOICE1|EXTERNAL;
+public type InlineArrayItemsSkuIdsSkuIdsOneOf12 SkuIdsSkuIdsOneOf12OneOf1;
 
-public type MEMBER_PRUNE 21;
+public type GuildScheduledEventEntityTypes NONE|STAGEINSTANCE|VOICE1|EXTERNAL;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# Represents the Queries record for the operation: update_webhook_message
+public type UpdateWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
+
 public type UpdateThreadRequestPartialAppliedtagsItemsString string;
 
-public type StickerFormatTypes PNG|APNG|LOTTIE|GIF;
+# The ar locale
+public type Ar "ar";
 
 # A UI-based command that shows up when you right click or tap on a message
 public type MESSAGE 3;
 
-public type MEMBER_DISCONNECT 27;
-
-public type STAGE_START 27;
+public type StickerFormatTypes PNG|APNG|LOTTIE|GIF;
 
 public type GithubDiscussion record {
+    int:Signed32 number;
+    @jsondata:Name {value: "answer_html_url"}
+    string? answerHtmlUrl?;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     @constraint:String {maxLength: 152133}
     string title;
-    int:Signed32 number;
-    @constraint:String {maxLength: 2048}
-    string html_url;
-    string? answer_html_url?;
     string? body?;
     GithubUser user;
 };
 
-public type MEMBER_KICK 20;
+public type MentionableSelectDefaultValues RoleSelectDefaultValue|UserSelectDefaultValue|DefaultValuesOneOf3?;
+
+public type BOTADD 28;
+
+public type THREADSTARTERMESSAGE 21;
+
+public type RECIPIENTREMOVE 2;
+
+public type GUILDBOOSTTIER1 9;
 
 public type SUCCESS 3;
 
+# The bg locale
+public type Bg "bg";
+
+public type OptionsOneOf123 anydata?;
+
+# allows /users/@me/guilds/{guild.id}/member to return a user's member information in a guild
+public type GUILDSMEMBERSREAD "guilds.members.read";
+
+public type OptionsOneOf122 anydata?;
+
+public type OptionsOneOf121 anydata?;
+
 public type GuildMFALevel NONE3|ELEVATED;
 
-public type STAGE_TOPIC 31;
+public type WebhookIdwebhookTokenBody IncomingWebhookRequestPartial|IncomingWebhookUpdateRequestPartial;
 
-# allows your app to read build data for a user's applications
-public type APPLICATIONS_BUILDS_READ "applications.builds.read";
+# Represents the Queries record for the operation: delete_original_webhook_message
+public type DeleteOriginalWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
 
-public type ApplicationCommandChannelOptionResponse record {
-    7 'type;
-    string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    # 
-    ChannelTypes[]? channel_types?;
+# guild has access to set a vanity URL
+public type VANITYURL "VANITY_URL";
+
+public type MEMBERMOVE 26;
+
+public type MessagesoriginalBody record {
+    #
+    ActionRow[]? components?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
 };
 
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type PrivateGuildMemberResponseRolesItemsString string;
 
-# Provides settings related to HTTP/1.x protocol.
-public type ClientHttp1Settings record {|
-    # Specifies whether to reuse a connection for multiple requests
-    http:KeepAlive keepAlive = http:KEEPALIVE_AUTO;
-    # The chunking behaviour of the request
-    http:Chunking chunking = http:CHUNKING_AUTO;
-    # Proxy server related options
-    ProxyConfig proxy?;
-|};
-
-public type IncomingWebhookUpdateForInteractionCallbackRequestPartial record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
-    ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
-    int:Signed32? flags?;
+public type ApplicationCommandChannelOptionResponse record {
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    string name;
+    string description;
+    #
+    @jsondata:Name {value: "channel_types"}
+    ChannelTypes[]? channelTypes?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    7 'type;
+    boolean? required?;
 };
+
+public type MentionChannelsOneOf21 anydata?;
 
 public type MessageEmbedProviderResponse record {
     string name;
     string? url?;
 };
+
+public type IncomingWebhookUpdateForInteractionCallbackRequestPartial record {
+    #
+    ActionRow[]? components?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
+};
+
+public type UsersUsersOneOf12 anydata?;
+
+public type SOUNDBOARDSOUNDDELETE 132;
+
+# A text channel within a server
+public type GUILDTEXT 0;
 
 public type GuildsTemplatesRequest record {
     @constraint:String {maxLength: 100, minLength: 2}
@@ -305,14 +386,17 @@ public type GuildsTemplatesRequest record {
     record {byte[] fileContent; string fileName;}? icon?;
 };
 
-public type STAGE_INSTANCE_DELETE 85;
+# guild has set up auto moderation rules
+public type AUTOMODERATION "AUTO_MODERATION";
 
 public type GuildsChannelsRequest record {
+    @jsondata:Name {value: "lock_permissions"}
+    boolean? lockPermissions?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id?;
     int:Signed32? position?;
-    anydata parent_id?;
-    boolean? lock_permissions?;
 };
 
 # OAuth2 Client Credentials Grant Configs
@@ -322,30 +406,36 @@ public type OAuth2ClientCredentialsGrantConfig record {|
     string tokenUrl = "https://discord.com/api/oauth2/token";
 |};
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# the metadata value (integer) is equal to the guild's configured value (integer; 1)
+public type BOOLEANEQUAL 7;
+
 public type KeywordRuleResponseExemptchannelsItemsString string;
 
 public type OnboardingPromptOptionResponse record {
+    #
+    @jsondata:Name {value: "channel_ids"}
+    OnboardingPromptOptionResponseChannelidsItemsString[] channelIds;
+    SettingsEmojiResponse emoji;
+    string description;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     string title;
-    string description;
-    SettingsEmojiResponse emoji;
-    # 
-    OnboardingPromptOptionResponseRoleidsItemsString[] role_ids;
-    # 
-    OnboardingPromptOptionResponseChannelidsItemsString[] channel_ids;
+    #
+    @jsondata:Name {value: "role_ids"}
+    OnboardingPromptOptionResponseRoleidsItemsString[] roleIds;
 };
 
 public type GuildsMembersRequest1 record {
     string? nick?;
-    # 
-    (anydata)[]? roles?;
-    boolean? mute?;
+    @jsondata:Name {value: "communication_disabled_until"}
+    string? communicationDisabledUntil?;
+    #
+    GuildsMembersRequest1Roles[]? roles?;
     boolean? deaf?;
-    anydata channel_id?;
-    string? communication_disabled_until?;
     int:Signed32? flags?;
+    boolean? mute?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
 };
 
 # A direct message between users
@@ -354,197 +444,248 @@ public type DM 1;
 # enables /users/@me to return an email
 public type EMAIL "email";
 
-public type CHANNEL_NAME_CHANGE 4;
+# The cs locale
+public type Cs "cs";
 
 public type StageInstancesRequest record {
+    @jsondata:Name {value: "privacy_level"}
+    anydata privacyLevel?;
+    @jsondata:Name {value: "send_start_notification"}
+    boolean? sendStartNotification?;
     @constraint:String {maxLength: 120, minLength: 1}
     string topic;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    anydata privacy_level?;
-    anydata guild_scheduled_event_id?;
-    boolean? send_start_notification?;
+    @jsondata:Name {value: "guild_scheduled_event_id"}
+    anydata guildScheduledEventId?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
-
-# Sent when a user submits a modal previously sent by your application
-public type MODAL_SUBMIT 5;
 
 public type GuildWelcomeChannel record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
     @constraint:String {maxLength: 50, minLength: 1}
     string description;
-    anydata emoji_id?;
-    string? emoji_name?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
-
-# the scheduled event is only accessible to guild members
-public type GUILD_ONLY 2;
 
 # guild is able to be discovered in the directory
 public type DISCOVERABLE "DISCOVERABLE";
 
 public type KeywordTriggerMetadataResponse record {
-    # 
-    string[] keyword_filter;
-    # 
-    string[] regex_patterns;
-    # 
-    string[] allow_list;
+    #
+    @jsondata:Name {value: "keyword_filter"}
+    string[] keywordFilter;
+    #
+    @jsondata:Name {value: "allow_list"}
+    string[] allowList;
+    #
+    @jsondata:Name {value: "regex_patterns"}
+    string[] regexPatterns;
 };
 
-public type AUTO_MODERATION_QUARANTINE_USER 146;
+# The da locale
+public type Da "da";
 
-public type MessageType DEFAULT|RECIPIENT_ADD|RECIPIENT_REMOVE|CALL|CHANNEL_NAME_CHANGE|CHANNEL_ICON_CHANGE|CHANNEL_PINNED_MESSAGE|USER_JOIN|GUILD_BOOST|GUILD_BOOST_TIER_1|GUILD_BOOST_TIER_2|GUILD_BOOST_TIER_3|CHANNEL_FOLLOW_ADD|GUILD_DISCOVERY_DISQUALIFIED|GUILD_DISCOVERY_REQUALIFIED|GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING|GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING|THREAD_CREATED|REPLY|CHAT_INPUT_COMMAND|THREAD_STARTER_MESSAGE|GUILD_INVITE_REMINDER|CONTEXT_MENU_COMMAND|AUTO_MODERATION_ACTION|ROLE_SUBSCRIPTION_PURCHASE|INTERACTION_PREMIUM_UPSELL|STAGE_START|STAGE_END|STAGE_SPEAKER|STAGE_TOPIC|GUILD_APPLICATION_PREMIUM_SUBSCRIPTION|GUILD_INCIDENT_ALERT_MODE_ENABLED|GUILD_INCIDENT_ALERT_MODE_DISABLED|GUILD_INCIDENT_REPORT_RAID|GUILD_INCIDENT_REPORT_FALSE_ALARM;
+public type MessageType DEFAULT|RECIPIENTADD|RECIPIENTREMOVE|CALL|CHANNELNAMECHANGE|CHANNELICONCHANGE|CHANNELPINNEDMESSAGE|USERJOIN|GUILDBOOST|GUILDBOOSTTIER1|GUILDBOOSTTIER2|GUILDBOOSTTIER3|CHANNELFOLLOWADD|GUILDDISCOVERYDISQUALIFIED|GUILDDISCOVERYREQUALIFIED|GUILDDISCOVERYGRACEPERIODINITIALWARNING|GUILDDISCOVERYGRACEPERIODFINALWARNING|THREADCREATED|REPLY|CHATINPUTCOMMAND|THREADSTARTERMESSAGE|GUILDINVITEREMINDER|CONTEXTMENUCOMMAND|AUTOMODERATIONACTION|ROLESUBSCRIPTIONPURCHASE|INTERACTIONPREMIUMUPSELL|STAGESTART|STAGEEND|STAGESPEAKER|STAGETOPIC|GUILDAPPLICATIONPREMIUMSUBSCRIPTION|GUILDINCIDENTALERTMODEENABLED|GUILDINCIDENTALERTMODEDISABLED|GUILDINCIDENTREPORTRAID|GUILDINCIDENTREPORTFALSEALARM;
+
+public type '200AnyOf4 anydata?;
+
+# Represents the Queries record for the operation: list_guild_audit_log_entries
+public type ListGuildAuditLogEntriesQueries record {
+    #
+    @http:Query {name: "user_id"}
+    string userId?;
+    #
+    @http:Query {name: "action_type"}
+    int:Signed32 actionType?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @http:Query {name: "target_id"}
+    string targetId?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+};
 
 public type ConnectedAccountResponse record {
-    string id;
-    string? name?;
-    ConnectedAccountProviders 'type;
-    boolean friend_sync;
-    # 
-    ConnectedAccountIntegrationResponse[]? integrations?;
-    boolean show_activity;
-    boolean two_way_link;
-    boolean verified;
+    @jsondata:Name {value: "friend_sync"}
+    boolean friendSync;
+    @jsondata:Name {value: "show_activity"}
+    boolean showActivity;
     ConnectedAccountVisibility visibility;
+    @jsondata:Name {value: "two_way_link"}
+    boolean twoWayLink;
+    string? name?;
+    boolean verified;
+    string id;
+    ConnectedAccountProviders 'type;
     boolean? revoked?;
+    #
+    ConnectedAccountIntegrationResponse[]? integrations?;
 };
 
-public type sv\-SE "sv-SE";
+# The de locale
+public type De "de";
 
 public type RichEmbedAuthor record {
+    @jsondata:Name {value: "icon_url"}
+    string? iconUrl?;
     string? name?;
     string? url?;
-    string? icon_url?;
 };
+
+# guild has enabled the role subscription promo page
+public type CREATORSTOREPAGE "CREATOR_STORE_PAGE";
 
 public type YOUTUBE "youtube";
 
 public type GithubRepository record {
-    int:Signed32 id;
-    @constraint:String {maxLength: 2048}
-    string html_url;
+    @jsondata:Name {value: "full_name"}
+    string fullName;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     @constraint:String {maxLength: 152133}
     string name;
-    @constraint:String {maxLength: 152133}
-    string full_name;
+    int:Signed32 id;
 };
 
-public type ROLE_CREATE 30;
-
 public type ApplicationRoleConnectionsMetadataItemRequest record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string?...;|}? nameLocalizations?;
+    @constraint:String {maxLength: 100, minLength: 1}
+    string name;
+    @constraint:String {maxLength: 200, minLength: 1}
+    string description;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string?...;|}? descriptionLocalizations?;
     MetadataItemTypes 'type;
     @constraint:String {maxLength: 50, minLength: 1}
     string 'key;
-    @constraint:String {maxLength: 100, minLength: 1}
-    string name;
-    record {|string?...;|}? name_localizations?;
-    @constraint:String {maxLength: 200, minLength: 1}
-    string description;
-    record {|string?...;|}? description_localizations?;
 };
 
-# for local rpc server access, this allows you to read a user's screenshare status- requires Discord approval
-public type RPC_SCREENSHARE_READ "rpc.screenshare.read";
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type OnboardingPromptOptionRequestChannelidsItemsString string;
 
 public type MessageComponentButtonResponse record {
-    2 'type;
-    int:Signed32 id;
-    string? custom_id?;
-    ButtonStyleTypes style;
-    string? label?;
-    boolean? disabled?;
     anydata emoji?;
+    @jsondata:Name {value: "custom_id"}
+    string? customId?;
+    ButtonStyleTypes style;
+    boolean? disabled?;
+    @jsondata:Name {value: "sku_id"}
+    anydata skuId?;
+    int:Signed32 id;
+    string? label?;
+    2 'type;
     string? url?;
-    anydata sku_id?;
 };
+
+# guild can be previewed before joining via Membership Screening or the directory
+public type PREVIEWENABLED "PREVIEW_ENABLED";
 
 public type GithubCheckPullRequest record {
     int:Signed32 number;
 };
 
-# the metadata value (integer) is not equal to the guild's configured value (integer; 1)
-public type BOOLEAN_NOT_EQUAL 8;
-
 public type ApplicationOAuth2InstallParams record {
-    # 
-    OAuth2Scopes[]? scopes?;
     int:Signed32? permissions?;
+    #
+    OAuth2Scopes[]? scopes?;
 };
 
 public type GuildTemplateSnapshotResponse record {
-    string name;
-    string? description?;
-    string? region?;
-    VerificationLevels verification_level;
-    UserNotificationSettings default_message_notifications;
-    GuildExplicitContentFilterTypes explicit_content_filter;
-    AvailableLocalesEnum preferred_locale;
-    anydata afk_channel_id?;
-    AfkTimeouts afk_timeout;
-    anydata system_channel_id?;
-    int:Signed32 system_channel_flags;
-    # 
+    @jsondata:Name {value: "preferred_locale"}
+    AvailableLocalesEnum preferredLocale;
+    @jsondata:Name {value: "default_message_notifications"}
+    UserNotificationSettings defaultMessageNotifications;
+    @jsondata:Name {value: "system_channel_flags"}
+    int:Signed32 systemChannelFlags;
+    #
     GuildTemplateRoleResponse[] roles;
-    # 
+    string? description?;
+    @jsondata:Name {value: "system_channel_id"}
+    anydata systemChannelId?;
+    @jsondata:Name {value: "afk_timeout"}
+    AfkTimeouts afkTimeout;
+    @jsondata:Name {value: "verification_level"}
+    VerificationLevels verificationLevel;
+    @jsondata:Name {value: "explicit_content_filter"}
+    GuildExplicitContentFilterTypes explicitContentFilter;
+    #
     GuildTemplateChannelResponse[] channels;
+    @jsondata:Name {value: "afk_channel_id"}
+    anydata afkChannelId?;
+    string name;
+    string? region?;
 };
 
 public type MentionSpamRuleResponse record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    5 triggerType;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MentionSpamRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
-    string name;
-    AutomodEventType event_type;
-    # 
-    (BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse)[] actions;
-    5 trigger_type;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MentionSpamRuleResponseExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
-    # 
-    MentionSpamRuleResponseExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MentionSpamRuleResponseExemptchannelsItemsString[]? exempt_channels?;
-    MentionSpamTriggerMetadataResponse trigger_metadata;
+    @jsondata:Name {value: "trigger_metadata"}
+    MentionSpamTriggerMetadataResponse triggerMetadata;
 };
+
+public type GUILDINCIDENTALERTMODEDISABLED 37;
+
+# The el locale
+public type El "el";
 
 public type ZEROES "0000";
 
-public type MetadataItemTypes INTEGER_LESS_THAN_EQUAL|INTEGER_GREATER_THAN_EQUAL|INTEGER_EQUAL|INTEGER_NOT_EQUAL|DATETIME_LESS_THAN_EQUAL|DATETIME_GREATER_THAN_EQUAL|BOOLEAN_EQUAL|BOOLEAN_NOT_EQUAL;
+public type MetadataItemTypes INTEGERLESSTHANEQUAL|INTEGERGREATERTHANEQUAL|INTEGEREQUAL|INTEGERNOTEQUAL|DATETIMELESSTHANEQUAL|DATETIMEGREATERTHANEQUAL|BOOLEANEQUAL|BOOLEANNOTEQUAL;
 
 public type CreateGuildRequestRoleItem record {
-    int:Signed32 id;
-    string? name?;
-    int:Signed32? permissions?;
     int:Signed32? color?;
-    boolean? hoist?;
+    @jsondata:Name {value: "unicode_emoji"}
+    string? unicodeEmoji?;
+    int:Signed32? permissions?;
+    string? name?;
     boolean? mentionable?;
-    string? unicode_emoji?;
-};
-
-# Represents the Queries record for the operation: get_guild_scheduled_event
-public type Get_guild_scheduled_eventQueries record {
-    # 
-    boolean with_user_count?;
+    int:Signed32 id;
+    boolean? hoist?;
 };
 
 public type UsersMeApplicationsRoleConnectionRequest record {
-    string? platform_name?;
-    string? platform_username?;
     record {|string...;|}? metadata?;
+    @jsondata:Name {value: "platform_username"}
+    string? platformUsername?;
+    @jsondata:Name {value: "platform_name"}
+    string? platformName?;
 };
 
 public type WebhookSlackEmbedField record {
+    boolean? inline?;
     string? name?;
     string? value?;
-    boolean? inline?;
 };
+
+public type GUILDSCHEDULEDEVENTUPDATE 101;
 
 # OAuth2 Refresh Token Grant Configs
 public type OAuth2RefreshTokenGrantConfig record {|
@@ -554,538 +695,660 @@ public type OAuth2RefreshTokenGrantConfig record {|
 |};
 
 public type BlockMessageActionResponse record {
-    1 'type;
     BlockMessageActionMetadataResponse metadata;
+    1 'type;
 };
 
 public type DiscordIntegrationResponse record {
-    "discord" 'type;
+    IntegrationApplicationResponse application;
     string? name?;
-    anydata account?;
-    boolean? enabled?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    IntegrationApplicationResponse application;
-    # 
+    #
     OAuth2Scopes[] scopes;
+    "discord" 'type;
     anydata user?;
+    anydata account?;
+    boolean? enabled?;
 };
 
 public type TeamMembershipStates INVITED|ACCEPTED;
 
-# Channel that can only contain threads
-public type GUILD_FORUM 15;
+public type LEAGUEOFLEGENDS "leagueoflegends";
+
+# The fi locale
+public type Fi "fi";
 
 # Words and phrases that may be considered slurs and hate speech
 public type SLURS 3;
 
-# allows your app to read entitlements for a user's applications
-public type APPLICATIONS_ENTITLEMENTS "applications.entitlements";
-
 public type ApplicationCommandPermissionType ROLE1|USER2|CHANNEL1;
 
-# allows your app to update a user's connection and metadata for the app
-public type ROLE_CONNECTIONS_WRITE "role_connections.write";
+# The fr locale
+public type Fr "fr";
 
 public type PrivateGroupChannelResponse record {
+    @jsondata:Name {value: "last_message_id"}
+    anydata lastMessageId?;
+    @jsondata:Name {value: "last_pin_timestamp"}
+    string? lastPinTimestamp?;
+    #
+    UserResponse[] recipients;
+    @jsondata:Name {value: "owner_id"}
+    anydata ownerId?;
+    boolean? managed?;
+    int:Signed32 flags;
+    string? name?;
+    string? icon?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     3 'type;
-    anydata last_message_id?;
-    int:Signed32 flags;
-    string? last_pin_timestamp?;
-    # 
-    UserResponse[] recipients;
-    string? name?;
-    string? icon?;
-    anydata owner_id?;
-    boolean? managed?;
-    anydata application_id?;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
 };
 
 # Single-line input
 public type SHORT 1;
 
+# for local rpc server access, this allows you to receive notifications pushed out to the user - requires Discord approval
+public type RPCNOTIFICATIONSREAD "rpc.notifications.read";
+
+# this generates a webhook that is returned in the oauth token response for authorization code grants
+public type WEBHOOKINCOMING "webhook.incoming";
+
 public type DefaultKeywordListTriggerMetadata record {
-    # 
-    DefaultKeywordListTriggerMetadataAllowlistItemsString[]? allow_list?;
-    # 
+    #
     AutomodKeywordPresetType[]? presets?;
+    #
+    @jsondata:Name {value: "allow_list"}
+    DefaultKeywordListTriggerMetadataAllowlistItemsString[]? allowList?;
 };
 
 # Many options shown as a dropdown
 public type DROPDOWN 1;
 
-# DEPRECATED
-public type SPAM_LINK 2;
-
 public type TeamMemberResponse record {
+    @jsondata:Name {value: "membership_state"}
+    TeamMembershipStates membershipState;
+    @jsondata:Name {value: "team_id"}
+    string teamId;
     UserResponse user;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string team_id;
-    TeamMembershipStates membership_state;
 };
 
 public type PongInteractionCallbackRequest record {
     1 'type;
 };
 
-public type automoderation_rules_body DefaultKeywordListUpsertRequest|KeywordUpsertRequest|MLSpamUpsertRequest|MentionSpamUpsertRequest;
-
 public type UserCommunicationDisabledActionResponse record {
-    3 'type;
     UserCommunicationDisabledActionMetadataResponse metadata;
-};
-
-# guild has access to set an animated guild banner image
-public type ANIMATED_BANNER "ANIMATED_BANNER";
-
-public type GuildsEmojisRequest record {
-    @constraint:String {maxLength: 32, minLength: 2}
-    string name?;
-    # 
-    (anydata)[]? roles?;
+    3 'type;
 };
 
 public type CreateTextThreadWithoutMessageRequest record {
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    anydata auto_archive_duration?;
-    int:Signed32? rate_limit_per_user?;
-    anydata 'type?;
     boolean? invitable?;
+    anydata 'type?;
+    @jsondata:Name {value: "auto_archive_duration"}
+    anydata autoArchiveDuration?;
+};
+
+public type GuildsEmojisRequest record {
+    #
+    GuildsEmojisRequestRoles[]? roles?;
+    @constraint:String {maxLength: 32, minLength: 2}
+    string name?;
 };
 
 # Guild has a 2FA requirement for moderation actions
 public type ELEVATED 1;
 
+public type IncludeRoles IncludeRolesOneOf1|IncludeRolesIncludeRolesOneOf12;
+
 # guild is verified
 public type VERIFIED "VERIFIED";
 
-public type AutomodEventType MESSAGE_SEND|GUILD_MEMBER_JOIN_OR_UPDATE;
+public type AutomodEventType MESSAGESEND|GUILDMEMBERJOINORUPDATE;
 
-# Represents the Queries record for the operation: preview_prune_guild
-public type Preview_prune_guildQueries record {
-    # 
-    @constraint:Int {minValue: 1, maxValue: 30}
-    int:Signed32 days?;
-    # 
-    include_roles include_roles?;
-};
-
-public type GuildTemplateChannelTags record {
-    string name;
-    anydata emoji_id?;
-    string? emoji_name?;
-    boolean? moderated?;
+public type MessagesmessageIdBody record {
+    #
+    ActionRow[]? components?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    #
+    @jsondata:Name {value: "sticker_ids"}
+    MessagesmessageIdBodyStickeridsItemsString[]? stickerIds?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
 };
 
 public type ApplicationCommandAttachmentOption record {
-    11 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    11 'type;
     boolean? required?;
 };
 
-# allows your app to upload/update builds for a user's applications - requires Discord approval
-public type APPLICATIONS_BUILDS_UPLOAD "applications.builds.upload";
+public type GuildTemplateChannelTags record {
+    boolean? moderated?;
+    string name;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
+};
 
-# User has accepted the team invitation.
+# User has accepted the team invitation
 public type ACCEPTED 2;
 
-# This permission is for a user.
+# This permission is for a user
 public type USER2 2;
 
 public type MessageComponentMentionableSelectResponse record {
-    7 'type;
-    int:Signed32 id;
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
+    int:Signed32 id;
+    string? placeholder?;
+    7 'type;
 };
 
 public type ModalInteractionCallbackData record {
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    @constraint:String {maxLength: 45}
-    string title;
-    # 
+    #
     @constraint:Array {maxLength: 5, minLength: 1}
     ActionRow[] components;
-};
-
-public type QUEST_REWARD 10;
-
-public type THREAD_DELETE 112;
-
-# guild has increased custom sticker slots
-public type MORE_STICKERS "MORE_STICKERS";
-
-public type MessageEmbedFooterResponse record {
-    string text;
-    string? icon_url?;
-    string? proxy_icon_url?;
-};
-
-public type MessageComponentStringSelectResponse record {
-    3 'type;
-    int:Signed32 id;
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
-    boolean? disabled?;
-    # 
-    (anydata)[]? options?;
-};
-
-public type ApplicationCommandChannelOption record {
-    7 'type;
-    @constraint:String {maxLength: 32, minLength: 1}
-    string name;
-    record {|string...;|}? name_localizations?;
-    @constraint:String {maxLength: 100, minLength: 1}
-    string description;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    # 
-    ChannelTypes[]? channel_types?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @constraint:String {maxLength: 45}
+    string title;
 };
 
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type IncludeRolesIncludeRolesOneOf12OneOf1 string;
+
+# Multiple choice options
+public type MULTIPLECHOICE 0;
+
+# The he locale
+public type He "he";
+
+# Represents the Queries record for the operation: list_message_reactions_by_emoji
+public type ListMessageReactionsByEmojiQueries record {
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+};
+
+# The hi locale
+public type Hi "hi";
+
+public type MessageEmbedFooterResponse record {
+    @jsondata:Name {value: "icon_url"}
+    string? iconUrl?;
+    @jsondata:Name {value: "proxy_icon_url"}
+    string? proxyIconUrl?;
+    string text;
+};
+
+public type ApplicationCommandChannelOption record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    @constraint:String {maxLength: 32, minLength: 1}
+    string name;
+    @constraint:String {maxLength: 100, minLength: 1}
+    string description;
+    #
+    @jsondata:Name {value: "channel_types"}
+    ChannelTypes[]? channelTypes?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    7 'type;
+    boolean? required?;
+};
+
+public type MessageComponentStringSelectResponse record {
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
+    #
+    MessageComponentStringSelectResponseOptions[]? options?;
+    boolean? disabled?;
+    int:Signed32 id;
+    string? placeholder?;
+    3 'type;
+};
+
+public type GuildsEmojisRequest1Roles RolesOneOf12|RolesRolesOneOf122?;
+
 public type MLSpamUpsertRequestPartialExemptchannelsItemsString string;
 
-public type GUILD_BOOST 8;
+# The hr locale
+public type Hr "hr";
+
+# Represents the Queries record for the operation: search_guild_members
+public type SearchGuildMembersQueries record {
+    #
+    @constraint:String {maxLength: 100, minLength: 1}
+    string query;
+    #
+    @constraint:Int {minValue: 1, maxValue: 1000}
+    int:Signed32 'limit;
+};
+
+# The hu locale
+public type Hu "hu";
 
 public type StageInstancesRequest1 record {
+    @jsondata:Name {value: "privacy_level"}
+    StageInstancesPrivacyLevels privacyLevel?;
     @constraint:String {maxLength: 120, minLength: 1}
     string topic?;
-    StageInstancesPrivacyLevels privacy_level?;
 };
 
 public type SPOTIFY "spotify";
-
-public type SOUNDBOARD_SOUND_DELETE 132;
 
 public type WidgetActivity record {
     string name;
 };
 
-# Represents the Queries record for the operation: invite_resolve
-public type Invite_resolveQueries record {
-    # 
-    boolean with_counts?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_scheduled_event_id?;
-};
-
 public type FlagToChannelActionMetadata record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
 public type ApplicationCommandNumberOptionResponse record {
-    10 'type;
-    string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
+    @jsondata:Name {value: "min_value"}
+    decimal? minValue?;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     boolean? autocomplete?;
-    # 
+    string name;
+    string description;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    10 'type;
+    #
     ApplicationCommandOptionNumberChoiceResponse[]? choices?;
-    decimal? min_value?;
-    decimal? max_value?;
+    boolean? required?;
+    @jsondata:Name {value: "max_value"}
+    decimal? maxValue?;
 };
 
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type ChannelsMessagesBulkDeleteRequestMessagesItemsString string;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MLSpamUpsertRequestExemptchannelsItemsString string;
+
+public type ChannelIdInvitesBody CreateGroupDMInviteRequest|CreateGuildInviteRequest;
+
+# The id locale
+public type Id "id";
+
+# The Stage instance is visible publicly. (deprecated)
+public type GUILDONLY1 2;
 
 # Controls role mentions
 public type USERS "users";
 
+public type ONEHOUR 3600;
+
 public type GuildTemplateRoleResponse record {
-    int:Signed32 id;
-    string name;
-    string permissions;
     int:Signed32 color;
-    boolean hoist;
-    boolean mentionable;
+    @jsondata:Name {value: "unicode_emoji"}
+    string? unicodeEmoji?;
+    string permissions;
+    string name;
     string? icon?;
-    string? unicode_emoji?;
+    boolean mentionable;
+    int:Signed32 id;
+    boolean hoist;
 };
 
-public type MESSAGE_PIN 74;
-
-# Seven days
-public type SEVEN_DAY 10080;
+# Represents the Queries record for the operation: execute_webhook
+public type ExecuteWebhookQueries record {
+    #
+    boolean 'wait?;
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
 
 public type ApplicationCommandSubcommandGroupOption record {
-    2 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandSubcommandOption[]? options?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    2 'type;
     boolean? required?;
-    # 
-    ApplicationCommandSubcommandOption[]? options?;
 };
 
-public type AGE_RESTRICTED 3;
+public type STAGESPEAKER 29;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type CreateForumThreadRequestAppliedtagsItemsString string;
 
+# The it locale
+public type It "it";
+
 public type StringSelect record {
-    3 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
-    boolean? disabled?;
-    # 
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
+    #
     @constraint:Array {maxLength: 25, minLength: 1}
     SelectOption[] options;
+    boolean? disabled?;
+    string? placeholder?;
+    3 'type;
 };
 
 public type StandardStickerResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    @jsondata:Name {value: "format_type"}
+    anydata formatType?;
+    @jsondata:Name {value: "pack_id"}
+    string packId;
     string name;
-    string tags;
-    1 'type;
-    anydata format_type?;
     string? description?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string pack_id;
-    int:Signed32 sort_value;
+    string id;
+    @jsondata:Name {value: "sort_value"}
+    int:Signed32 sortValue;
+    1 'type;
+    string tags;
 };
 
+public type DefaultKeywordListUpsertRequestActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf5?;
+
 public type ApplicationCommandAttachmentOptionResponse record {
-    11 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    11 'type;
     boolean? required?;
 };
+
+# The pt-BR locale
+public type PtBR "pt-BR";
+
+# allows your app to update a user's connection and metadata for the app
+public type ROLECONNECTIONSWRITE "role_connections.write";
+
+# The ja locale
+public type Ja "ja";
 
 # Sent by Discord to validate your application's interaction handler
 public type PING 1;
 
+@constraint:Array {maxLength: 100}
+public type IncludeRolesIncludeRolesOneOf12 InlineArrayItemsIncludeRolesIncludeRolesOneOf12[];
+
 public type ApplicationRoleConnectionsMetadataItemResponse record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    string name;
+    string description;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
     MetadataItemTypes 'type;
     string 'key;
-    string name;
-    record {|string...;|}? name_localizations?;
-    string description;
-    record {|string...;|}? description_localizations?;
 };
 
 public type WebhookSourceChannelResponse record {
+    string name;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
 };
-
-# allows your app to know a user's friends and implicit relationships - requires Discord approval
-public type RELATIONSHIPS_READ "relationships.read";
 
 public type MLSpamRuleResponse record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    3 triggerType;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MLSpamRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
-    string name;
-    AutomodEventType event_type;
-    # 
-    (BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse)[] actions;
-    3 trigger_type;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MLSpamRuleResponseExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
-    # 
-    MLSpamRuleResponseExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MLSpamRuleResponseExemptchannelsItemsString[]? exempt_channels?;
-    record {} trigger_metadata;
+    @jsondata:Name {value: "trigger_metadata"}
+    record {} triggerMetadata;
 };
 
-public type AutomodTriggerType KEYWORD|SPAM_LINK|ML_SPAM|DEFAULT_KEYWORD_LIST|MENTION_SPAM;
+public type AutomodTriggerType KEYWORD|SPAMLINK|MLSPAM|DEFAULTKEYWORDLIST|MENTIONSPAM;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MLSpamRuleResponseExemptchannelsItemsString string;
 
 public type GatewayBotSessionStartLimitResponse record {
-    int:Signed32 max_concurrency;
-    int:Signed32 remaining;
-    int:Signed32 reset_after;
+    @jsondata:Name {value: "reset_after"}
+    int:Signed32 resetAfter;
+    @jsondata:Name {value: "max_concurrency"}
+    int:Signed32 maxConcurrency;
     int:Signed32 total;
+    int:Signed32 remaining;
 };
-
-# guild has enabled role subscriptions
-public type ROLE_SUBSCRIPTIONS_ENABLED "ROLE_SUBSCRIPTIONS_ENABLED";
 
 public type GithubCheckRun record {
     string? conclusion?;
+    anydata output?;
+    #
+    @jsondata:Name {value: "pull_requests"}
+    GithubCheckPullRequest[]? pullRequests?;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     @constraint:String {maxLength: 152133}
     string name;
-    @constraint:String {maxLength: 2048}
-    string html_url;
-    GithubCheckSuite check_suite;
-    string? details_url?;
-    anydata output?;
-    # 
-    GithubCheckPullRequest[]? pull_requests?;
+    @jsondata:Name {value: "check_suite"}
+    GithubCheckSuite checkSuite;
+    @jsondata:Name {value: "details_url"}
+    string? detailsUrl?;
 };
 
-public type GUILD_INVITE_REMINDER 22;
-
-public type AUTO_MODERATION_ACTION 24;
-
 public type ApplicationCommandOptionIntegerChoiceResponse record {
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     @constraint:Int {minValue: 1, maxValue: -1}
     int value;
 };
 
-public type CHANNEL_ICON_CHANGE 5;
+# media content sent by all members will be scanned
+public type ALLMEMBERS 2;
 
-# allows your app to read and update store data (SKUs, store listings, achievements, etc.) for a user's applications
-public type APPLICATIONS_STORE_UPDATE "applications.store.update";
-
-public type GUILD_INCIDENT_ALERT_MODE_ENABLED 36;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MLSpamRuleResponseExemptrolesItemsString string;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type ThreadResponseAppliedtagsItemsString string;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MentionSpamUpsertRequestExemptrolesItemsString string;
-
-# Represents the Queries record for the operation: list_guild_scheduled_events
-public type List_guild_scheduled_eventsQueries record {
-    # 
-    boolean with_user_count?;
-};
 
 # allows /users/@me without email
 public type IDENTIFY "identify";
 
+# The ko locale
+public type Ko "ko";
+
 public type GuildsRolesRequest record {
-    string? name?;
-    int:Signed32? permissions?;
     int:Signed32? color?;
-    boolean? hoist?;
-    boolean? mentionable?;
+    @jsondata:Name {value: "unicode_emoji"}
+    string? unicodeEmoji?;
+    int:Signed32? permissions?;
+    string? name?;
     record {byte[] fileContent; string fileName;}? icon?;
-    string? unicode_emoji?;
+    boolean? mentionable?;
+    boolean? hoist?;
 };
+
+public type ActionRowComponents Button|ChannelSelect|InputText|MentionableSelect|RoleSelect|StringSelect|UserSelect;
+
+# allows your app to update a user's activity - requires Discord approval (NOT REQUIRED FOR GAMESDK ACTIVITY MANAGER)
+public type ACTIVITIESWRITE "activities.write";
 
 public type VoiceScheduledEventCreateRequest record {
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    2 entityType;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
     @constraint:String {maxLength: 100}
     string name;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    2 entity_type;
-    anydata channel_id?;
-    anydata entity_metadata?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
-
-public type FIVE_MINUTES 300;
 
 public type GuildAuditLogResponse record {
-    # 
-    AuditLogEntryResponse[] audit_log_entries;
-    # 
-    UserResponse[] users;
-    # 
-    (PartialDiscordIntegrationResponse|PartialExternalConnectionIntegrationResponse|PartialGuildSubscriptionIntegrationResponse)[] integrations;
-    # 
-    (ApplicationIncomingWebhookResponse|ChannelFollowerWebhookResponse|GuildIncomingWebhookResponse)[] webhooks;
-    # 
-    (ExternalScheduledEventResponse|StageScheduledEventResponse|VoiceScheduledEventResponse)[] guild_scheduled_events;
-    # 
+    #
+    InlineResponse2004[] webhooks;
+    #
+    @jsondata:Name {value: "application_commands"}
+    ApplicationCommandResponse[] applicationCommands;
+    #
     ThreadResponse[] threads;
-    # 
-    ApplicationCommandResponse[] application_commands;
-    # 
-    (DefaultKeywordRuleResponse|KeywordRuleResponse|MLSpamRuleResponse|MentionSpamRuleResponse|SpamLinkRuleResponse)[] auto_moderation_rules;
+    #
+    @jsondata:Name {value: "guild_scheduled_events"}
+    InlineResponse2003[] guildScheduledEvents;
+    #
+    GuildAuditLogResponseIntegrations[] integrations;
+    #
+    @jsondata:Name {value: "auto_moderation_rules"}
+    InlineResponse2001[] autoModerationRules;
+    #
+    UserResponse[] users;
+    #
+    @jsondata:Name {value: "audit_log_entries"}
+    AuditLogEntryResponse[] auditLogEntries;
 };
 
-public type messages_message_id_bodyStickeridsItemsString string;
+public type STAGEEND 28;
 
 public type GuildPreviewResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    #
+    EmojiResponse[] emojis;
+    #
+    GuildFeatures[] features;
+    @jsondata:Name {value: "home_header"}
+    string? homeHeader?;
+    @jsondata:Name {value: "approximate_presence_count"}
+    int:Signed32 approximatePresenceCount;
+    @jsondata:Name {value: "discovery_splash"}
+    string? discoverySplash?;
+    @jsondata:Name {value: "approximate_member_count"}
+    int:Signed32 approximateMemberCount;
     string name;
     string? icon?;
     string? description?;
-    string? home_header?;
-    string? splash?;
-    string? discovery_splash?;
-    # 
-    GuildFeatures[] features;
-    int:Signed32 approximate_member_count;
-    int:Signed32 approximate_presence_count;
-    # 
-    EmojiResponse[] emojis;
-    # 
+    #
     GuildStickerResponse[] stickers;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    string? splash?;
 };
 
 public type GroupDMInviteResponse record {
-    anydata 'type?;
+    @jsondata:Name {value: "max_age"}
+    int:Signed32? maxAge?;
     string code;
-    anydata inviter?;
-    int:Signed32? max_age?;
-    string? created_at?;
-    string? expires_at?;
+    @jsondata:Name {value: "expires_at"}
+    string? expiresAt?;
+    @jsondata:Name {value: "approximate_member_count"}
+    int:Signed32? approximateMemberCount?;
     anydata channel?;
-    int:Signed32? approximate_member_count?;
+    @jsondata:Name {value: "created_at"}
+    string? createdAt?;
+    anydata inviter?;
+    anydata 'type?;
 };
+
+public type INTEGRATIONCREATE 80;
+
+public type GUILDBOOSTTIER2 10;
+
+# Represents the Queries record for the operation: execute_github_compatible_webhook
+public type ExecuteGithubCompatibleWebhookQueries record {
+    #
+    boolean 'wait?;
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
+
+public type GUILDBOOSTTIER3 11;
 
 public type GuildsVoiceStatesMeRequest record {
-    string? request_to_speak_timestamp?;
+    @jsondata:Name {value: "request_to_speak_timestamp"}
+    string? requestToSpeakTimestamp?;
     boolean? suppress?;
-    anydata channel_id?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
 };
 
-public type GuildFeatures ANIMATED_BANNER|ANIMATED_ICON|APPLICATION_COMMAND_PERMISSIONS_V2|AUTO_MODERATION|BANNER|COMMUNITY|CREATOR_MONETIZABLE_PROVISIONAL|CREATOR_STORE_PAGE|DEVELOPER_SUPPORT_SERVER|DISCOVERABLE|FEATURABLE|INVITES_DISABLED|INVITE_SPLASH|MEMBER_VERIFICATION_GATE_ENABLED|MORE_STICKERS|NEWS|PARTNERED|PREVIEW_ENABLED|RAID_ALERTS_DISABLED|ROLE_ICONS|ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE|ROLE_SUBSCRIPTIONS_ENABLED|TICKETED_EVENTS_ENABLED|VANITY_URL|VERIFIED|VIP_REGIONS|WELCOME_SCREEN_ENABLED;
-
-# allows your app to join users to a group dm
-public type GDM_JOIN "gdm.join";
+public type GuildFeatures ANIMATEDBANNER|ANIMATEDICON|APPLICATIONCOMMANDPERMISSIONSV2|AUTOMODERATION|BANNER|COMMUNITY|CREATORMONETIZABLEPROVISIONAL|CREATORSTOREPAGE|DEVELOPERSUPPORTSERVER|DISCOVERABLE|FEATURABLE|INVITESDISABLED|INVITESPLASH|MEMBERVERIFICATIONGATEENABLED|MORESTICKERS|NEWS|PARTNERED|PREVIEWENABLED|RAIDALERTSDISABLED|ROLEICONS|ROLESUBSCRIPTIONSAVAILABLEFORPURCHASE|ROLESUBSCRIPTIONSENABLED|TICKETEDEVENTSENABLED|VANITYURL|VERIFIED|VIPREGIONS|WELCOMESCREENENABLED;
 
 public type ButtonStyleTypes PRIMARY|SECONDARY|SUCCESS|DANGER|LINK|PREMIUM;
 
 # for oauth2 bots, this puts the bot in the user's selected guild by default
 public type BOT "bot";
 
-public type MessageAllowedMentionsRequestRolesItemsnull anydata;
+# The lt locale
+public type Lt "lt";
 
 public type ChannelPermissionOverwrites ROLE2|MEMBER;
 
@@ -1094,223 +1357,251 @@ public type GuildsMembersMeRequest record {
 };
 
 public type RichEmbedField record {
+    boolean? inline?;
     @constraint:String {maxLength: 256}
     string name;
     @constraint:String {maxLength: 1024}
     string value;
-    boolean? inline?;
 };
 
 public type MessageComponentChannelSelectResponse record {
-    8 'type;
-    int:Signed32 id;
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
+    #
+    @jsondata:Name {value: "channel_types"}
+    ChannelTypes[]? channelTypes?;
     boolean? disabled?;
-    # 
-    ChannelTypes[]? channel_types?;
+    int:Signed32 id;
+    string? placeholder?;
+    8 'type;
 };
 
-public type GUILD_SCHEDULED_EVENT_UPDATE 101;
-
-# Check if content represents generic spam
-public type ML_SPAM 3;
-
 public type RoleSelectDefaultValue record {
-    "role" 'type;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
+    "role" 'type;
 };
 
 public type MessageReferenceRequest record {
-    anydata guild_id?;
-    anydata channel_id?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string message_id;
-    boolean? fail_if_not_exists?;
+    @jsondata:Name {value: "fail_if_not_exists"}
+    boolean? failIfNotExists?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    @jsondata:Name {value: "message_id"}
+    string messageId;
     anydata 'type?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
 };
 
 public type MessageAttachmentResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    string? description?;
+    boolean? ephemeral?;
+    @jsondata:Name {value: "duration_secs"}
+    decimal? durationSecs?;
+    string? title?;
+    string url;
+    #
+    @jsondata:Name {value: "clip_participants"}
+    UserResponse[]? clipParticipants?;
     string filename;
     int:Signed32 size;
-    string url;
-    string proxy_url;
-    int:Signed32? width?;
-    int:Signed32? height?;
-    decimal? duration_secs?;
-    string? waveform?;
-    string? description?;
-    string? content_type?;
-    boolean? ephemeral?;
-    string? title?;
+    @jsondata:Name {value: "content_type"}
+    string? contentType?;
     anydata application?;
-    string? clip_created_at?;
-    # 
-    UserResponse[]? clip_participants?;
+    int:Signed32? width?;
+    @jsondata:Name {value: "clip_created_at"}
+    string? clipCreatedAt?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "proxy_url"}
+    string proxyUrl;
+    string? waveform?;
+    int:Signed32? height?;
 };
 
-# guild can be previewed before joining via Membership Screening or the directory
-public type PREVIEW_ENABLED "PREVIEW_ENABLED";
+# User has been invited to the team
+public type INVITED 1;
 
 public type ACTIVE 2;
 
-# User has been invited to the team.
-public type INVITED 1;
-
 public type FlagToChannelAction record {
-    2 'type;
     FlagToChannelActionMetadata metadata;
+    2 'type;
 };
 
-# An organizational category that contains up to 50 channels
-public type GUILD_CATEGORY 4;
-
 public type GuildWelcomeScreenResponse record {
+    #
+    @jsondata:Name {value: "welcome_channels"}
+    GuildWelcomeScreenChannelResponse[] welcomeChannels;
     string? description?;
-    # 
-    GuildWelcomeScreenChannelResponse[] welcome_channels;
 };
 
 public type GuildTemplateChannelResponse record {
-    int:Signed32? id?;
-    ChannelTypes 'type;
-    string? name?;
-    int:Signed32? position?;
-    string? topic?;
-    int:Signed32 bitrate;
-    int:Signed32 user_limit;
-    boolean nsfw;
-    int:Signed32 rate_limit_per_user;
-    anydata parent_id?;
-    anydata default_auto_archive_duration?;
-    # 
-    (ChannelPermissionOverwriteResponse)[] permission_overwrites;
-    # 
-    GuildTemplateChannelTags[]? available_tags?;
     string template;
-    anydata default_reaction_emoji?;
-    int:Signed32? default_thread_rate_limit_per_user?;
-    anydata default_sort_order?;
-    anydata default_forum_layout?;
-    anydata icon_emoji?;
-    int:Signed32? theme_color?;
+    @jsondata:Name {value: "theme_color"}
+    int:Signed32? themeColor?;
+    boolean nsfw;
+    @jsondata:Name {value: "icon_emoji"}
+    anydata iconEmoji?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32 rateLimitPerUser;
+    int:Signed32 bitrate;
+    ChannelTypes 'type;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32 userLimit;
+    #
+    @jsondata:Name {value: "permission_overwrites"}
+    GuildTemplateChannelResponsePermissionOverwrites[] permissionOverwrites;
+    @jsondata:Name {value: "default_thread_rate_limit_per_user"}
+    int:Signed32? defaultThreadRateLimitPerUser?;
+    @jsondata:Name {value: "default_auto_archive_duration"}
+    anydata defaultAutoArchiveDuration?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    @jsondata:Name {value: "default_reaction_emoji"}
+    anydata defaultReactionEmoji?;
+    string? name?;
+    string? topic?;
+    @jsondata:Name {value: "default_forum_layout"}
+    anydata defaultForumLayout?;
+    int:Signed32? id?;
+    int:Signed32? position?;
+    #
+    @jsondata:Name {value: "available_tags"}
+    GuildTemplateChannelTags[]? availableTags?;
+    @jsondata:Name {value: "default_sort_order"}
+    anydata defaultSortOrder?;
 };
+
+# The es-419 locale
+public type Es419 "es-419";
 
 public type MEMBER 1;
 
 public type FlagToChannelActionResponse record {
-    2 'type;
     FlagToChannelActionMetadataResponse metadata;
+    2 'type;
 };
 
 public type MessageAttachmentRequest record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
     string? filename?;
     string? description?;
-    boolean? is_remix?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "is_remix"}
+    boolean? isRemix?;
 };
 
 public type EXTERNAL 3;
 
 public type MentionSpamUpsertRequestPartial record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType?;
+    @jsondata:Name {value: "trigger_type"}
+    AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    AutomodEventType event_type?;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MentionSpamUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MentionSpamUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
+    #
+    MentionSpamUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
-    # 
-    MentionSpamUpsertRequestPartialExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MentionSpamUpsertRequestPartialExemptchannelsItemsString[]? exempt_channels?;
-    AutomodTriggerType trigger_type?;
-    anydata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
 };
 
-public type rules_rule_id_body DefaultKeywordListUpsertRequestPartial|KeywordUpsertRequestPartial|MLSpamUpsertRequestPartial|MentionSpamUpsertRequestPartial;
-
-public type APPLICATION_COMMAND_PERMISSION_UPDATE 121;
-
-public type UPDATE_MESSAGE 7;
+# A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
+public type ANNOUNCEMENTTHREAD 10;
 
 public type GithubRelease record {
-    int:Signed32 id;
-    @constraint:String {maxLength: 152133}
-    string tag_name;
-    @constraint:String {maxLength: 2048}
-    string html_url;
+    @jsondata:Name {value: "tag_name"}
+    string tagName;
     GithubUser author;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
+    int:Signed32 id;
 };
 
 public type GithubReview record {
-    GithubUser user;
-    string? body?;
-    @constraint:String {maxLength: 2048}
-    string html_url;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     @constraint:String {maxLength: 152133}
     string state;
+    string? body?;
+    GithubUser user;
 };
+
+# The nl locale
+public type Nl "nl";
+
+# The no locale
+public type No "no";
 
 public type ApplicationCommandType CHAT|USER|MESSAGE;
 
+public type ApplicationCommandSubcommandOptionOptions ApplicationCommandAttachmentOption|ApplicationCommandBooleanOption|ApplicationCommandChannelOption|ApplicationCommandIntegerOption|ApplicationCommandMentionableOption|ApplicationCommandNumberOption|ApplicationCommandRoleOption|ApplicationCommandStringOption|ApplicationCommandUserOption|OptionsOneOf10?;
+
 public type MessageEmbedFieldResponse record {
+    boolean inline;
     string name;
     string value;
-    boolean inline;
 };
 
-public type STICKER_DELETE 92;
+public type GUILDHOMEFEATUREITEM 171;
 
 public type MessageReactionResponse record {
+    @jsondata:Name {value: "count_details"}
+    MessageReactionCountDetailsResponse countDetails;
     MessageReactionEmojiResponse emoji;
+    @jsondata:Name {value: "me_burst"}
+    boolean meBurst;
     int:Signed32 count;
-    MessageReactionCountDetailsResponse count_details;
-    # 
-    string[] burst_colors;
-    boolean me_burst;
     boolean me;
+    #
+    @jsondata:Name {value: "burst_colors"}
+    string[] burstColors;
 };
 
 public type PRIMARY 1;
 
-public type CHANNEL_PINNED_MESSAGE 6;
-
-public type SOUNDBOARD_SOUND_UPDATE 131;
+public type ApplicationCommandUpdateRequestOptions ApplicationCommandAttachmentOption|ApplicationCommandBooleanOption|ApplicationCommandChannelOption|ApplicationCommandIntegerOption|ApplicationCommandMentionableOption|ApplicationCommandNumberOption|ApplicationCommandRoleOption|ApplicationCommandStringOption|ApplicationCommandSubcommandGroupOption|ApplicationCommandSubcommandOption|ApplicationCommandUserOption|OptionsOneOf123?;
 
 public type GuildsEmojisRequest1 record {
+    record {byte[] fileContent; string fileName;} image;
+    #
+    GuildsEmojisRequest1Roles[]? roles?;
     @constraint:String {maxLength: 32, minLength: 2}
     string name;
-    record {byte[] fileContent; string fileName;} image;
-    # 
-    (anydata)[]? roles?;
 };
 
-public type messages_message_id_body_1 record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
-    ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
-    int:Signed32? flags?;
-};
+public type CHANNELOVERWRITEUPDATE 14;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type BaseCreateMessageCreateRequestStickeridsItemsString string;
 
-public type CHAT_INPUT_COMMAND 20;
+# Represents the Queries record for the operation: get_guild
+public type GetGuildQueries record {
+    #
+    @http:Query {name: "with_counts"}
+    boolean withCounts?;
+};
+
+public type BasicMessageResponseMentionChannels MessageMentionChannelResponse|MentionChannelsOneOf2?;
 
 public type GuildMFALevelResponse record {
     GuildMFALevel level;
 };
+
+# guild has enabled role subscriptions
+public type ROLESUBSCRIPTIONSENABLED "ROLE_SUBSCRIPTIONS_ENABLED";
 
 public type GithubCheckApp record {
     @constraint:String {maxLength: 152133}
@@ -1319,221 +1610,333 @@ public type GithubCheckApp record {
 
 public type SKYPE "skype";
 
-# media content sent by members without roles will be scanned
-public type MEMBERS_WITHOUT_ROLES 1;
+public type GuildIdStickersBody record {
+    record {byte[] fileContent; string fileName;} file;
+    @constraint:String {maxLength: 30, minLength: 2}
+    string name;
+    string? description?;
+    @constraint:String {maxLength: 200, minLength: 1}
+    string tags;
+};
 
-public type GuildsMembersRequestRolesItemsnull anydata;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type UpdateGuildOnboardingRequestDefaultchannelidsItemsString string;
 
 public type OnboardingPromptOptionRequest record {
+    #
+    @jsondata:Name {value: "channel_ids"}
+    OnboardingPromptOptionRequestChannelidsItemsString[]? channelIds?;
+    string? description?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
     anydata id?;
     @constraint:String {maxLength: 50, minLength: 1}
     string title;
-    string? description?;
-    anydata emoji_id?;
-    string? emoji_name?;
-    boolean? emoji_animated?;
-    # 
-    OnboardingPromptOptionRequestRoleidsItemsString[]? role_ids?;
-    # 
-    OnboardingPromptOptionRequestChannelidsItemsString[]? channel_ids?;
+    @jsondata:Name {value: "emoji_animated"}
+    boolean? emojiAnimated?;
+    #
+    @jsondata:Name {value: "role_ids"}
+    OnboardingPromptOptionRequestRoleidsItemsString[]? roleIds?;
 };
 
 public type IncomingWebhookInteractionRequest record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
+    #
     ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
     boolean? tts?;
+    #
+    MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
 };
 
+public type RolesRolesOneOf132 anydata?;
+
 public type KeywordUpsertRequest record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    1 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    AutomodEventType event_type;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    KeywordUpsertRequestExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    KeywordUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
+    #
+    KeywordUpsertRequestActions[]? actions?;
     boolean? enabled?;
-    # 
-    KeywordUpsertRequestExemptrolesItemsString[]? exempt_roles?;
-    # 
-    KeywordUpsertRequestExemptchannelsItemsString[]? exempt_channels?;
-    1 trigger_type;
-    anydata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
 };
 
 public type GuildScheduledEventStatuses SCHEDULED|ACTIVE|COMPLETED|CANCELED;
 
-public type UserCommunicationDisabledActionMetadata record {
-    int:Signed32? duration_seconds?;
-};
+public type CHATINPUTCOMMAND 20;
 
 # guild can enable welcome screen, Membership Screening, stage channels and discovery, and             receives community updates
 public type COMMUNITY "COMMUNITY";
 
-# Words and phrases that may be considered as sexual content
-public type SEXUAL_CONTENT 2;
+public type UserCommunicationDisabledActionMetadata record {
+    @jsondata:Name {value: "duration_seconds"}
+    int:Signed32? durationSeconds?;
+};
 
 public type ConnectedAccountVisibility NONE|EVERYONE1;
 
 public type BUNGIE "bungie";
 
 public type KeywordUpsertRequestPartial record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType?;
+    @jsondata:Name {value: "trigger_type"}
+    AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    AutomodEventType event_type?;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    KeywordUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    KeywordUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
+    #
+    KeywordUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
-    # 
-    KeywordUpsertRequestPartialExemptrolesItemsString[]? exempt_roles?;
-    # 
-    KeywordUpsertRequestPartialExemptchannelsItemsString[]? exempt_channels?;
-    AutomodTriggerType trigger_type?;
-    anydata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
 };
 
-public type AfkTimeouts ONE_MINUTE|FIVE_MINUTES|FIFTEEN_MINUTES|THIRTY_MINUTES|ONE_HOUR;
+public type AfkTimeouts ONEMINUTE|FIVEMINUTES|FIFTEENMINUTES|THIRTYMINUTES|ONEHOUR;
 
-# One day
-public type ONE_DAY 1440;
+# The pl locale
+public type Pl "pl";
 
 public type MentionSpamTriggerMetadata record {
-    @constraint:Int {minValue: 0, maxValue: 50}
-    int:Signed32 mention_total_limit;
-    boolean? mention_raid_protection_enabled?;
+    @jsondata:Name {value: "mention_total_limit"}
+    int:Signed32 mentionTotalLimit;
+    @jsondata:Name {value: "mention_raid_protection_enabled"}
+    boolean? mentionRaidProtectionEnabled?;
 };
 
-public type ONE_MINUTE 60;
+public type MESSAGEUNPIN 75;
 
-# Represents the Queries record for the operation: list_private_archived_threads
-public type List_private_archived_threadsQueries record {
-    # 
-    string before?;
-    # 
-    @constraint:Int {minValue: 2, maxValue: 100}
-    int:Signed32 'limit?;
+public type MEMBERBANREMOVE 23;
+
+# Represents the Queries record for the operation: get_original_webhook_message
+public type GetOriginalWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
 };
+
+# Represents the Headers record for the operation: create_message
+public type CreateMessageHeaders record {
+    #
+    @http:Header {name: "Content-Type"}
+    "application/x-www-form-urlencoded" contentType;
+};
+
+public type RolesRolesOneOf142 anydata?;
 
 public type ChannelFollowerWebhookResponse record {
-    anydata application_id?;
+    @jsondata:Name {value: "source_channel"}
+    anydata sourceChannel?;
+    @jsondata:Name {value: "source_guild"}
+    anydata sourceGuild?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    string name;
     string? avatar?;
-    anydata channel_id?;
-    anydata guild_id?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     2 'type;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
     anydata user?;
-    anydata source_guild?;
-    anydata source_channel?;
 };
 
 public type GuildPruneResponse record {
     int:Signed32? pruned?;
 };
 
-public type EPIC_GAMES "epicgames";
+public type APPLICATIONSUBSCRIPTION 8;
 
 public type GithubIssue record {
-    int:Signed32 id;
     int:Signed32 number;
-    @constraint:String {maxLength: 2048}
-    string html_url;
-    GithubUser user;
+    @jsondata:Name {value: "pull_request"}
+    anydata pullRequest?;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
+    int:Signed32 id;
     @constraint:String {maxLength: 152133}
     string title;
     string? body?;
-    anydata pull_request?;
+    GithubUser user;
 };
 
+public type ChannelschannelIdBody PrivateChannelRequestPartial|UpdateGuildChannelRequestPartial|UpdateThreadRequestPartial;
+
 public type ApplicationCommandRoleOption record {
-    8 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    8 'type;
     boolean? required?;
 };
 
-public type channel_id_threads_body CreateForumThreadRequest|CreateTextThreadWithoutMessageRequest;
+public type THREADCREATED 18;
 
 # Controls user mentions
 public type ROLES "roles";
 
 public type APNG 2;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# A user is attempting to join the server or a member's properties were updated
+public type GUILDMEMBERJOINORUPDATE 2;
+
 public type GuildsBulkBanRequestUseridsItemsString string;
 
-# Sent when a user uses an application command
-public type APPLICATION_COMMAND 2;
+public type ChannelIdMessagesBody record {
+    #
+    ActionRow[]? components?;
+    boolean? tts?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    #
+    @jsondata:Name {value: "sticker_ids"}
+    ChannelIdMessagesBodyStickeridsItemsString[]? stickerIds?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    @jsondata:Name {value: "message_reference"}
+    anydata messageReference?;
+    #
+    RichEmbed[]? embeds?;
+    anydata nonce?;
+    string? content?;
+};
 
-# guild is able to set role icons
-public type ROLE_ICONS "ROLE_ICONS";
+public type RolesRolesOneOf12 anydata?;
+
+public type ChannelIdThreadsBody CreateForumThreadRequest|CreateTextThreadWithoutMessageRequest;
 
 public type CALL 3;
 
-public type PurchaseNotificationResponse record {
-    PurchaseType 'type;
-    anydata guild_product_purchase?;
+# Represents the Queries record for the operation: get_guild_widget_png
+public type GetGuildWidgetPngQueries record {
+    #
+    WidgetImageStyles style?;
 };
 
-public type CHANNEL_FOLLOW_ADD 12;
+# the metadata value (integer) is not equal to the guild's configured value (integer)
+public type INTEGERNOTEQUAL 4;
+
+# Represents the Queries record for the operation: list_messages
+public type ListMessagesQueries record {
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string around?;
+};
+
+public type PurchaseNotificationResponse record {
+    @jsondata:Name {value: "guild_product_purchase"}
+    anydata guildProductPurchase?;
+    PurchaseType 'type;
+};
+
+public type RIOTGAMES "riotgames";
+
+public type CHANNELOVERWRITECREATE 13;
+
+public type STAGEINSTANCEUPDATE 84;
+
+public type CHANNELMESSAGEWITHSOURCE 4;
 
 public type UpdateMessageInteractionCallbackRequest record {
-    InteractionCallbackTypes 'type;
     anydata data?;
+    InteractionCallbackTypes 'type;
 };
+
+public type GUILDSCHEDULEDEVENTDELETE 102;
 
 public type MessageMentionChannelResponse record {
+    string name;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     ChannelTypes 'type;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
 };
 
-public type InteractionTypes PING|APPLICATION_COMMAND|MESSAGE_COMPONENT|APPLICATION_COMMAND_AUTOCOMPLETE|MODAL_SUBMIT;
+# The ro locale
+public type Ro "ro";
+
+# the metadata value (integer) is less than or equal to the guild's configured value (integer)
+public type INTEGERLESSTHANEQUAL 1;
+
+public type InteractionTypes PING|APPLICATIONCOMMAND|MESSAGECOMPONENT|APPLICATIONCOMMANDAUTOCOMPLETE|MODALSUBMIT;
 
 public type GuildWelcomeScreenChannelResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
     string description;
-    anydata emoji_id?;
-    string? emoji_name?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
+public type FIFTEENMINUTES 900;
+
+# for local rpc server access, this allows you to read a user's screenshare status- requires Discord approval
+public type RPCSCREENSHAREREAD "rpc.screenshare.read";
+
+# The ru locale
+public type Ru "ru";
+
+# allows your app to read and update store data (SKUs, store listings, achievements, etc.) for a user's applications
+public type APPLICATIONSSTOREUPDATE "applications.store.update";
+
 public type GithubCheckRunOutput record {
-    string? title?;
     string? summary?;
+    string? title?;
 };
 
 public type CreatePrivateChannelRequest record {
-    anydata recipient_id?;
-    # 
-    CreatePrivateChannelRequestAccesstokensItemsString[]? access_tokens?;
+    #
+    @jsondata:Name {value: "access_tokens"}
+    CreatePrivateChannelRequestAccesstokensItemsString[]? accessTokens?;
+    @jsondata:Name {value: "recipient_id"}
+    anydata recipientId?;
     record {|string?...;|}? nicks?;
 };
 
-# Represents the Queries record for the operation: delete_original_webhook_message
-public type Delete_original_webhook_messageQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
+# for local rpc server api access, this allows you to read messages from all client channels (otherwise restricted to channels/guilds your app creates)
+public type MESSAGESREAD "messages.read";
 
-public type CREATOR_MONETIZATION_REQUEST_CREATED 150;
+public type EPICGAMES "epicgames";
 
 public type ChannelsWebhooksRequest record {
     @constraint:String {maxLength: 80, minLength: 1}
@@ -1541,303 +1944,424 @@ public type ChannelsWebhooksRequest record {
     record {byte[] fileContent; string fileName;}? avatar?;
 };
 
-# guild has set up auto moderation rules
-public type AUTO_MODERATION "AUTO_MODERATION";
+public type CHANNELNAMECHANGE 4;
 
-# Represents the Queries record for the operation: get_thread_member
-public type Get_thread_memberQueries record {
-    # 
-    boolean with_member?;
-};
+public type ChannelIdMessagesBodyStickeridsItemsString string;
 
 public type ApplicationCommandMentionableOptionResponse record {
-    9 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    9 'type;
     boolean? required?;
 };
 
 public type ApplicationCommandIntegerOption record {
-    4 'type;
+    @jsondata:Name {value: "min_value"}
+    anydata minValue?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    boolean? autocomplete?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    boolean? autocomplete?;
-    # 
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    4 'type;
+    #
     ApplicationCommandOptionIntegerChoice[]? choices?;
-    anydata min_value?;
-    anydata max_value?;
+    boolean? required?;
+    @jsondata:Name {value: "max_value"}
+    anydata maxValue?;
 };
 
 public type XBOX "xbox";
 
+# The zh-TW locale
+public type ZhTW "zh-TW";
+
+public type MessageAllowedMentionsRequestRoles RolesOneOf1|RolesRolesOneOf12?;
+
+@constraint:Array {maxLength: 100}
+public type SkuIdsSkuIdsOneOf12 InlineArrayItemsSkuIdsSkuIdsOneOf12[];
+
+public type WebhookTokenSlackBody record {
+    @jsondata:Name {value: "icon_url"}
+    string? iconUrl?;
+    #
+    WebhookSlackEmbed[]? attachments?;
+    string? text?;
+    string? username?;
+};
+
+public type InlineArrayItemsIncludeRolesIncludeRolesOneOf12 IncludeRolesIncludeRolesOneOf12OneOf1;
+
 public type TWITTER "twitter";
 
-public type ThreadAutoArchiveDuration ONE_HOUR1|ONE_DAY|THREE_DAY|SEVEN_DAY;
+public type ThreadAutoArchiveDuration ONEHOUR1|ONEDAY|THREEDAY|SEVENDAY;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type ActionsOneOf55 anydata?;
+
 public type DefaultKeywordRuleResponseExemptchannelsItemsString string;
 
-# Represents the Queries record for the operation: execute_slack_compatible_webhook
-public type Execute_slack_compatible_webhookQueries record {
-    # 
-    boolean 'wait?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
+public type ActionsOneOf56 anydata?;
 
-public type GUILD_INCIDENT_REPORT_FALSE_ALARM 39;
+public type ActionsOneOf57 anydata?;
 
 public type WebhookSourceGuildResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
     string? icon?;
     string name;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
 };
+
+public type GUILDSCHEDULEDEVENTCREATE 100;
 
 public type VIEW 0;
 
-public type EMOJI_CREATE 60;
+public type AUTOMODERATIONRULEDELETE 142;
 
-public type GUILD_DISCOVERY_GRACE_PERIOD_INITIAL_WARNING 16;
+# The th locale
+public type Th "th";
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MLSpamUpsertRequestExemptrolesItemsString string;
 
+public type DefaultValuesOneOf3 anydata?;
+
 public type ResourceChannelResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    string title;
     anydata emoji?;
     string? icon?;
     string description;
+    string title;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
-public type GUILD_SUBSCRIPTION "guild_subscription";
+public type ONBOARDINGCREATE 166;
 
-# guild has access to set 384kbps bitrate in voice (previously VIP voice servers)
-public type VIP_REGIONS "VIP_REGIONS";
+# The tr locale
+public type Tr "tr";
 
-public type INTERACTION_PREMIUM_UPSELL 26;
+# the metadata value (integer) is greater than or equal to the guild's configured value (integer)
+public type INTEGERGREATERTHANEQUAL 2;
+
+# media content sent by members without roles will be scanned
+public type MEMBERSWITHOUTROLES 1;
 
 public type FlagToChannelActionMetadataResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
 public type CreateGuildChannelRequest record {
+    boolean? nsfw?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    int:Signed32? bitrate?;
     anydata 'type?;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    #
+    @jsondata:Name {value: "permission_overwrites"}
+    ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "default_thread_rate_limit_per_user"}
+    int:Signed32? defaultThreadRateLimitPerUser?;
+    @jsondata:Name {value: "default_auto_archive_duration"}
+    anydata defaultAutoArchiveDuration?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    @jsondata:Name {value: "default_reaction_emoji"}
+    anydata defaultReactionEmoji?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    int:Signed32? position?;
     string? topic?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    boolean? nsfw?;
-    int:Signed32? rate_limit_per_user?;
-    anydata parent_id?;
-    # 
-    ChannelPermissionOverwriteRequest[]? permission_overwrites?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    anydata default_auto_archive_duration?;
-    anydata default_reaction_emoji?;
-    int:Signed32? default_thread_rate_limit_per_user?;
-    anydata default_sort_order?;
-    anydata default_forum_layout?;
-    # 
-    (anydata)[]? available_tags?;
+    @jsondata:Name {value: "default_forum_layout"}
+    anydata defaultForumLayout?;
+    int:Signed32? position?;
+    #
+    @jsondata:Name {value: "available_tags"}
+    CreateGuildChannelRequestAvailableTags[]? availableTags?;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    @jsondata:Name {value: "default_sort_order"}
+    anydata defaultSortOrder?;
 };
 
 public type WidgetMember record {
-    string id;
-    string username;
-    WidgetUserDiscriminator discriminator;
-    string? avatar?;
-    string status;
-    string avatar_url;
     anydata activity?;
     boolean? deaf?;
     boolean? mute?;
-    boolean? self_deaf?;
-    boolean? self_mute?;
+    string? avatar?;
     boolean? suppress?;
-    anydata channel_id?;
+    WidgetUserDiscriminator discriminator;
+    @jsondata:Name {value: "avatar_url"}
+    string avatarUrl;
+    @jsondata:Name {value: "self_deaf"}
+    boolean? selfDeaf?;
+    string id;
+    @jsondata:Name {value: "self_mute"}
+    boolean? selfMute?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    string username;
+    string status;
 };
 
-public type THREAD_UPDATE 111;
-
-public type UserNotificationSettings ALL_MESSAGES|ONLY_MENTIONS;
+public type UserNotificationSettings ALLMESSAGES|ONLYMENTIONS;
 
 public type ChannelsMessagesBulkDeleteRequest record {
-    # 
+    #
     @constraint:Array {maxLength: 100, minLength: 2}
     ChannelsMessagesBulkDeleteRequestMessagesItemsString[] messages;
 };
 
-# Check if content contains words from internal pre-defined wordsets
-public type DEFAULT_KEYWORD_LIST 4;
+# Seven days
+public type SEVENDAY 10080;
+
+public type ChoicesOneOf21 anydata?;
+
+public type ChoicesOneOf22 anydata?;
+
+# The uk locale
+public type Uk "uk";
 
 public type GITHUB "github";
 
+public type ActionsOneOf51 anydata?;
+
+public type ActionsOneOf52 anydata?;
+
 public type GuildsBansRequest record {
-    int:Signed32? delete_message_seconds?;
-    int:Signed32? delete_message_days?;
+    @jsondata:Name {value: "delete_message_days"}
+    int:Signed32? deleteMessageDays?;
+    @jsondata:Name {value: "delete_message_seconds"}
+    int:Signed32? deleteMessageSeconds?;
 };
 
-# A direct message between multiple users
-public type GROUP_DM 3;
+public type ActionsOneOf53 anydata?;
+
+public type ActionsOneOf54 anydata?;
+
+# guild has enabled monetization
+public type CREATORMONETIZABLEPROVISIONAL "CREATOR_MONETIZABLE_PROVISIONAL";
 
 public type GuildBanResponse record {
-    UserResponse user;
     string? reason?;
+    UserResponse user;
 };
+
+public type '200AnyOf41 anydata?;
+
+public type InteractionApplicationCommandAutocompleteCallbackStringDataChoices ApplicationCommandOptionStringChoice|ChoicesOneOf22?;
 
 public type WelcomeMessageResponse record {
-    # 
-    WelcomeMessageResponseAuthoridsItemsString[] author_ids;
+    #
+    @jsondata:Name {value: "author_ids"}
+    WelcomeMessageResponseAuthoridsItemsString[] authorIds;
     string message;
-};
-
-public type MEMBER_MOVE 26;
-
-public type MessageInteractionResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    InteractionTypes 'type;
-    string name;
-    anydata user?;
-    string? name_localized?;
 };
 
 # guild is able to be featured in the directory
 public type FEATURABLE "FEATURABLE";
 
+public type MessageInteractionResponse record {
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    string name;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    InteractionTypes 'type;
+    anydata user?;
+};
+
+# members will receive notifications only for messages that @mention them by default
+public type ONLYMENTIONS 1;
+
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type RolesOneOf12 string;
+
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type RolesOneOf11 string;
+
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type RolesOneOf14 string;
+
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type RolesOneOf13 string;
+
 public type ApplicationUserRoleConnectionResponse record {
-    string? platform_name?;
-    string? platform_username?;
     record {|string...;|}? metadata?;
+    @jsondata:Name {value: "platform_username"}
+    string? platformUsername?;
+    @jsondata:Name {value: "platform_name"}
+    string? platformName?;
 };
 
 public type BasicApplicationResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    anydata bot?;
     string name;
     string? icon?;
     string description;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "cover_image"}
+    string? coverImage?;
+    @jsondata:Name {value: "primary_sku_id"}
+    anydata primarySkuId?;
     anydata 'type?;
-    string? cover_image?;
-    anydata primary_sku_id?;
-    anydata bot?;
 };
 
-public type pt\-BR "pt-BR";
+public type RolesRolesOneOf112 anydata?;
 
-public type GUILD_SCHEDULED_EVENT_DELETE 102;
-
-public type IntegrationTypes DISCORD|TWITCH|YOUTUBE|GUILD_SUBSCRIPTION;
-
-public type GuildsMembersRequest record {
-    string? nick?;
-    # 
-    (anydata)[]? roles?;
-    boolean? mute?;
-    boolean? deaf?;
-    @constraint:String {maxLength: 152133}
-    string access_token;
-    int:Signed32? flags?;
+# Represents the Queries record for the operation: get_webhook_message
+public type GetWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
 };
+
+public type IntegrationTypes DISCORD|TWITCH|YOUTUBE|GUILDSUBSCRIPTION;
+
+public type QUESTREWARD 10;
+
+public type CHANNELICONCHANGE 5;
 
 # shield style widget with Discord icon and guild members online count
 public type SHIELD "shield";
 
-# This permission is for a role.
+public type GuildsMembersRequest record {
+    string? nick?;
+    @jsondata:Name {value: "access_token"}
+    string accessToken;
+    #
+    GuildsMembersRequestRoles[]? roles?;
+    boolean? deaf?;
+    int:Signed32? flags?;
+    boolean? mute?;
+};
+
+# The vi locale
+public type Vi "vi";
+
+# This permission is for a role
 public type ROLE1 1;
 
 public type ROLE2 0;
-
-# A user is attempting to join the server or a member's properties were updated.
-public type GUILD_MEMBER_JOIN_OR_UPDATE 2;
 
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type GuildMemberResponseRolesItemsString string;
 
 public type CreateGroupDMInviteRequest record {
-    int:Signed32? max_age?;
+    @jsondata:Name {value: "max_age"}
+    int:Signed32? maxAge?;
 };
 
-public type GUILD_HOME_REMOVE_ITEM 172;
+public type GUILDDISCOVERYREQUALIFIED 15;
+
+# allows your app to see information about the user's DMs and group DMs - requires Discord approval
+public type DMCHANNELSREAD "dm_channels.read";
 
 public type WidgetImageStyles SHIELD|BANNER1|BANNER2|BANNER3|BANNER4;
 
-public type MEMBER_BAN_ADD 22;
+public type ChoicesOneOf2 anydata?;
 
 public type MessageReactionEmojiResponse record {
-    anydata id?;
     string? name?;
     boolean? animated?;
+    anydata id?;
 };
 
-public type AUTO_MODERATION_RULE_CREATE 140;
+public type DefaultKeywordRuleResponseActions BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse;
+
+# Represents the Queries record for the operation: get_guild_scheduled_event
+public type GetGuildScheduledEventQueries record {
+    #
+    @http:Query {name: "with_user_count"}
+    boolean withUserCount?;
+};
 
 public type UserCommunicationDisabledActionMetadataResponse record {
-    int:Signed32 duration_seconds;
+    @jsondata:Name {value: "duration_seconds"}
+    int:Signed32 durationSeconds;
 };
+
+public type AUTOMODERATIONUSERCOMMDISABLED 145;
+
+public type ComponentsOneOf8 anydata?;
+
+public type RolesRolesOneOf122 anydata?;
 
 public type UserResponse record {
+    @jsondata:Name {value: "accent_color"}
+    int:Signed32? accentColor?;
+    boolean? system?;
+    @jsondata:Name {value: "global_name"}
+    string? globalName?;
+    boolean? bot?;
+    @constraint:Int {minValue: -9007199254740991, maxValue: 9007199254740991}
+    int flags;
+    string? banner?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string username;
     string? avatar?;
+    @jsondata:Name {value: "public_flags"}
+    int:Signed32 publicFlags;
+    string username;
     string discriminator;
-    int:Signed32 public_flags;
-    @constraint:Int {minValue: -1, maxValue: 1}
-    int flags;
-    boolean? bot?;
-    boolean? system?;
-    string? banner?;
-    int:Signed32? accent_color?;
-    string? global_name?;
 };
 
-public type THREAD_STARTER_MESSAGE 21;
+public type MEMBERPRUNE 21;
 
 public type ApplicationsGuildsCommandsCommandIdPermissionsRequest record {
-    # 
+    #
     ApplicationCommandPermission[]? permissions?;
 };
 
 public type GuildInviteResponse record {
-    anydata 'type?;
-    string code;
-    anydata inviter?;
-    int:Signed32? max_age?;
-    string? created_at?;
-    string? expires_at?;
-    boolean? is_contact?;
-    int:Signed32? flags?;
-    anydata guild?;
-    anydata guild_id?;
-    anydata channel?;
-    anydata stage_instance?;
-    anydata target_type?;
-    anydata target_user?;
-    anydata target_application?;
-    anydata guild_scheduled_event?;
-    int:Signed32? uses?;
-    int:Signed32? max_uses?;
     boolean? temporary?;
-    int:Signed32? approximate_member_count?;
-    int:Signed32? approximate_presence_count?;
+    string code;
+    @jsondata:Name {value: "guild_scheduled_event"}
+    anydata guildScheduledEvent?;
+    @jsondata:Name {value: "approximate_presence_count"}
+    int:Signed32? approximatePresenceCount?;
+    @jsondata:Name {value: "target_application"}
+    anydata targetApplication?;
+    int:Signed32? flags?;
+    anydata channel?;
+    @jsondata:Name {value: "target_type"}
+    anydata targetType?;
+    @jsondata:Name {value: "created_at"}
+    string? createdAt?;
+    anydata 'type?;
+    @jsondata:Name {value: "is_contact"}
+    boolean? isContact?;
+    @jsondata:Name {value: "max_age"}
+    int:Signed32? maxAge?;
+    anydata guild?;
+    @jsondata:Name {value: "expires_at"}
+    string? expiresAt?;
+    @jsondata:Name {value: "max_uses"}
+    int:Signed32? maxUses?;
+    @jsondata:Name {value: "approximate_member_count"}
+    int:Signed32? approximateMemberCount?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    @jsondata:Name {value: "target_user"}
+    anydata targetUser?;
+    anydata inviter?;
+    int:Signed32? uses?;
+    @jsondata:Name {value: "stage_instance"}
+    anydata stageInstance?;
 };
 
 # guild has access to create announcement channels
@@ -1846,327 +2370,408 @@ public type NEWS "NEWS";
 public type NewMemberActionType VIEW|TALK;
 
 public type DefaultKeywordListUpsertRequest record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    4 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    AutomodEventType event_type;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    DefaultKeywordListUpsertRequestExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    DefaultKeywordListUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordListUpsertRequestActions[]? actions?;
     boolean? enabled?;
-    # 
-    DefaultKeywordListUpsertRequestExemptrolesItemsString[]? exempt_roles?;
-    # 
-    DefaultKeywordListUpsertRequestExemptchannelsItemsString[]? exempt_channels?;
-    4 trigger_type;
-    DefaultKeywordListTriggerMetadata trigger_metadata;
+    @jsondata:Name {value: "trigger_metadata"}
+    DefaultKeywordListTriggerMetadata triggerMetadata;
 };
 
-# guild has enabled monetization
-public type CREATOR_MONETIZABLE_PROVISIONAL "CREATOR_MONETIZABLE_PROVISIONAL";
+public type GUILDINVITEREMINDER 22;
+
+public type NewMemberActionsOneOf2 anydata?;
 
 public type GuildOnboardingResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    # 
+    #
+    @jsondata:Name {value: "default_channel_ids"}
+    GuildOnboardingResponseDefaultchannelidsItemsString[] defaultChannelIds;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    #
     OnboardingPromptResponse[] prompts;
-    # 
-    GuildOnboardingResponseDefaultchannelidsItemsString[] default_channel_ids;
     boolean enabled;
 };
 
 public type MessageAllowedMentionsRequest record {
-    # 
+    #
+    MessageAllowedMentionsRequestRoles[]? roles?;
+    #
     AllowedMentionTypes[]? parse?;
-    # 
-    (anydata)[]? users?;
-    # 
-    (anydata)[]? roles?;
-    boolean? replied_user?;
+    @jsondata:Name {value: "replied_user"}
+    boolean? repliedUser?;
+    #
+    MessageAllowedMentionsRequestUsers[]? users?;
 };
 
 # Multi-line input
 public type PARAGRAPH 2;
 
-public type RECIPIENT_ADD 1;
+# the metadata value (integer) is not equal to the guild's configured value (integer; 1)
+public type BOOLEANNOTEQUAL 8;
 
 public type ConnectedAccountIntegrationResponse record {
+    ConnectedAccountGuildResponse guild;
     string id;
     IntegrationTypes 'type;
     AccountResponse account;
-    ConnectedAccountGuildResponse guild;
 };
+
+public type IncludeRolesOneOf1 string;
 
 public type VoiceScheduledEventPatchRequestPartial record {
-    anydata status?;
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    anydata entityType?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel?;
     @constraint:String {maxLength: 100}
     string name?;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time?;
-    string? scheduled_end_time?;
-    anydata entity_type?;
-    GuildScheduledEventPrivacyLevels privacy_level?;
-    anydata channel_id?;
-    anydata entity_metadata?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    anydata status?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
-
-# A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
-public type PRIVATE_THREAD 12;
 
 public type ROBLOX "roblox";
-
-# Represents the Queries record for the operation: list_guild_members
-public type List_guild_membersQueries record {
-    # 
-    @constraint:Int {minValue: 1, maxValue: 1000}
-    int:Signed32 'limit?;
-    # 
-    @constraint:Int {minValue: 0}
-    int:Signed32 after?;
-};
 
 # allows /users/@me/guilds to return basic information about all of a user's guilds
 public type GUILDS "guilds";
 
-public type INTEGRATION_UPDATE 81;
+public type MEMBERROLEUPDATE 25;
 
-public type STAGE_INSTANCE_UPDATE 84;
+# guild is using the old permissions configuration behavior
+public type APPLICATIONCOMMANDPERMISSIONSV2 "APPLICATION_COMMAND_PERMISSIONS_V2";
 
 public type ApplicationCommandNumberOption record {
-    10 'type;
+    @jsondata:Name {value: "min_value"}
+    decimal? minValue?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    boolean? autocomplete?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    boolean? autocomplete?;
-    # 
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    10 'type;
+    #
     ApplicationCommandOptionNumberChoice[]? choices?;
-    decimal? min_value?;
-    decimal? max_value?;
+    boolean? required?;
+    @jsondata:Name {value: "max_value"}
+    decimal? maxValue?;
 };
+
+public type MessageResponseMentionChannels MessageMentionChannelResponse|MentionChannelsOneOf21?;
 
 public type GuildHomeSettingsResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
+    #
+    @jsondata:Name {value: "new_member_actions"}
+    GuildHomeSettingsResponseNewMemberActions[]? newMemberActions?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "welcome_message"}
+    anydata welcomeMessage?;
     boolean enabled;
-    anydata welcome_message?;
-    # 
-    (anydata)[]? new_member_actions?;
-    # 
-    (anydata)[]? resource_channels?;
+    #
+    @jsondata:Name {value: "resource_channels"}
+    GuildHomeSettingsResponseResourceChannels[]? resourceChannels?;
 };
 
+public type INVITECREATE 40;
+
+public type GUILDDISCOVERYDISQUALIFIED 14;
+
+public type MEMBERUPDATE 24;
+
+public type AUTOMODERATIONACTION 24;
+
 public type UpdateOnboardingPromptRequest record {
-    @constraint:String {maxLength: 100, minLength: 1}
-    string title;
-    # 
+    @jsondata:Name {value: "in_onboarding"}
+    boolean? inOnboarding?;
+    #
     @constraint:Array {maxLength: 50, minLength: 1}
     OnboardingPromptOptionRequest[] options;
-    boolean? single_select?;
-    boolean? required?;
-    boolean? in_onboarding?;
-    anydata 'type?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
+    @constraint:String {maxLength: 100, minLength: 1}
+    string title;
+    anydata 'type?;
+    @jsondata:Name {value: "single_select"}
+    boolean? singleSelect?;
+    boolean? required?;
 };
 
 # The Stage instance is visible publicly. (deprecated)
 public type PUBLIC 1;
 
 public type ChannelPermissionOverwriteRequest record {
+    int:Signed32? allow?;
+    int:Signed32? deny?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     anydata 'type?;
-    int:Signed32? allow?;
-    int:Signed32? deny?;
 };
 
 public type WidgetSettingsResponse record {
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
     boolean enabled;
-    anydata channel_id?;
 };
 
 public type EVERYONE1 1;
 
 public type ApplicationCommandMentionableOption record {
-    9 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    9 'type;
     boolean? required?;
 };
 
-public type OnboardingPromptType MULTIPLE_CHOICE|DROPDOWN;
+# Represents the Queries record for the operation: list_guild_application_commands
+public type ListGuildApplicationCommandsQueries record {
+    #
+    @http:Query {name: "with_localizations"}
+    boolean withLocalizations?;
+};
+
+public type OnboardingPromptType MULTIPLECHOICE|DROPDOWN;
 
 public type GuildSubscriptionIntegrationResponse record {
-    "guild_subscription" 'type;
     string? name?;
-    anydata account?;
-    boolean? enabled?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
+    "guild_subscription" 'type;
+    anydata account?;
+    boolean? enabled?;
 };
+
+# The en-GB locale
+public type EnGB "en-GB";
+
+public type GUILDSUBSCRIPTION "guild_subscription";
 
 # Slash commands; a text-based command that shows up when a user types /
 public type CHAT 1;
-
-public type CHANNEL_OVERWRITE_UPDATE 14;
 
 public type InviteChannelRecipientResponse record {
     string username;
 };
 
-public type THREAD_CREATE 110;
-
-public type MESSAGE_BULK_DELETE 73;
-
-public type EMOJI_UPDATE 61;
+public type GuildHomeSettingsResponseResourceChannels ResourceChannelResponse|ResourceChannelsOneOf2?;
 
 public type GuildsRolesRequest2 record {
     anydata id?;
     int:Signed32? position?;
 };
 
+# guild has access to set 384kbps bitrate in voice (previously VIP voice servers)
+public type VIPREGIONS "VIP_REGIONS";
+
 public type RoleSelect record {
-    6 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    #
+    @jsondata:Name {value: "default_values"}
+    RoleSelectDefaultValue[]? defaultValues?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
-    # 
-    RoleSelectDefaultValue[]? default_values?;
+    string? placeholder?;
+    6 'type;
 };
 
 public type GithubUser record {
+    @jsondata:Name {value: "avatar_url"}
+    string avatarUrl;
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     int:Signed32 id;
     @constraint:String {maxLength: 152133}
     string login;
-    @constraint:String {maxLength: 2048}
-    string html_url;
-    @constraint:String {maxLength: 2048}
-    string avatar_url;
 };
 
-public type APPLICATION_SUBSCRIPTION 8;
+# Sent when a user uses an application command
+public type APPLICATIONCOMMAND 2;
 
-public type ONBOARDING_PROMPT_UPDATE 164;
+public type InteractionCallbackTypes PONG|CHANNELMESSAGEWITHSOURCE|DEFERREDCHANNELMESSAGEWITHSOURCE|DEFERREDUPDATEMESSAGE|UPDATEMESSAGE|APPLICATIONCOMMANDAUTOCOMPLETERESULT|MODAL;
 
-public type InteractionCallbackTypes PONG|CHANNEL_MESSAGE_WITH_SOURCE|DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE|DEFERRED_UPDATE_MESSAGE|UPDATE_MESSAGE|APPLICATION_COMMAND_AUTOCOMPLETE_RESULT|MODAL;
+public type AvailableLocalesEnum Ar|Bg|Cs|Da|De|El|EnGB|EnUS|Es419|EsES|Fi|Fr|He|Hi|Hr|Hu|Id|It|Ja|Ko|Lt|Nl|No|Pl|PtBR|Ro|Ru|SvSE|Th|Tr|Uk|Vi|ZhCN|ZhTW;
+
+public type AutoModerationRulesBody DefaultKeywordListUpsertRequest|KeywordUpsertRequest|MLSpamUpsertRequest|MentionSpamUpsertRequest;
 
 public type StageScheduledEventResponse record {
+    string? image?;
+    anydata creator?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
+    string? description?;
+    @jsondata:Name {value: "entity_id"}
+    anydata entityId?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
+    @jsondata:Name {value: "entity_type"}
+    1 entityType;
+    @jsondata:Name {value: "user_rsvp"}
+    anydata userRsvp?;
+    @jsondata:Name {value: "user_count"}
+    int:Signed32? userCount?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    @jsondata:Name {value: "creator_id"}
+    anydata creatorId?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    string? description?;
-    anydata channel_id?;
-    anydata creator_id?;
-    anydata creator?;
-    string? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
     GuildScheduledEventStatuses status;
-    1 entity_type;
-    anydata entity_id?;
-    int:Signed32? user_count?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    anydata user_rsvp?;
-    anydata entity_metadata?;
 };
 
-public type AvailableLocalesEnum ar|bg|cs|da|de|el|en\-GB|en\-US|es\-419|es\-ES|fi|fr|he|hi|hr|hu|id|it|ja|ko|lt|nl|no|pl|pt\-BR|ro|ru|sv\-SE|th|tr|uk|vi|zh\-CN|zh\-TW;
+# allows /guilds/{guild.id}/members/{user.id} to be used for joining users to a guild
+public type GUILDSJOIN "guilds.join";
 
 public type KeywordTriggerMetadata record {
-    # 
-    KeywordTriggerMetadataKeywordfilterItemsString[]? keyword_filter?;
-    # 
-    KeywordTriggerMetadataRegexpatternsItemsString[]? regex_patterns?;
-    # 
-    KeywordTriggerMetadataAllowlistItemsString[]? allow_list?;
+    #
+    @jsondata:Name {value: "keyword_filter"}
+    KeywordTriggerMetadataKeywordfilterItemsString[]? keywordFilter?;
+    #
+    @jsondata:Name {value: "allow_list"}
+    KeywordTriggerMetadataAllowlistItemsString[]? allowList?;
+    #
+    @jsondata:Name {value: "regex_patterns"}
+    KeywordTriggerMetadataRegexpatternsItemsString[]? regexPatterns?;
 };
 
-# The Stage instance is visible publicly. (deprecated)
-public type GUILD_ONLY1 2;
+public type INTEGRATIONDELETE 82;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# guild has access to set an animated guild banner image
+public type ANIMATEDBANNER "ANIMATED_BANNER";
+
 public type DefaultKeywordListUpsertRequestPartialExemptchannelsItemsString string;
 
-public type GuildChannelResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    ChannelTypes 'type;
-    anydata last_message_id?;
-    int:Signed32 flags;
-    string? last_pin_timestamp?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    anydata parent_id?;
-    int:Signed32? rate_limit_per_user?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    string? permissions?;
-    string? topic?;
-    anydata default_auto_archive_duration?;
-    int:Signed32? default_thread_rate_limit_per_user?;
-    int:Signed32 position;
-    # 
-    ChannelPermissionOverwriteResponse[]? permission_overwrites?;
-    boolean? nsfw?;
-    # 
-    ForumTagResponse[]? available_tags?;
-    anydata default_reaction_emoji?;
-    anydata default_sort_order?;
-    anydata default_forum_layout?;
-};
-
 public type CreateGuildRequestChannelItem record {
+    boolean? nsfw?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    int:Signed32? bitrate?;
     anydata 'type?;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    #
+    @jsondata:Name {value: "permission_overwrites"}
+    ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "default_thread_rate_limit_per_user"}
+    int:Signed32? defaultThreadRateLimitPerUser?;
+    @jsondata:Name {value: "default_auto_archive_duration"}
+    anydata defaultAutoArchiveDuration?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    @jsondata:Name {value: "default_reaction_emoji"}
+    anydata defaultReactionEmoji?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    int:Signed32? position?;
     string? topic?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    boolean? nsfw?;
-    int:Signed32? rate_limit_per_user?;
-    anydata parent_id?;
-    # 
-    ChannelPermissionOverwriteRequest[]? permission_overwrites?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    anydata default_auto_archive_duration?;
-    anydata default_reaction_emoji?;
-    int:Signed32? default_thread_rate_limit_per_user?;
-    anydata default_sort_order?;
-    anydata default_forum_layout?;
+    @jsondata:Name {value: "default_forum_layout"}
+    anydata defaultForumLayout?;
+    int:Signed32? position?;
     anydata id?;
-    # 
-    CreateOrUpdateThreadTagRequest[]? available_tags?;
+    #
+    @jsondata:Name {value: "available_tags"}
+    CreateOrUpdateThreadTagRequest[]? availableTags?;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    @jsondata:Name {value: "default_sort_order"}
+    anydata defaultSortOrder?;
 };
 
-public type MEMBER_BAN_REMOVE 23;
-
-public type MessageStickerItemResponse record {
+public type GuildChannelResponse record {
+    @jsondata:Name {value: "last_pin_timestamp"}
+    string? lastPinTimestamp?;
+    boolean? nsfw?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    int:Signed32 flags;
+    int:Signed32? bitrate?;
+    ChannelTypes 'type;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    @jsondata:Name {value: "last_message_id"}
+    anydata lastMessageId?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    #
+    @jsondata:Name {value: "permission_overwrites"}
+    ChannelPermissionOverwriteResponse[]? permissionOverwrites?;
+    @jsondata:Name {value: "default_thread_rate_limit_per_user"}
+    int:Signed32? defaultThreadRateLimitPerUser?;
+    @jsondata:Name {value: "default_auto_archive_duration"}
+    anydata defaultAutoArchiveDuration?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    string? permissions?;
+    @jsondata:Name {value: "default_reaction_emoji"}
+    anydata defaultReactionEmoji?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    string? topic?;
+    @jsondata:Name {value: "default_forum_layout"}
+    anydata defaultForumLayout?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    StickerFormatTypes format_type;
+    int:Signed32 position;
+    #
+    @jsondata:Name {value: "available_tags"}
+    ForumTagResponse[]? availableTags?;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    @jsondata:Name {value: "default_sort_order"}
+    anydata defaultSortOrder?;
 };
 
-public type GuildsEmojisRequest1RolesItemsnull anydata;
+# for local rpc server access, this allows you to read a user's video status - requires Discord approval
+public type RPCVIDEOREAD "rpc.video.read";
 
-public type INTEGRATION_DELETE 82;
+public type MessageStickerItemResponse record {
+    @jsondata:Name {value: "format_type"}
+    StickerFormatTypes formatType;
+    string name;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+};
 
 # Check if content contains words from a list of keywords or matches regex
 public type KEYWORD 1;
@@ -2177,227 +2782,251 @@ public type NONE2 0;
 # Guild has no MFA/2FA requirement for moderation actions
 public type NONE3 0;
 
-public type BlockMessageAction record {
-    1 'type;
-    anydata metadata?;
-};
-
-public type WebhookSlackEmbed record {
-    string? title?;
-    string? title_link?;
-    string? text?;
-    string? color?;
-    int:Signed32? ts?;
-    string? pretext?;
-    string? footer?;
-    string? footer_icon?;
-    string? author_name?;
-    string? author_link?;
-    string? author_icon?;
-    string? image_url?;
-    string? thumb_url?;
-    # 
-    WebhookSlackEmbedField[]? fields?;
-};
-
 # Guild has not unlocked any Server Boost perks
 public type NONE4 0;
 
+public type BlockMessageAction record {
+    anydata metadata?;
+    1 'type;
+};
+
+public type WebhookSlackEmbed record {
+    @jsondata:Name {value: "author_name"}
+    string? authorName?;
+    @jsondata:Name {value: "thumb_url"}
+    string? thumbUrl?;
+    string? color?;
+    string? footer?;
+    @jsondata:Name {value: "image_url"}
+    string? imageUrl?;
+    @jsondata:Name {value: "footer_icon"}
+    string? footerIcon?;
+    @jsondata:Name {value: "title_link"}
+    string? titleLink?;
+    string? title?;
+    @jsondata:Name {value: "author_link"}
+    string? authorLink?;
+    @jsondata:Name {value: "author_icon"}
+    string? authorIcon?;
+    string? pretext?;
+    string? text?;
+    #
+    WebhookSlackEmbedField[]? fields?;
+    int:Signed32? ts?;
+};
+
+public type OptionsOneOf12 anydata?;
+
 public type InteractionApplicationCommandAutocompleteCallbackIntegerData record {
-    # 
-    (anydata)[]? choices?;
+    #
+    InteractionApplicationCommandAutocompleteCallbackIntegerDataChoices[]? choices?;
+};
+
+# Represents the Queries record for the operation: list_guild_scheduled_event_users
+public type ListGuildScheduledEventUsersQueries record {
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+    #
+    @http:Query {name: "with_member"}
+    boolean withMember?;
 };
 
 public type MessageComponentInputTextResponse record {
-    4 'type;
-    int:Signed32 id;
-    string custom_id;
+    @jsondata:Name {value: "min_length"}
+    int:Signed32? minLength?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
     TextStyleTypes style;
+    int:Signed32 id;
     string? label?;
-    string? value?;
     string? placeholder?;
+    4 'type;
+    string? value?;
     boolean? required?;
-    int:Signed32? min_length?;
-    int:Signed32? max_length?;
+    @jsondata:Name {value: "max_length"}
+    int:Signed32? maxLength?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type KeywordUpsertRequestActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf52?;
+
+public type AUTOMODERATIONBLOCKMESSAGE 143;
+
+public type HOMESETTINGSCREATE 190;
+
 public type MentionSpamRuleResponseExemptchannelsItemsString string;
 
+# Channel that can only contain threads
+public type GUILDFORUM 15;
+
+public type ROLEUPDATE 31;
+
 public type IncomingWebhookUpdateRequestPartial record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
+    #
     ActionRow[]? components?;
-    # 
+    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
 };
 
 public type GuildStickerResponse record {
+    @jsondata:Name {value: "format_type"}
+    anydata formatType?;
+    string name;
+    boolean available;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string? description?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string tags;
     2 'type;
-    anydata format_type?;
-    string? description?;
-    boolean available;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
     anydata user?;
+    string tags;
 };
 
-public type ModalInteractionCallbackRequest record {
-    9 'type;
-    ModalInteractionCallbackData data;
-};
+public type MessageComponentActionRowResponseComponents MessageComponentButtonResponse|MessageComponentChannelSelectResponse|MessageComponentInputTextResponse|MessageComponentMentionableSelectResponse|MessageComponentRoleSelectResponse|MessageComponentStringSelectResponse|MessageComponentUserSelectResponse|ComponentsOneOf8?;
 
 public type GIF 4;
 
+public type ModalInteractionCallbackRequest record {
+    ModalInteractionCallbackData data;
+    9 'type;
+};
+
+public type GUILDINCIDENTREPORTFALSEALARM 39;
+
 public type GithubWebhook record {
-    string? action?;
-    string? ref?;
-    string? ref_type?;
-    anydata comment?;
-    anydata issue?;
-    anydata pull_request?;
-    anydata repository?;
-    anydata forkee?;
-    GithubUser sender;
-    anydata member?;
-    anydata release?;
-    anydata head_commit?;
-    # 
-    GithubCommit[]? commits?;
-    boolean? forced?;
+    @jsondata:Name {value: "pull_request"}
+    anydata pullRequest?;
+    @jsondata:Name {value: "head_commit"}
+    anydata headCommit?;
     string? compare?;
-    anydata review?;
-    anydata check_run?;
-    anydata check_suite?;
+    anydata issue?;
+    anydata release?;
+    boolean? forced?;
     anydata discussion?;
+    anydata repository?;
+    string? ref?;
+    @jsondata:Name {value: "check_run"}
+    anydata checkRun?;
     anydata answer?;
+    GithubUser sender;
+    anydata review?;
+    anydata member?;
+    string? action?;
+    #
+    GithubCommit[]? commits?;
+    anydata comment?;
+    @jsondata:Name {value: "ref_type"}
+    string? refType?;
+    @jsondata:Name {value: "check_suite"}
+    anydata checkSuite?;
+    anydata forkee?;
 };
 
-# A channel that users can follow and crosspost into their own server (formerly news channels)
-public type GUILD_ANNOUNCEMENT 5;
+# allows your app to upload/update builds for a user's applications - requires Discord approval
+public type APPLICATIONSBUILDSUPLOAD "applications.builds.upload";
 
-# Represents the Queries record for the operation: search_guild_members
-public type Search_guild_membersQueries record {
-    # 
-    @constraint:String {maxLength: 100, minLength: 1}
-    string query;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 1000}
-    int:Signed32 'limit;
-};
+# A temporary sub-channel within a GUILD_TEXT channel that is only viewable by those invited and those with the MANAGE_THREADS permission
+public type PRIVATETHREAD 12;
 
-public type messages_message_id_body record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    int:Signed32? flags?;
-    anydata allowed_mentions?;
-    # 
-    messages_message_id_bodyStickeridsItemsString[]? sticker_ids?;
-    # 
-    ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
-};
+public type OptionsOneOf10 anydata?;
 
-# allows your app to update its commands using a Bearer token - client credentials grant only
-public type APPLICATIONS_COMMANDS_UPDATE "applications.commands.update";
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type RolesOneOf1 string;
 
-public type es\-ES "es-ES";
+public type INTEGRATIONUPDATE 81;
 
-# the metadata value (ISO8601 string) is less than or equal to the guild's configured value (integer; days before current date)
-public type DATETIME_LESS_THAN_EQUAL 5;
+# A user submitted a message to a channel
+public type MESSAGESEND 1;
 
 public type FriendInviteResponse record {
-    anydata 'type?;
+    @jsondata:Name {value: "max_age"}
+    int:Signed32? maxAge?;
+    @jsondata:Name {value: "friends_count"}
+    int:Signed32? friendsCount?;
     string code;
-    anydata inviter?;
-    int:Signed32? max_age?;
-    string? created_at?;
-    string? expires_at?;
-    int:Signed32? friends_count?;
+    @jsondata:Name {value: "expires_at"}
+    string? expiresAt?;
+    @jsondata:Name {value: "max_uses"}
+    int:Signed32? maxUses?;
     anydata channel?;
-    boolean? is_contact?;
-    int:Signed32? uses?;
-    int:Signed32? max_uses?;
     int:Signed32? flags?;
+    @jsondata:Name {value: "created_at"}
+    string? createdAt?;
+    anydata inviter?;
+    int:Signed32? uses?;
+    anydata 'type?;
+    @jsondata:Name {value: "is_contact"}
+    boolean? isContact?;
 };
-
-public type GUILD_DISCOVERY_REQUALIFIED 15;
 
 public type AccountResponse record {
-    string id;
     string? name?;
-};
-
-public type channel_id_messages_body record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
-    channel_id_messages_bodyStickeridsItemsString[]? sticker_ids?;
-    # 
-    ActionRow[]? components?;
-    int:Signed32? flags?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
-    anydata message_reference?;
-    anydata nonce?;
-    boolean? tts?;
+    string id;
 };
 
 public type CreateMessageInteractionCallbackRequest record {
-    InteractionCallbackTypes 'type;
     anydata data?;
+    InteractionCallbackTypes 'type;
 };
 
-public type CHANNEL_OVERWRITE_DELETE 15;
+public type GuildIdScheduledEventsBody ExternalScheduledEventCreateRequest|StageScheduledEventCreateRequest|VoiceScheduledEventCreateRequest;
 
 public type GuildsStickersRequest record {
     @constraint:String {maxLength: 30, minLength: 2}
     string name?;
+    string? description?;
     @constraint:String {maxLength: 200, minLength: 1}
     string tags?;
-    string? description?;
 };
 
-# Represents the Headers record for the operation: execute_slack_compatible_webhook
-public type Execute_slack_compatible_webhookHeaders record {
-    # 
-    "application/x-www-form-urlencoded" Content\-Type;
+# Represents the Headers record for the operation: update_message
+public type UpdateMessageHeaders record {
+    #
+    @http:Header {name: "Content-Type"}
+    "application/x-www-form-urlencoded" contentType;
 };
+
+# Words and phrases that may be considered as sexual content
+public type SEXUALCONTENT 2;
 
 public type ChannelSelect record {
-    8 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    #
+    @jsondata:Name {value: "default_values"}
+    ChannelSelectDefaultValue[]? defaultValues?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
+    #
+    @jsondata:Name {value: "channel_types"}
+    ChannelTypes[]? channelTypes?;
     boolean? disabled?;
-    # 
-    ChannelSelectDefaultValue[]? default_values?;
-    # 
-    ChannelTypes[]? channel_types?;
+    string? placeholder?;
+    8 'type;
 };
 
 public type WebhooksRequest2 record {
     @constraint:String {maxLength: 80, minLength: 1}
     string name?;
     record {byte[] fileContent; string fileName;}? avatar?;
-    anydata channel_id?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
 };
-
-public type zh\-TW "zh-TW";
 
 public type WebhooksRequest1 record {
     @constraint:String {maxLength: 80, minLength: 1}
@@ -2406,256 +3035,291 @@ public type WebhooksRequest1 record {
 };
 
 public type MessageRoleSubscriptionDataResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string role_subscription_listing_id;
-    string tier_name;
-    int:Signed32 total_months_subscribed;
-    boolean is_renewal;
+    @jsondata:Name {value: "tier_name"}
+    string tierName;
+    @jsondata:Name {value: "is_renewal"}
+    boolean isRenewal;
+    @jsondata:Name {value: "role_subscription_listing_id"}
+    string roleSubscriptionListingId;
+    @jsondata:Name {value: "total_months_subscribed"}
+    int:Signed32 totalMonthsSubscribed;
 };
-
-public type GUILD_APPLICATION_PREMIUM_SUBSCRIPTION 32;
 
 public type CANCELED 4;
 
 public type Emoji record {
-    anydata id?;
     @constraint:String {maxLength: 32}
     string name;
     boolean? animated?;
+    anydata id?;
 };
-
-# A user submitted a message to a channel
-public type MESSAGE_SEND 1;
 
 public type DefaultKeywordListTriggerMetadataResponse record {
-    # 
-    string[] allow_list;
-    # 
+    #
     AutomodKeywordPresetType[] presets;
+    #
+    @jsondata:Name {value: "allow_list"}
+    string[] allowList;
 };
 
-public type inline_response_200 PrivateChannelResponse|PrivateGroupChannelResponse;
+public type PremiumGuildTiers NONE4|TIER1|TIER2|TIER3;
 
 public type GuildMemberResponse record {
-    string? avatar?;
-    anydata avatar_decoration_data?;
-    string? communication_disabled_until?;
-    int:Signed32 flags;
-    string joined_at;
+    @jsondata:Name {value: "joined_at"}
+    string joinedAt;
     string? nick?;
+    @jsondata:Name {value: "premium_since"}
+    string? premiumSince?;
+    @jsondata:Name {value: "communication_disabled_until"}
+    string? communicationDisabledUntil?;
+    @jsondata:Name {value: "avatar_decoration_data"}
+    anydata avatarDecorationData?;
     boolean pending;
-    string? premium_since?;
-    # 
+    #
     GuildMemberResponseRolesItemsString[] roles;
-    UserResponse user;
-    boolean mute;
+    int:Signed32 flags;
     boolean deaf;
+    boolean mute;
+    string? avatar?;
+    UserResponse user;
 };
 
-public type PremiumGuildTiers NONE4|TIER_1|TIER_2|TIER_3;
-
 public type GuildsWidgetRequest record {
-    anydata channel_id?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
     boolean? enabled?;
 };
 
-# Represents the Queries record for the operation: get_webhook_message
-public type Get_webhook_messageQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
-
 public type GithubComment record {
+    @jsondata:Name {value: "html_url"}
+    string htmlUrl;
     int:Signed32 id;
-    @constraint:String {maxLength: 2048}
-    string html_url;
-    GithubUser user;
-    string? commit_id?;
     @constraint:String {maxLength: 152133}
     string body;
+    GithubUser user;
+    @jsondata:Name {value: "commit_id"}
+    string? commitId?;
 };
 
 public type ApplicationCommandBooleanOption record {
-    5 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    5 'type;
     boolean? required?;
 };
 
 public type ChannelPermissionOverwriteResponse record {
+    string allow;
+    string deny;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     ChannelPermissionOverwrites 'type;
-    string allow;
-    string deny;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type IncomingWebhookRequestPartialAppliedtagsItemsString string;
 
 public type ApplicationResponse record {
+    #
+    @jsondata:Name {value: "rpc_origins"}
+    string[]? rpcOrigins?;
+    @jsondata:Name {value: "privacy_policy_url"}
+    string? privacyPolicyUrl?;
+    @jsondata:Name {value: "bot_require_code_grant"}
+    boolean? botRequireCodeGrant?;
+    anydata bot?;
+    string? icon?;
+    int:Signed32 flags;
+    string description;
+    @jsondata:Name {value: "verify_key"}
+    string verifyKey;
+    anydata 'type?;
+    @jsondata:Name {value: "max_participants"}
+    int:Signed32? maxParticipants?;
+    #
+    string[]? tags?;
+    @jsondata:Name {value: "custom_install_url"}
+    string? customInstallUrl?;
+    @jsondata:Name {value: "install_params"}
+    anydata installParams?;
+    string name;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string? icon?;
-    string description;
-    anydata 'type?;
-    string? cover_image?;
-    anydata primary_sku_id?;
-    anydata bot?;
+    @jsondata:Name {value: "cover_image"}
+    string? coverImage?;
+    @jsondata:Name {value: "primary_sku_id"}
+    anydata primarySkuId?;
     string? slug?;
-    anydata guild_id?;
-    # 
-    string[]? rpc_origins?;
-    boolean? bot_public?;
-    boolean? bot_require_code_grant?;
-    string? terms_of_service_url?;
-    string? privacy_policy_url?;
-    string? custom_install_url?;
-    anydata install_params?;
-    string verify_key;
-    int:Signed32 flags;
-    int:Signed32? max_participants?;
-    # 
-    string[]? tags?;
+    @jsondata:Name {value: "bot_public"}
+    boolean? botPublic?;
+    @jsondata:Name {value: "terms_of_service_url"}
+    string? termsOfServiceUrl?;
 };
-
-# Proxy server configurations to be used with the HTTP client endpoint.
-public type ProxyConfig record {|
-    # Host name of the proxy server
-    string host = "";
-    # Proxy server port
-    int port = 0;
-    # Proxy server username
-    string userName = "";
-    # Proxy server password
-    @display {label: "", kind: "password"}
-    string password = "";
-|};
 
 # A UI-based command that shows up when you right click or tap on a user
 public type USER 2;
 
+public type MessageAllowedMentionsRequestUsers UsersOneOf1|UsersUsersOneOf12?;
+
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type EmojiResponseRolesItemsString string;
 
-# guild has paused invites, preventing new users from joining
-public type INVITES_DISABLED "INVITES_DISABLED";
+public type CreateGuildChannelRequestAvailableTags CreateOrUpdateThreadTagRequest|AvailableTagsOneOf2?;
 
-public type ROLE_SUBSCRIPTION_PURCHASE 25;
+# the metadata value (integer) is equal to the guild's configured value (integer)
+public type INTEGEREQUAL 3;
+
+public type INTERACTIONPREMIUMUPSELL 26;
 
 public type MessageComponentEmojiResponse record {
-    anydata id?;
     string name;
     boolean? animated?;
+    anydata id?;
+};
+
+# DEPRECATED
+public type SPAMLINK 2;
+
+# Represents the Queries record for the operation: list_private_archived_threads
+public type ListPrivateArchivedThreadsQueries record {
+    #
+    string before?;
+    #
+    @constraint:Int {minValue: 2, maxValue: 100}
+    int:Signed32 'limit?;
 };
 
 public type MessageCallResponse record {
-    string? ended_timestamp?;
-    # 
+    @jsondata:Name {value: "ended_timestamp"}
+    string? endedTimestamp?;
+    #
     MessageCallResponseParticipantsItemsString[] participants;
 };
 
-# Three days
-public type THREE_DAY 4320;
-
-public type webhook_token_slack_body record {
-    string? text?;
-    string? username?;
-    string? icon_url?;
-    # 
-    WebhookSlackEmbed[]? attachments?;
+# Represents the Queries record for the operation: list_guild_bans
+public type ListGuildBansQueries record {
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 1000}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
 };
 
 public type SECONDARY 2;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type DefaultKeywordListUpsertRequestPartialExemptrolesItemsString string;
+
+# Represents the Queries record for the operation: list_application_commands
+public type ListApplicationCommandsQueries record {
+    #
+    @http:Query {name: "with_localizations"}
+    boolean withLocalizations?;
+};
+
+public type ScheduledEventsguildScheduledEventIdBody ExternalScheduledEventPatchRequestPartial|StageScheduledEventPatchRequestPartial|VoiceScheduledEventPatchRequestPartial;
+
+public type MESSAGEPIN 74;
 
 public type SCHEDULED 1;
 
+# Represents the Queries record for the operation: list_my_private_archived_threads
+public type ListMyPrivateArchivedThreadsQueries record {
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 2, maxValue: 100}
+    int:Signed32 'limit?;
+};
+
+# The channel in a hub containing the listed servers
+public type GUILDDIRECTORY 14;
+
 public type GuildRoleTagsResponse record {
-    string? premium_subscriber?;
-    anydata bot_id?;
-    anydata integration_id?;
-    anydata subscription_listing_id?;
-    string? available_for_purchase?;
-    string? guild_connections?;
+    @jsondata:Name {value: "subscription_listing_id"}
+    anydata subscriptionListingId?;
+    @jsondata:Name {value: "guild_connections"}
+    string? guildConnections?;
+    @jsondata:Name {value: "integration_id"}
+    anydata integrationId?;
+    @jsondata:Name {value: "premium_subscriber"}
+    string? premiumSubscriber?;
+    @jsondata:Name {value: "available_for_purchase"}
+    string? availableForPurchase?;
+    @jsondata:Name {value: "bot_id"}
+    anydata botId?;
 };
 
 public type Button record {
-    2 'type;
-    string? custom_id?;
-    ButtonStyleTypes style;
-    string? label?;
-    boolean? disabled?;
     anydata emoji?;
+    @jsondata:Name {value: "custom_id"}
+    string? customId?;
+    ButtonStyleTypes style;
+    boolean? disabled?;
+    @jsondata:Name {value: "sku_id"}
+    anydata skuId?;
+    string? label?;
+    2 'type;
     string? url?;
-    anydata sku_id?;
 };
 
 public type ApplicationCommandSubcommandOption record {
-    1 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandSubcommandOptionOptions[]? options?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    1 'type;
     boolean? required?;
-    # 
-    (anydata)[]? options?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type GUILDDISCOVERYGRACEPERIODINITIALWARNING 16;
+
 public type UserGuildOnboardingResponseDefaultchannelidsItemsString string;
 
-# Represents the Queries record for the operation: update_original_webhook_message
-public type Update_original_webhook_messageQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
+public type GUILDAPPLICATIONPREMIUMSUBSCRIPTION 32;
 
-public type CHANNEL_CREATE 10;
-
-# Represents the Headers record for the operation: update_original_webhook_message
-public type Update_original_webhook_messageHeaders record {
-    # 
-    "application/x-www-form-urlencoded" Content\-Type;
-};
-
-public type THIRTY_MINUTES 1800;
+public type DEFERREDCHANNELMESSAGEWITHSOURCE 5;
 
 # must be registered on Discord for longer than 5 minutes
 public type MEDIUM 2;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type GuildOnboardingResponseDefaultchannelidsItemsString string;
 
-# for local rpc server access, this allows you to update a user's screenshare settings- requires Discord approval
-public type RPC_SCREENSHARE_WRITE "rpc.screenshare.write";
+# A temporary sub-channel within a GUILD_TEXT or GUILD_THREADS_ONLY channel type set
+public type PUBLICTHREAD 11;
+
+public type CHANNELPINNEDMESSAGE 6;
 
 public type NewMemberActionResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    NewMemberActionType action_type;
-    string title;
-    string description;
     anydata emoji?;
+    @jsondata:Name {value: "action_type"}
+    NewMemberActionType actionType;
     string? icon?;
+    string description;
+    string title;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
 # large image with guild icon, name and online count. "POWERED BY DISCORD" as the footer of the widget
 public type BANNER1 "banner1";
-
-# The ar locale
-public type ar "ar";
 
 # large image with guild icon, name and online count. In the footer, Discord logo on the left and "Chat Now" on the right
 public type BANNER3 "banner3";
@@ -2666,42 +3330,56 @@ public type PROFANITY 1;
 # smaller widget style with guild icon, name and online count. Split on the right with Discord logo
 public type BANNER2 "banner2";
 
+# for local rpc server access, this allows you to update a user's voice settings - requires Discord approval
+public type RPCVOICEWRITE "rpc.voice.write";
+
 public type ExternalScheduledEventCreateRequest record {
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    3 entityType;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
     @constraint:String {maxLength: 100}
     string name;
+    @jsondata:Name {value: "entity_metadata"}
+    EntityMetadataExternal entityMetadata;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    3 entity_type;
-    anydata channel_id?;
-    EntityMetadataExternal entity_metadata;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
 
-public type STAGE_INSTANCE_CREATE 83;
-
-public type sku_ids string|(string)[];
+# guild has disabled activity alerts in the configured safety alerts channel
+public type RAIDALERTSDISABLED "RAID_ALERTS_DISABLED";
 
 public type ApplicationCommandOptionNumberChoice record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     decimal value;
 };
+
+public type CONTEXTMENUCOMMAND 23;
+
+# guild has access to set an animated guild icon
+public type ANIMATEDICON "ANIMATED_ICON";
+
+public type ApplicationCommandResponseOptions ApplicationCommandAttachmentOptionResponse|ApplicationCommandBooleanOptionResponse|ApplicationCommandChannelOptionResponse|ApplicationCommandIntegerOptionResponse|ApplicationCommandMentionableOptionResponse|ApplicationCommandNumberOptionResponse|ApplicationCommandRoleOptionResponse|ApplicationCommandStringOptionResponse|ApplicationCommandSubcommandGroupOptionResponse|ApplicationCommandSubcommandOptionResponse|ApplicationCommandUserOptionResponse|OptionsOneOf122?;
+
+public type ROLESUBSCRIPTIONPURCHASE 25;
 
 # large Discord logo at the top of the widget. Guild icon, name and online count in the middle portion of the widget and a "JOIN MY SERVER" button at the bottom
 public type BANNER4 "banner4";
 
-public type GuildsEmojisRequestRolesItemsnull anydata;
+public type STAGETOPIC 31;
 
-public type SkuidsItemsnull string;
+public type ONBOARDINGUPDATE 167;
 
-# allows your app to fetch data from a user's "Now Playing/Recently Played" list - requires Discord approval
-public type ACTIVITIES_READ "activities.read";
-
-# The bg locale
-public type bg "bg";
+public type MessageComponentStringSelectResponseOptions SelectOptionResponse|OptionsOneOf2?;
 
 public type VanityURLResponse record {
     string? code?;
@@ -2709,70 +3387,96 @@ public type VanityURLResponse record {
     anydata 'error?;
 };
 
+# allows your app to fetch data from a user's "Now Playing/Recently Played" list - requires Discord approval
+public type ACTIVITIESREAD "activities.read";
+
+public type WEBHOOKUPDATE 51;
+
 public type PrivateChannelResponse record {
+    @jsondata:Name {value: "last_message_id"}
+    anydata lastMessageId?;
+    @jsondata:Name {value: "last_pin_timestamp"}
+    string? lastPinTimestamp?;
+    #
+    UserResponse[] recipients;
+    int:Signed32 flags;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     1 'type;
-    anydata last_message_id?;
-    int:Signed32 flags;
-    string? last_pin_timestamp?;
-    # 
-    UserResponse[] recipients;
 };
 
-public type include_roles string|(string)[];
+# One day
+public type ONEDAY 1440;
+
+# Represents the Queries record for the operation: list_public_archived_threads
+public type ListPublicArchivedThreadsQueries record {
+    #
+    string before?;
+    #
+    @constraint:Int {minValue: 2, maxValue: 100}
+    int:Signed32 'limit?;
+};
+
+# allows your app to update its commands using a Bearer token - client credentials grant only
+public type APPLICATIONSCOMMANDSUPDATE "applications.commands.update";
 
 public type BotAccountPatchRequest record {
+    record {byte[] fileContent; string fileName;}? banner?;
+    record {byte[] fileContent; string fileName;}? avatar?;
     @constraint:String {maxLength: 32, minLength: 2}
     string username;
-    record {byte[] fileContent; string fileName;}? avatar?;
-    record {byte[] fileContent; string fileName;}? banner?;
+};
+
+# Represents the Queries record for the operation: execute_slack_compatible_webhook
+public type ExecuteSlackCompatibleWebhookQueries record {
+    #
+    boolean 'wait?;
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
 };
 
 public type COMPLETED 3;
 
 public type BulkBanUsersResponse record {
-    # 
-    BulkBanUsersResponseBannedusersItemsString[] banned_users;
-    # 
-    BulkBanUsersResponseFailedusersItemsString[] failed_users;
-};
-
-# Represents the Queries record for the operation: get_original_webhook_message
-public type Get_original_webhook_messageQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
+    #
+    @jsondata:Name {value: "failed_users"}
+    BulkBanUsersResponseFailedusersItemsString[] failedUsers;
+    #
+    @jsondata:Name {value: "banned_users"}
+    BulkBanUsersResponseBannedusersItemsString[] bannedUsers;
 };
 
 # guild is partnered
 public type PARTNERED "PARTNERED";
 
-# the metadata value (integer) is less than or equal to the guild's configured value (integer)
-public type INTEGER_LESS_THAN_EQUAL 1;
+public type VOICECHANNELSTATUSDELETE 193;
 
-public type RECIPIENT_REMOVE 2;
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type SkuIdsSkuIdsOneOf12OneOf1 string;
 
-public type channels_channel_id_body PrivateChannelRequestPartial|UpdateGuildChannelRequestPartial|UpdateThreadRequestPartial;
-
-# Sent when a user is filling in an autocomplete option in a chat command
-public type APPLICATION_COMMAND_AUTOCOMPLETE 4;
+public type ApplicationCommandCreateRequestOptions ApplicationCommandAttachmentOption|ApplicationCommandBooleanOption|ApplicationCommandChannelOption|ApplicationCommandIntegerOption|ApplicationCommandMentionableOption|ApplicationCommandNumberOption|ApplicationCommandRoleOption|ApplicationCommandStringOption|ApplicationCommandSubcommandGroupOption|ApplicationCommandSubcommandOption|ApplicationCommandUserOption|OptionsOneOf12?;
 
 public type WelcomeScreenPatchRequestPartial record {
+    #
+    @jsondata:Name {value: "welcome_channels"}
+    GuildWelcomeChannel[]? welcomeChannels?;
     string? description?;
-    # 
-    GuildWelcomeChannel[]? welcome_channels?;
     boolean? enabled?;
 };
 
 public type ApplicationCommandBooleanOptionResponse record {
-    5 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    5 'type;
     boolean? required?;
 };
 
@@ -2780,605 +3484,645 @@ public type EntityMetadataExternalResponse record {
     string location;
 };
 
+# Represents the Queries record for the operation: preview_prune_guild
+public type PreviewPruneGuildQueries record {
+    #
+    @constraint:Int {minValue: 1, maxValue: 30}
+    int:Signed32 days?;
+    #
+    @http:Query {name: "include_roles"}
+    IncludeRoles includeRoles?;
+};
+
 public type GuildRoleResponse record {
+    int:Signed32 color;
+    @jsondata:Name {value: "unicode_emoji"}
+    string? unicodeEmoji?;
+    string permissions;
+    boolean managed;
+    string name;
+    string? icon?;
+    string? description?;
+    boolean mentionable;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string? description?;
-    string permissions;
     int:Signed32 position;
-    int:Signed32 color;
     boolean hoist;
-    boolean managed;
-    boolean mentionable;
-    string? icon?;
-    string? unicode_emoji?;
     anydata tags?;
 };
 
 public type ApplicationCommandOptionNumberChoiceResponse record {
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     decimal value;
 };
 
 public type StageInstanceResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
+    @jsondata:Name {value: "privacy_level"}
+    StageInstancesPrivacyLevels privacyLevel;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
     string topic;
-    StageInstancesPrivacyLevels privacy_level;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    boolean? discoverable_disabled?;
-    anydata guild_scheduled_event_id?;
+    @jsondata:Name {value: "guild_scheduled_event_id"}
+    anydata guildScheduledEventId?;
+    @jsondata:Name {value: "discoverable_disabled"}
+    boolean? discoverableDisabled?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
 public type IncomingWebhookRequestPartial record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
+    #
     ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
     boolean? tts?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    @jsondata:Name {value: "avatar_url"}
+    string? avatarUrl?;
+    @jsondata:Name {value: "thread_name"}
+    string? threadName?;
     int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
     string? username?;
-    string? avatar_url?;
-    string? thread_name?;
-    # 
-    IncomingWebhookRequestPartialAppliedtagsItemsString[]? applied_tags?;
+    #
+    @jsondata:Name {value: "applied_tags"}
+    IncomingWebhookRequestPartialAppliedtagsItemsString[]? appliedTags?;
 };
 
-public type guild_id_scheduledevents_body ExternalScheduledEventCreateRequest|StageScheduledEventCreateRequest|VoiceScheduledEventCreateRequest;
-
 public type WidgetChannel record {
+    string name;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     int:Signed32 position;
 };
 
 public type UpdateThreadRequestPartial record {
-    string? name?;
     boolean? archived?;
-    boolean? locked?;
-    boolean? invitable?;
-    anydata auto_archive_duration?;
-    int:Signed32? rate_limit_per_user?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    string? name?;
     int:Signed32? flags?;
-    # 
-    UpdateThreadRequestPartialAppliedtagsItemsString[]? applied_tags?;
+    boolean? invitable?;
     int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
+    boolean? locked?;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    @jsondata:Name {value: "auto_archive_duration"}
+    anydata autoArchiveDuration?;
+    #
+    @jsondata:Name {value: "applied_tags"}
+    UpdateThreadRequestPartialAppliedtagsItemsString[]? appliedTags?;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
 };
 
-# Multiple choice options
-public type MULTIPLE_CHOICE 0;
-
-# The cs locale
-public type cs "cs";
-
-public type STAGE_END 28;
+# Sent when a user submits a modal previously sent by your application
+public type MODALSUBMIT 5;
 
 public type InteractionApplicationCommandAutocompleteCallbackStringData record {
-    # 
-    (anydata)[]? choices?;
+    #
+    InteractionApplicationCommandAutocompleteCallbackStringDataChoices[]? choices?;
 };
 
 public type AuditLogObjectChangeResponse record {
+    @jsondata:Name {value: "old_value"}
+    anydata oldValue?;
     string? 'key?;
-    anydata new_value?;
-    anydata old_value?;
+    @jsondata:Name {value: "new_value"}
+    anydata newValue?;
 };
 
-# The da locale
-public type da "da";
+public type ROLECREATE 30;
 
-# the metadata value (integer) is equal to the guild's configured value (integer)
-public type INTEGER_EQUAL 3;
+public type InlineResponse2001 DefaultKeywordRuleResponse|KeywordRuleResponse|MLSpamRuleResponse|MentionSpamRuleResponse|SpamLinkRuleResponse;
 
-# The de locale
-public type de "de";
+# allows your app to join users to a group dm
+public type GDMJOIN "gdm.join";
+
+public type InlineResponse2003 ExternalScheduledEventResponse|StageScheduledEventResponse|VoiceScheduledEventResponse;
+
+public type InlineResponse2002 FriendInviteResponse|GroupDMInviteResponse|GuildInviteResponse;
+
+public type InlineResponse2005 GuildStickerResponse|StandardStickerResponse;
+
+public type InlineResponse2004 ApplicationIncomingWebhookResponse|ChannelFollowerWebhookResponse|GuildIncomingWebhookResponse;
+
+public type InlineResponse2006 GuildChannelResponse|PrivateChannelResponse|PrivateGroupChannelResponse|ThreadResponse;
 
 public type RichEmbedFooter record {
+    @jsondata:Name {value: "icon_url"}
+    string? iconUrl?;
     string? text?;
-    string? icon_url?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# Represents the Queries record for the operation: update_original_webhook_message
+public type UpdateOriginalWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
+
 public type MentionSpamRuleResponseExemptrolesItemsString string;
+
+public type StickersOneOf3 anydata?;
 
 public type TALK 1;
 
-# for local rpc server api access, this allows you to read messages from all client channels (otherwise restricted to channels/guilds your app creates)
-public type MESSAGES_READ "messages.read";
-
-public type MyGuildResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    string name;
-    string? icon?;
-    boolean owner;
-    string permissions;
-    # 
-    GuildFeatures[] features;
-    int:Signed32? approximate_member_count?;
-    int:Signed32? approximate_presence_count?;
+# Represents the Headers record for the operation: execute_slack_compatible_webhook
+public type ExecuteSlackCompatibleWebhookHeaders record {
+    #
+    @http:Header {name: "Content-Type"}
+    "application/x-www-form-urlencoded" contentType;
 };
 
-# allows /users/@me/guilds/{guild.id}/member to return a user's member information in a guild
-public type GUILDS_MEMBERS_READ "guilds.members.read";
+public type CREATORMONETIZATIONREQUESTCREATED 150;
 
-public type VOICE_CHANNEL_STATUS_DELETE 193;
-
-public type CommandPermissionsResponse record {
+public type MyGuildResponse record {
+    boolean owner;
+    #
+    GuildFeatures[] features;
+    @jsondata:Name {value: "approximate_presence_count"}
+    int:Signed32? approximatePresenceCount?;
+    string permissions;
+    @jsondata:Name {value: "approximate_member_count"}
+    int:Signed32? approximateMemberCount?;
+    string name;
+    string? icon?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string application_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    # 
+};
+
+# allows your app to use commands in a guild
+public type APPLICATIONSCOMMANDS "applications.commands";
+
+public type CommandPermissionsResponse record {
+    #
     CommandPermissionResponse[] permissions;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "application_id"}
+    string applicationId;
 };
 
 public type ResolvedObjectsResponse record {
-    record {|UserResponse...;|} users;
-    record {|GuildMemberResponse...;|} members;
     record {} channels;
+    record {|GuildMemberResponse...;|} members;
     record {|GuildRoleResponse...;|} roles;
+    record {|UserResponse...;|} users;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MLSpamUpsertRequestPartialExemptrolesItemsString string;
 
-# The el locale
-public type el "el";
-
-# A temporary sub-channel within a GUILD_TEXT or GUILD_THREADS_ONLY channel type set
-public type PUBLIC_THREAD 11;
-
-public type BasicMessageResponse record {
-    MessageType 'type;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    string content;
-    # 
-    MessageAttachmentResponse[] attachments;
-    # 
-    MessageEmbedResponse[] embeds;
-    string timestamp;
-    string? edited_timestamp?;
-    int:Signed32 flags;
-    # 
-    (MessageComponentActionRowResponse|MessageComponentButtonResponse|MessageComponentChannelSelectResponse|MessageComponentInputTextResponse|MessageComponentMentionableSelectResponse|MessageComponentRoleSelectResponse|MessageComponentStringSelectResponse|MessageComponentUserSelectResponse)[] components;
-    anydata resolved?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    UserResponse author;
-    # 
-    UserResponse[] mentions;
-    # 
-    BasicMessageResponseMentionrolesItemsString[] mention_roles;
-    boolean pinned;
-    boolean mention_everyone;
-    boolean tts;
-    anydata call?;
-    anydata activity?;
-    anydata application?;
-    anydata application_id?;
-    anydata interaction?;
-    anydata nonce?;
-    anydata webhook_id?;
-    anydata message_reference?;
-    anydata thread?;
-    # 
-    (anydata)[]? mention_channels?;
-    # 
-    (anydata)[]? stickers?;
-    # 
-    MessageStickerItemResponse[]? sticker_items?;
-    anydata role_subscription_data?;
-    anydata purchase_notification?;
-    int:Signed32? position?;
-};
+# A channel that users can follow and crosspost into their own server (formerly news channels)
+public type GUILDANNOUNCEMENT 5;
 
 public type GuildResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    string name;
+    @jsondata:Name {value: "max_stage_video_channel_users"}
+    int:Signed32? maxStageVideoChannelUsers?;
+    @jsondata:Name {value: "preferred_locale"}
+    AvailableLocalesEnum preferredLocale;
+    @jsondata:Name {value: "default_message_notifications"}
+    UserNotificationSettings defaultMessageNotifications;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId;
+    @jsondata:Name {value: "widget_channel_id"}
+    anydata widgetChannelId?;
+    #
+    GuildRoleResponse[] roles;
     string? icon?;
     string? description?;
-    string? home_header?;
-    string? splash?;
-    string? discovery_splash?;
-    # 
+    @jsondata:Name {value: "system_channel_id"}
+    anydata systemChannelId?;
+    @jsondata:Name {value: "rules_channel_id"}
+    anydata rulesChannelId?;
+    @jsondata:Name {value: "afk_timeout"}
+    AfkTimeouts afkTimeout;
+    #
     GuildFeatures[] features;
-    string? banner?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id;
-    anydata application_id?;
-    string region;
-    anydata afk_channel_id?;
-    AfkTimeouts afk_timeout;
-    anydata system_channel_id?;
-    int:Signed32 system_channel_flags;
-    boolean widget_enabled;
-    anydata widget_channel_id?;
-    VerificationLevels verification_level;
-    # 
-    GuildRoleResponse[] roles;
-    UserNotificationSettings default_message_notifications;
-    GuildMFALevel mfa_level;
-    GuildExplicitContentFilterTypes explicit_content_filter;
-    int:Signed32? max_presences?;
-    int:Signed32? max_members?;
-    int:Signed32? max_stage_video_channel_users?;
-    int:Signed32? max_video_channel_users?;
-    string? vanity_url_code?;
-    PremiumGuildTiers premium_tier;
-    int:Signed32 premium_subscription_count;
-    AvailableLocalesEnum preferred_locale;
-    anydata rules_channel_id?;
-    anydata safety_alerts_channel_id?;
-    anydata public_updates_channel_id?;
-    boolean premium_progress_bar_enabled;
-    boolean nsfw;
-    GuildNSFWContentLevel nsfw_level;
-    # 
-    EmojiResponse[] emojis;
-    # 
+    @jsondata:Name {value: "afk_channel_id"}
+    anydata afkChannelId?;
+    @jsondata:Name {value: "max_members"}
+    int:Signed32? maxMembers?;
+    #
     GuildStickerResponse[] stickers;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "widget_enabled"}
+    boolean widgetEnabled;
+    @jsondata:Name {value: "max_video_channel_users"}
+    int:Signed32? maxVideoChannelUsers?;
+    @jsondata:Name {value: "nsfw_level"}
+    GuildNSFWContentLevel nsfwLevel;
+    @jsondata:Name {value: "safety_alerts_channel_id"}
+    anydata safetyAlertsChannelId?;
+    #
+    EmojiResponse[] emojis;
+    boolean nsfw;
+    @jsondata:Name {value: "vanity_url_code"}
+    string? vanityUrlCode?;
+    @jsondata:Name {value: "system_channel_flags"}
+    int:Signed32 systemChannelFlags;
+    @jsondata:Name {value: "max_presences"}
+    int:Signed32? maxPresences?;
+    @jsondata:Name {value: "premium_progress_bar_enabled"}
+    boolean premiumProgressBarEnabled;
+    string? banner?;
+    @jsondata:Name {value: "premium_subscription_count"}
+    int:Signed32 premiumSubscriptionCount;
+    @jsondata:Name {value: "public_updates_channel_id"}
+    anydata publicUpdatesChannelId?;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    @jsondata:Name {value: "home_header"}
+    string? homeHeader?;
+    @jsondata:Name {value: "verification_level"}
+    VerificationLevels verificationLevel;
+    @jsondata:Name {value: "discovery_splash"}
+    string? discoverySplash?;
+    @jsondata:Name {value: "explicit_content_filter"}
+    GuildExplicitContentFilterTypes explicitContentFilter;
+    string name;
+    @jsondata:Name {value: "mfa_level"}
+    GuildMFALevel mfaLevel;
+    @jsondata:Name {value: "premium_tier"}
+    PremiumGuildTiers premiumTier;
+    string region;
+    string? splash?;
 };
 
-public type MessageAllowedMentionsRequestUsersItemsnull anydata;
+public type BasicMessageResponse record {
+    @jsondata:Name {value: "mention_everyone"}
+    boolean mentionEveryone;
+    #
+    BasicMessageResponseComponents[] components;
+    boolean pinned;
+    #
+    MessageAttachmentResponse[] attachments;
+    anydata activity?;
+    int:Signed32 flags;
+    MessageType 'type;
+    #
+    @jsondata:Name {value: "mention_roles"}
+    BasicMessageResponseMentionrolesItemsString[] mentionRoles;
+    string content;
+    @jsondata:Name {value: "edited_timestamp"}
+    string? editedTimestamp?;
+    #
+    BasicMessageResponseStickers[]? stickers?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "message_reference"}
+    anydata messageReference?;
+    #
+    @jsondata:Name {value: "sticker_items"}
+    MessageStickerItemResponse[]? stickerItems?;
+    string timestamp;
+    anydata resolved?;
+    @jsondata:Name {value: "role_subscription_data"}
+    anydata roleSubscriptionData?;
+    UserResponse author;
+    anydata thread?;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    anydata nonce?;
+    anydata call?;
+    boolean tts;
+    #
+    @jsondata:Name {value: "mention_channels"}
+    BasicMessageResponseMentionChannels[]? mentionChannels?;
+    anydata application?;
+    @jsondata:Name {value: "webhook_id"}
+    anydata webhookId?;
+    #
+    UserResponse[] mentions;
+    @jsondata:Name {value: "purchase_notification"}
+    anydata purchaseNotification?;
+    anydata interaction?;
+    int:Signed32? position?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
+    #
+    MessageEmbedResponse[] embeds;
+};
 
 public type CreateOrUpdateThreadTagRequest record {
+    boolean? moderated?;
     @constraint:String {maxLength: 20}
     string name;
-    anydata emoji_id?;
-    string? emoji_name?;
-    boolean? moderated?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
 };
 
 # media content will not be scanned
 public type DISABLED 0;
 
-# Represents the Queries record for the operation: list_thread_members
-public type List_thread_membersQueries record {
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
-    # 
-    boolean with_member?;
+public type GuildProductPurchaseResponse record {
+    @jsondata:Name {value: "listing_id"}
+    string listingId;
+    @jsondata:Name {value: "product_name"}
+    string productName;
 };
 
-public type GuildProductPurchaseResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string listing_id;
-    string product_name;
-};
+public type UPDATEMESSAGE 7;
 
 public type ApplicationCommandPermission record {
+    boolean permission;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     ApplicationCommandPermissionType 'type;
-    boolean permission;
 };
 
-@constraint:String {maxLength: 60, minLength: 1}
 public type DefaultKeywordListTriggerMetadataAllowlistItemsString string;
 
-public type scheduledevents_guild_scheduled_event_id_body ExternalScheduledEventPatchRequestPartial|StageScheduledEventPatchRequestPartial|VoiceScheduledEventPatchRequestPartial;
-
 public type BlockMessageActionMetadata record {
-    string? custom_message?;
+    @jsondata:Name {value: "custom_message"}
+    string? customMessage?;
 };
 
+public type AGERESTRICTED 3;
+
+public type CREATORMONETIZATIONTERMSACCEPTED 151;
+
+public type EMOJIDELETE 62;
+
 public type ApplicationCommandOptionStringChoiceResponse record {
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string value;
 };
 
-public type ROLE_DELETE 32;
-
-# The fi locale
-public type fi "fi";
-
-public type MentionSpamUpsertRequest record {
-    @constraint:String {maxLength: 100}
-    string name;
-    AutomodEventType event_type;
-    # 
-    (anydata)[]? actions?;
-    boolean? enabled?;
-    # 
-    MentionSpamUpsertRequestExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MentionSpamUpsertRequestExemptchannelsItemsString[]? exempt_channels?;
-    5 trigger_type;
-    anydata trigger_metadata?;
-};
-
 public type OAuth2GetAuthorizationResponse record {
-    ApplicationResponse application;
     string expires;
-    # 
+    ApplicationResponse application;
+    #
     OAuth2Scopes[] scopes;
     anydata user?;
 };
 
+public type MentionSpamUpsertRequest record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    5 triggerType;
+    @constraint:String {maxLength: 100}
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MentionSpamUpsertRequestExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MentionSpamUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
+    #
+    MentionSpamUpsertRequestActions[]? actions?;
+    boolean? enabled?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
+};
+
 public type BATTLENET "battlenet";
 
+public type STAGEINSTANCEDELETE 85;
+
 public type InviteChannelResponse record {
+    #
+    InviteChannelRecipientResponse[]? recipients?;
+    string? name?;
+    string? icon?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     ChannelTypes 'type;
-    string? name?;
-    string? icon?;
-    # 
-    InviteChannelRecipientResponse[]? recipients?;
 };
 
-# The fr locale
-public type fr "fr";
+# Check if content contains words from internal pre-defined wordsets
+public type DEFAULTKEYWORDLIST 4;
 
 public type GithubCommit record {
+    GithubAuthor author;
     @constraint:String {maxLength: 152133}
     string id;
-    @constraint:String {maxLength: 2048}
-    string url;
     @constraint:String {maxLength: 152133}
     string message;
-    GithubAuthor author;
+    @constraint:String {maxLength: 2048}
+    string url;
 };
 
-# the metadata value (integer) is equal to the guild's configured value (integer; 1)
-public type BOOLEAN_EQUAL 7;
-
 public type TeamResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    @jsondata:Name {value: "owner_user_id"}
+    string ownerUserId;
+    #
+    TeamMemberResponse[] members;
     string? icon?;
     string name;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_user_id;
-    # 
-    TeamMemberResponse[] members;
+    string id;
 };
 
 public type SelectOption record {
+    boolean? default?;
+    anydata emoji?;
+    string? description?;
     @constraint:String {maxLength: 100, minLength: 1}
     string label;
     @constraint:String {maxLength: 100, minLength: 1}
     string value;
-    string? description?;
-    anydata emoji?;
-    boolean? default?;
 };
 
-public type INVITE_UPDATE 41;
+public type ConnectedAccountProviders BATTLENET|BUNGIE|EBAY|EPICGAMES|FACEBOOK|GITHUB|INSTAGRAM|LEAGUEOFLEGENDS|PAYPAL|PLAYSTATION|REDDIT|RIOTGAMES|ROBLOX|SKYPE|SPOTIFY|STEAM|TIKTOK|TWITCH|TWITTER|XBOX|YOUTUBE|DOMAIN;
 
-public type ConnectedAccountProviders BATTLENET|BUNGIE|EBAY|EPIC_GAMES|FACEBOOK|GITHUB|INSTAGRAM|LEAGUE_OF_LEGENDS|PAYPAL|PLAYSTATION|REDDIT|RIOT_GAMES|ROBLOX|SKYPE|SPOTIFY|STEAM|TIKTOK|TWITCH|TWITTER|XBOX|YOUTUBE|DOMAIN;
+public type KeywordUpsertRequestPartialActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf53?;
 
 public type SelectOptionResponse record {
+    boolean? default?;
+    anydata emoji?;
+    string? description?;
     string label;
     string value;
-    string? description?;
-    anydata emoji?;
-    boolean? default?;
 };
+
+public type STAGESTART 27;
 
 public type ActionRow record {
-    1 'type;
-    # 
+    #
     @constraint:Array {maxLength: 5, minLength: 1}
-    (Button|ChannelSelect|InputText|MentionableSelect|RoleSelect|StringSelect|UserSelect)[] components;
+    ActionRowComponents[] components;
+    1 'type;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# for local rpc server access, this allows you to update a user's video settings - requires Discord approval
+public type RPCVIDEOWRITE "rpc.video.write";
+
+# guild has role subscriptions that can be purchased
+public type ROLESUBSCRIPTIONSAVAILABLEFORPURCHASE "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE";
+
 public type MessageResponseMentionrolesItemsString string;
 
-# Represents the Queries record for the operation: list_application_commands
-public type List_application_commandsQueries record {
-    # 
-    boolean with_localizations?;
-};
+# for local rpc server access, this allows you to update a user's activity - requires Discord approval
+public type RPCACTIVITIESWRITE "rpc.activities.write";
 
 public type RichEmbed record {
-    string? 'type?;
-    string? url?;
-    string? title?;
-    int:Signed32? color?;
-    string? timestamp?;
-    string? description?;
-    anydata author?;
     anydata image?;
     anydata thumbnail?;
+    int:Signed32? color?;
     anydata footer?;
-    # 
-    RichEmbedField[]? fields?;
-    anydata provider?;
+    anydata author?;
+    string? description?;
     anydata video?;
+    string? 'type?;
+    string? title?;
+    string? url?;
+    anydata provider?;
+    #
+    RichEmbedField[]? fields?;
+    string? timestamp?;
 };
-
-public type GUILD_UPDATE 1;
-
-# The he locale
-public type he "he";
 
 public type DEFAULT 0;
 
-# guild has access to set an animated guild icon
-public type ANIMATED_ICON "ANIMATED_ICON";
-
-# The hi locale
-public type hi "hi";
+public type InteractionTokenCallbackBody ApplicationCommandAutocompleteCallbackRequest|CreateMessageInteractionCallbackRequest|ModalInteractionCallbackRequest|PongInteractionCallbackRequest|UpdateMessageInteractionCallbackRequest;
 
 public type MessageEmbedResponse record {
-    string 'type;
-    string? url?;
-    string? title?;
-    string? description?;
-    int:Signed32? color?;
-    string? timestamp?;
-    # 
-    MessageEmbedFieldResponse[]? fields?;
-    anydata author?;
-    anydata provider?;
     anydata image?;
     anydata thumbnail?;
-    anydata video?;
+    int:Signed32? color?;
     anydata footer?;
+    anydata author?;
+    string? description?;
+    anydata video?;
+    string 'type;
+    string? title?;
+    string? url?;
+    anydata provider?;
+    #
+    MessageEmbedFieldResponse[]? fields?;
+    string? timestamp?;
 };
 
 public type OnboardingPromptResponse record {
+    @jsondata:Name {value: "in_onboarding"}
+    boolean inOnboarding;
+    #
+    OnboardingPromptOptionResponse[] options;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     string title;
-    # 
-    OnboardingPromptOptionResponse[] options;
-    boolean single_select;
-    boolean required;
-    boolean in_onboarding;
     OnboardingPromptType 'type;
+    @jsondata:Name {value: "single_select"}
+    boolean singleSelect;
+    boolean required;
 };
 
 public type InteractionApplicationCommandAutocompleteCallbackNumberData record {
-    # 
-    (anydata)[]? choices?;
+    #
+    InteractionApplicationCommandAutocompleteCallbackNumberDataChoices[]? choices?;
 };
 
-public type messages_original_body record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
-    ActionRow[]? components?;
-    # 
-    MessageAttachmentRequest[]? attachments?;
-    int:Signed32? flags?;
-};
-
-# the metadata value (ISO8601 string) is greater than or equal to the guild's configured value (integer; days before current date)
-public type DATETIME_GREATER_THAN_EQUAL 6;
+# The en-US locale
+public type EnUS "en-US";
 
 public type GuildsPruneRequest record {
+    @jsondata:Name {value: "compute_prune_count"}
+    boolean? computePruneCount?;
     int:Signed32? days?;
-    boolean? compute_prune_count?;
-    anydata include_roles?;
+    @jsondata:Name {value: "include_roles"}
+    anydata includeRoles?;
 };
 
-# Represents the Queries record for the operation: get_entitlements
-public type Get_entitlementsQueries record {
-    # 
-    boolean exclude_ended?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string user_id?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    sku_ids sku_ids;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id?;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
-    # 
-    boolean only_active?;
-};
-
-public type ChannelTypes DM|GROUP_DM|GUILD_TEXT|GUILD_VOICE|GUILD_CATEGORY|GUILD_ANNOUNCEMENT|ANNOUNCEMENT_THREAD|PUBLIC_THREAD|PRIVATE_THREAD|GUILD_STAGE_VOICE|GUILD_DIRECTORY|GUILD_FORUM;
-
-# The hr locale
-public type hr "hr";
+public type ChannelTypes DM|GROUPDM|GUILDTEXT|GUILDVOICE|GUILDCATEGORY|GUILDANNOUNCEMENT|ANNOUNCEMENTTHREAD|PUBLICTHREAD|PRIVATETHREAD|GUILDSTAGEVOICE|GUILDDIRECTORY|GUILDFORUM;
 
 public type StageScheduledEventPatchRequestPartial record {
-    anydata status?;
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    anydata entityType?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel?;
     @constraint:String {maxLength: 100}
     string name?;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time?;
-    string? scheduled_end_time?;
-    anydata entity_type?;
-    GuildScheduledEventPrivacyLevels privacy_level?;
-    anydata channel_id?;
-    anydata entity_metadata?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    anydata status?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
 
-public type USER_JOIN 7;
+public type CHANNELCREATE 10;
 
-# The hu locale
-public type hu "hu";
+public type AUTOMODERATIONRULEUPDATE 141;
 
 public type GuildPatchRequestPartialFeaturesItemsString string?;
 
-# The id locale
-public type id "id";
-
-public type WEBHOOK_CREATE 50;
-
 public type UpdateGuildOnboardingRequest record {
-    # 
+    anydata mode?;
+    #
+    @jsondata:Name {value: "default_channel_ids"}
+    UpdateGuildOnboardingRequestDefaultchannelidsItemsString[]? defaultChannelIds?;
+    #
     UpdateOnboardingPromptRequest[]? prompts?;
     boolean? enabled?;
-    # 
-    UpdateGuildOnboardingRequestDefaultchannelidsItemsString[]? default_channel_ids?;
-    anydata mode?;
 };
+
+public type WEBHOOKCREATE 50;
 
 public type RichEmbedThumbnail record {
-    string? url?;
     int:Signed32? width?;
-    int:Signed32? height?;
+    @jsondata:Name {value: "placeholder_version"}
+    int:Signed32? placeholderVersion?;
     string? placeholder?;
-    int:Signed32? placeholder_version?;
+    string? url?;
+    int:Signed32? height?;
 };
 
-# for local rpc server access, this allows you to read a user's video status - requires Discord approval
-public type RPC_VIDEO_READ "rpc.video.read";
-
-public type INVITE_CREATE 40;
-
-public type DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE 5;
-
 public type ChannelsPermissionsRequest record {
-    anydata 'type?;
     int:Signed32? allow?;
     int:Signed32? deny?;
+    anydata 'type?;
 };
 
 public type ApplicationCommandAutocompleteCallbackRequest record {
-    8 'type;
     InteractionApplicationCommandAutocompleteCallbackIntegerData|InteractionApplicationCommandAutocompleteCallbackNumberData|InteractionApplicationCommandAutocompleteCallbackStringData data;
+    8 'type;
+};
+
+# Represents the Queries record for the operation: invite_resolve
+public type InviteResolveQueries record {
+    #
+    @http:Query {name: "with_counts"}
+    boolean withCounts?;
+    #
+    @http:Query {name: "guild_scheduled_event_id"}
+    string guildScheduledEventId?;
 };
 
 public type InviteStageInstanceResponse record {
-    string topic;
-    int:Signed32? participant_count?;
-    int:Signed32? speaker_count?;
-    # 
+    @jsondata:Name {value: "speaker_count"}
+    int:Signed32? speakerCount?;
+    @jsondata:Name {value: "participant_count"}
+    int:Signed32? participantCount?;
+    #
     GuildMemberResponse[]? members?;
+    string topic;
 };
 
 public type RichEmbedProvider record {
@@ -3386,319 +4130,330 @@ public type RichEmbedProvider record {
     string? url?;
 };
 
-# The it locale
-public type it "it";
-
-# Represents the Queries record for the operation: get_guild_widget_png
-public type Get_guild_widget_pngQueries record {
-    # 
-    WidgetImageStyles style?;
-};
-
 public type ApplicationCommandSubcommandGroupOptionResponse record {
-    2 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    # 
+    #
     ApplicationCommandSubcommandOptionResponse[]? options?;
+    string description;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    2 'type;
+    boolean? required?;
 };
 
 public type ApplicationCommandUserOption record {
-    6 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    6 'type;
     boolean? required?;
 };
 
 public type BlockMessageActionMetadataResponse record {
-    string? custom_message?;
+    @jsondata:Name {value: "custom_message"}
+    string? customMessage?;
 };
 
-# The ja locale
-public type ja "ja";
+public type MessageResponseStickers GuildStickerResponse|StandardStickerResponse|StickersOneOf31?;
 
 public type ApplicationIncomingWebhookResponse record {
-    anydata application_id?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    string name;
     string? avatar?;
-    anydata channel_id?;
-    anydata guild_id?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     3 'type;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
     anydata user?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MentionSpamUpsertRequestPartialExemptchannelsItemsString string;
 
-public type DEFERRED_UPDATE_MESSAGE 6;
+# A voice channel for hosting events with an audience
+public type GUILDSTAGEVOICE 13;
 
-# Represents the Queries record for the operation: list_guild_scheduled_event_users
-public type List_guild_scheduled_event_usersQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
-    # 
-    boolean with_member?;
-};
+public type MESSAGEDELETE 72;
 
-public type EMOJI_DELETE 62;
+public type ApplicationCommandPatchRequestPartialOptions ApplicationCommandAttachmentOption|ApplicationCommandBooleanOption|ApplicationCommandChannelOption|ApplicationCommandIntegerOption|ApplicationCommandMentionableOption|ApplicationCommandNumberOption|ApplicationCommandRoleOption|ApplicationCommandStringOption|ApplicationCommandSubcommandGroupOption|ApplicationCommandSubcommandOption|ApplicationCommandUserOption|OptionsOneOf121?;
 
-public type VerificationLevels NONE2|LOW|MEDIUM|HIGH|VERY_HIGH;
+public type VerificationLevels NONE2|LOW|MEDIUM|HIGH|VERYHIGH;
 
 @constraint:String {maxLength: 20}
 public type ApplicationFormPartialTagsItemsString string;
 
-# The ko locale
-public type ko "ko";
+# Represents the Queries record for the operation: list_my_guilds
+public type ListMyGuildsQueries record {
+    #
+    @http:Query {name: "with_counts"}
+    boolean withCounts?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string before?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 200}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+};
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type BasicMessageResponseMentionrolesItemsString string;
 
-public type AUTO_MODERATION_RULE_UPDATE 141;
+public type ONBOARDINGPROMPTDELETE 165;
 
-public type AuditLogActionTypes GUILD_UPDATE|CHANNEL_CREATE|CHANNEL_UPDATE|CHANNEL_DELETE|CHANNEL_OVERWRITE_CREATE|CHANNEL_OVERWRITE_UPDATE|CHANNEL_OVERWRITE_DELETE|MEMBER_KICK|MEMBER_PRUNE|MEMBER_BAN_ADD|MEMBER_BAN_REMOVE|MEMBER_UPDATE|MEMBER_ROLE_UPDATE|MEMBER_MOVE|MEMBER_DISCONNECT|BOT_ADD|ROLE_CREATE|ROLE_UPDATE|ROLE_DELETE|INVITE_CREATE|INVITE_UPDATE|INVITE_DELETE|WEBHOOK_CREATE|WEBHOOK_UPDATE|WEBHOOK_DELETE|EMOJI_CREATE|EMOJI_UPDATE|EMOJI_DELETE|MESSAGE_DELETE|MESSAGE_BULK_DELETE|MESSAGE_PIN|MESSAGE_UNPIN|INTEGRATION_CREATE|INTEGRATION_UPDATE|INTEGRATION_DELETE|STAGE_INSTANCE_CREATE|STAGE_INSTANCE_UPDATE|STAGE_INSTANCE_DELETE|STICKER_CREATE|STICKER_UPDATE|STICKER_DELETE|GUILD_SCHEDULED_EVENT_CREATE|GUILD_SCHEDULED_EVENT_UPDATE|GUILD_SCHEDULED_EVENT_DELETE|THREAD_CREATE|THREAD_UPDATE|THREAD_DELETE|APPLICATION_COMMAND_PERMISSION_UPDATE|SOUNDBOARD_SOUND_CREATE|SOUNDBOARD_SOUND_UPDATE|SOUNDBOARD_SOUND_DELETE|AUTO_MODERATION_RULE_CREATE|AUTO_MODERATION_RULE_UPDATE|AUTO_MODERATION_RULE_DELETE|AUTO_MODERATION_BLOCK_MESSAGE|AUTO_MODERATION_FLAG_TO_CHANNEL|AUTO_MODERATION_USER_COMM_DISABLED|AUTO_MODERATION_QUARANTINE_USER|CREATOR_MONETIZATION_REQUEST_CREATED|CREATOR_MONETIZATION_TERMS_ACCEPTED|ONBOARDING_PROMPT_CREATE|ONBOARDING_PROMPT_UPDATE|ONBOARDING_PROMPT_DELETE|ONBOARDING_CREATE|ONBOARDING_UPDATE|GUILD_HOME_FEATURE_ITEM|GUILD_HOME_REMOVE_ITEM|HARMFUL_LINKS_BLOCKED_MESSAGE|HOME_SETTINGS_CREATE|HOME_SETTINGS_UPDATE|VOICE_CHANNEL_STATUS_CREATE|VOICE_CHANNEL_STATUS_DELETE;
+public type AUTOMODERATIONQUARANTINEUSER 146;
+
+public type AuditLogActionTypes GUILDUPDATE|CHANNELCREATE|CHANNELUPDATE|CHANNELDELETE|CHANNELOVERWRITECREATE|CHANNELOVERWRITEUPDATE|CHANNELOVERWRITEDELETE|MEMBERKICK|MEMBERPRUNE|MEMBERBANADD|MEMBERBANREMOVE|MEMBERUPDATE|MEMBERROLEUPDATE|MEMBERMOVE|MEMBERDISCONNECT|BOTADD|ROLECREATE|ROLEUPDATE|ROLEDELETE|INVITECREATE|INVITEUPDATE|INVITEDELETE|WEBHOOKCREATE|WEBHOOKUPDATE|WEBHOOKDELETE|EMOJICREATE|EMOJIUPDATE|EMOJIDELETE|MESSAGEDELETE|MESSAGEBULKDELETE|MESSAGEPIN|MESSAGEUNPIN|INTEGRATIONCREATE|INTEGRATIONUPDATE|INTEGRATIONDELETE|STAGEINSTANCECREATE|STAGEINSTANCEUPDATE|STAGEINSTANCEDELETE|STICKERCREATE|STICKERUPDATE|STICKERDELETE|GUILDSCHEDULEDEVENTCREATE|GUILDSCHEDULEDEVENTUPDATE|GUILDSCHEDULEDEVENTDELETE|THREADCREATE|THREADUPDATE|THREADDELETE|APPLICATIONCOMMANDPERMISSIONUPDATE|SOUNDBOARDSOUNDCREATE|SOUNDBOARDSOUNDUPDATE|SOUNDBOARDSOUNDDELETE|AUTOMODERATIONRULECREATE|AUTOMODERATIONRULEUPDATE|AUTOMODERATIONRULEDELETE|AUTOMODERATIONBLOCKMESSAGE|AUTOMODERATIONFLAGTOCHANNEL|AUTOMODERATIONUSERCOMMDISABLED|AUTOMODERATIONQUARANTINEUSER|CREATORMONETIZATIONREQUESTCREATED|CREATORMONETIZATIONTERMSACCEPTED|ONBOARDINGPROMPTCREATE|ONBOARDINGPROMPTUPDATE|ONBOARDINGPROMPTDELETE|ONBOARDINGCREATE|ONBOARDINGUPDATE|GUILDHOMEFEATUREITEM|GUILDHOMEREMOVEITEM|HARMFULLINKSBLOCKEDMESSAGE|HOMESETTINGSCREATE|HOMESETTINGSUPDATE|VOICECHANNELSTATUSCREATE|VOICECHANNELSTATUSDELETE;
 
 public type EntitlementResponse record {
+    @jsondata:Name {value: "fulfilled_at"}
+    string? fulfilledAt?;
+    boolean? consumed?;
+    @jsondata:Name {value: "starts_at"}
+    string? startsAt?;
+    boolean deleted;
+    @jsondata:Name {value: "fulfillment_status"}
+    anydata fulfillmentStatus?;
+    @jsondata:Name {value: "user_id"}
+    string userId;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    @jsondata:Name {value: "sku_id"}
+    string skuId;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string sku_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string application_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string user_id;
-    anydata guild_id?;
-    boolean deleted;
-    string? starts_at?;
-    string? ends_at?;
+    @jsondata:Name {value: "ends_at"}
+    string? endsAt?;
     EntitlementTypes 'type;
-    string? fulfilled_at?;
-    anydata fulfillment_status?;
-    boolean? consumed?;
+    @jsondata:Name {value: "application_id"}
+    string applicationId;
 };
 
 public type ForumTagResponse record {
+    boolean moderated;
+    string name;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    boolean moderated;
-    anydata emoji_id?;
-    string? emoji_name?;
 };
 
-# allows /guilds/{guild.id}/members/{user.id} to be used for joining users to a guild
-public type GUILDS_JOIN "guilds.join";
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type KeywordUpsertRequestPartialExemptchannelsItemsString string;
-
-public type GUILD_DISCOVERY_GRACE_PERIOD_FINAL_WARNING 17;
 
 # must be a member of the server for longer than 10 minutes
 public type HIGH 3;
-
-public type MESSAGE_DELETE 72;
 
 public type TextStyleTypes SHORT|PARAGRAPH;
 
 public type REDDIT "reddit";
 
-@constraint:String {maxLength: 60, minLength: 1}
 public type KeywordTriggerMetadataAllowlistItemsString string;
 
 public type STEAM "steam";
 
-# The lt locale
-public type lt "lt";
+# Sent when a user is filling in an autocomplete option in a chat command
+public type APPLICATIONCOMMANDAUTOCOMPLETE 4;
 
-public type CONTEXT_MENU_COMMAND 23;
+public type GuildsEmojisRequestRoles RolesOneOf11|RolesRolesOneOf112?;
 
 public type ApplicationCommandSubcommandOptionResponse record {
-    1 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandSubcommandOptionResponseOptions[]? options?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    1 'type;
     boolean? required?;
-    # 
-    (anydata)[]? options?;
 };
-
-public type MEMBER_UPDATE 24;
 
 public type GuildPatchRequestPartial record {
+    @jsondata:Name {value: "preferred_locale"}
+    anydata preferredLocale?;
+    @jsondata:Name {value: "default_message_notifications"}
+    anydata defaultMessageNotifications?;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId?;
+    @jsondata:Name {value: "system_channel_flags"}
+    int:Signed32? systemChannelFlags?;
+    @jsondata:Name {value: "premium_progress_bar_enabled"}
+    boolean? premiumProgressBarEnabled?;
+    record {byte[] fileContent; string fileName;}? icon?;
+    string? description?;
+    @jsondata:Name {value: "system_channel_id"}
+    anydata systemChannelId?;
+    record {byte[] fileContent; string fileName;}? banner?;
+    @jsondata:Name {value: "rules_channel_id"}
+    anydata rulesChannelId?;
+    @jsondata:Name {value: "afk_timeout"}
+    anydata afkTimeout?;
+    @jsondata:Name {value: "public_updates_channel_id"}
+    anydata publicUpdatesChannelId?;
+    #
+    GuildPatchRequestPartialFeaturesItemsString[]? features?;
+    @jsondata:Name {value: "home_header"}
+    record {byte[] fileContent; string fileName;}? homeHeader?;
+    @jsondata:Name {value: "verification_level"}
+    anydata verificationLevel?;
+    @jsondata:Name {value: "explicit_content_filter"}
+    anydata explicitContentFilter?;
+    @jsondata:Name {value: "discovery_splash"}
+    record {byte[] fileContent; string fileName;}? discoverySplash?;
+    @jsondata:Name {value: "afk_channel_id"}
+    anydata afkChannelId?;
     @constraint:String {maxLength: 100, minLength: 2}
     string name?;
-    string? description?;
     string? region?;
-    record {byte[] fileContent; string fileName;}? icon?;
-    anydata verification_level?;
-    anydata default_message_notifications?;
-    anydata explicit_content_filter?;
-    anydata preferred_locale?;
-    anydata afk_timeout?;
-    anydata afk_channel_id?;
-    anydata system_channel_id?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id?;
     record {byte[] fileContent; string fileName;}? splash?;
-    record {byte[] fileContent; string fileName;}? banner?;
-    int:Signed32? system_channel_flags?;
-    # 
-    GuildPatchRequestPartialFeaturesItemsString[]? features?;
-    record {byte[] fileContent; string fileName;}? discovery_splash?;
-    record {byte[] fileContent; string fileName;}? home_header?;
-    anydata rules_channel_id?;
-    anydata safety_alerts_channel_id?;
-    anydata public_updates_channel_id?;
-    boolean? premium_progress_bar_enabled?;
+    @jsondata:Name {value: "safety_alerts_channel_id"}
+    anydata safetyAlertsChannelId?;
 };
+
+public type MEMBERDISCONNECT 27;
 
 public type EXPLICIT 1;
 
 public type CreateForumThreadRequest record {
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    anydata auto_archive_duration?;
-    int:Signed32? rate_limit_per_user?;
-    # 
-    CreateForumThreadRequestAppliedtagsItemsString[]? applied_tags?;
     BaseCreateMessageCreateRequest message;
+    @jsondata:Name {value: "auto_archive_duration"}
+    anydata autoArchiveDuration?;
+    #
+    @jsondata:Name {value: "applied_tags"}
+    CreateForumThreadRequestAppliedtagsItemsString[]? appliedTags?;
 };
+
+public type FIVEMINUTES 300;
 
 public type OAuth2Key record {
     string kty;
+    string e;
     string use;
     string kid;
-    string n;
-    string e;
     string alg;
+    string n;
 };
 
-public type inline_response_200_5 GuildStickerResponse|StandardStickerResponse;
-
-public type inline_response_200_6 GuildChannelResponse|PrivateChannelResponse|PrivateGroupChannelResponse|ThreadResponse;
+public type STICKERDELETE 92;
 
 public type QuarantineUserAction record {
-    4 'type;
     anydata metadata?;
+    4 'type;
 };
 
-@constraint:String {maxLength: 260, minLength: 1}
 public type KeywordTriggerMetadataRegexpatternsItemsString string;
 
 public type ApplicationCommandPatchRequestPartial record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    @jsondata:Name {value: "dm_permission"}
+    boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name?;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandPatchRequestPartialOptions[]? options?;
     string? description?;
-    record {|string...;|}? description_localizations?;
-    # 
-    (anydata)[]? options?;
-    int:Signed32? default_member_permissions?;
-    boolean? dm_permission?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    @jsondata:Name {value: "default_member_permissions"}
+    int:Signed32? defaultMemberPermissions?;
 };
 
 public type LOTTIE 3;
 
+public type SOUNDBOARDSOUNDCREATE 130;
+
+# guild has enabled ticketed events
+public type TICKETEDEVENTSENABLED "TICKETED_EVENTS_ENABLED";
+
 public type EBAY "ebay";
 
-public type GuildScheduledEventPrivacyLevels GUILD_ONLY;
+public type GuildScheduledEventPrivacyLevels GUILDONLY;
 
 public type OAuth2GetKeys record {
-    # 
+    #
     OAuth2Key[] keys;
 };
 
-public type inline_response_200_1 DefaultKeywordRuleResponse|KeywordRuleResponse|MLSpamRuleResponse|MentionSpamRuleResponse|SpamLinkRuleResponse;
+public type USERJOIN 7;
 
-public type zh\-CN "zh-CN";
-
-public type inline_response_200_2 FriendInviteResponse|GroupDMInviteResponse|GuildInviteResponse;
-
-public type inline_response_200_3 ExternalScheduledEventResponse|StageScheduledEventResponse|VoiceScheduledEventResponse;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type SpamLinkRuleResponseExemptrolesItemsString string;
-
-public type inline_response_200_4 ApplicationIncomingWebhookResponse|ChannelFollowerWebhookResponse|GuildIncomingWebhookResponse;
-
-# Represents the Queries record for the operation: delete_webhook_message
-public type Delete_webhook_messageQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
-
-# The nl locale
-public type nl "nl";
-
-# The no locale
-public type no "no";
 
 # for local rpc server access, this allows you to control a user's local Discord client - requires Discord approval
 public type RPC "rpc";
 
 public type ThreadsResponse record {
-    # 
-    ThreadResponse[] threads;
-    # 
+    #
     ThreadMemberResponse[] members;
-    boolean? has_more?;
+    #
+    ThreadResponse[] threads;
+    @jsondata:Name {value: "has_more"}
+    boolean? hasMore?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type BulkBanUsersResponseFailedusersItemsString string;
 
-# A voice channel for hosting events with an audience
-public type GUILD_STAGE_VOICE 13;
+public type InlineResponse200 PrivateChannelResponse|PrivateGroupChannelResponse;
 
-public type RIOT_GAMES "riotgames";
+public type GuildsMembersRequest1Roles RolesOneOf14|RolesRolesOneOf142?;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type BulkBanUsersResponseBannedusersItemsString string;
 
 public type RichEmbedVideo record {
-    string? url?;
     int:Signed32? width?;
-    int:Signed32? height?;
+    @jsondata:Name {value: "placeholder_version"}
+    int:Signed32? placeholderVersion?;
     string? placeholder?;
-    int:Signed32? placeholder_version?;
+    string? url?;
+    int:Signed32? height?;
 };
 
 public type WidgetResponse record {
+    #
+    WidgetChannel[] channels;
+    #
+    WidgetMember[] members;
+    string name;
+    @jsondata:Name {value: "presence_count"}
+    int:Signed32 presenceCount;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string? instant_invite?;
-    # 
-    WidgetChannel[] channels;
-    # 
-    WidgetMember[] members;
-    int:Signed32 presence_count;
+    @jsondata:Name {value: "instant_invite"}
+    string? instantInvite?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type OnboardingPromptOptionResponseRoleidsItemsString string;
+
+public type THREADDELETE 112;
+
+# The es-ES locale
+public type EsES "es-ES";
 
 public type GatewayResponse record {
     string url;
@@ -3707,245 +4462,262 @@ public type GatewayResponse record {
 public type DANGER 4;
 
 public type MLSpamUpsertRequestPartial record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType?;
+    @jsondata:Name {value: "trigger_type"}
+    AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    AutomodEventType event_type?;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    MLSpamUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    MLSpamUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
+    #
+    MLSpamUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
-    # 
-    MLSpamUpsertRequestPartialExemptrolesItemsString[]? exempt_roles?;
-    # 
-    MLSpamUpsertRequestPartialExemptchannelsItemsString[]? exempt_channels?;
-    AutomodTriggerType trigger_type?;
-    anydata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    anydata triggerMetadata?;
 };
 
+public type MentionSpamUpsertRequestPartialActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf57?;
+
 public type ExternalConnectionIntegrationResponse record {
+    boolean? syncing?;
     IntegrationTypes 'type;
-    string? name?;
-    anydata account?;
+    boolean? revoked?;
     boolean? enabled?;
+    @jsondata:Name {value: "expire_behavior"}
+    anydata expireBehavior?;
+    @jsondata:Name {value: "expire_grace_period"}
+    anydata expireGracePeriod?;
+    @jsondata:Name {value: "role_id"}
+    anydata roleId?;
+    @jsondata:Name {value: "subscriber_count"}
+    int:Signed32? subscriberCount?;
+    string? name?;
     string id;
     UserResponse user;
-    boolean? revoked?;
-    anydata expire_behavior?;
-    anydata expire_grace_period?;
-    int:Signed32? subscriber_count?;
-    string? synced_at?;
-    anydata role_id?;
-    boolean? syncing?;
-    boolean? enable_emoticons?;
+    anydata account?;
+    @jsondata:Name {value: "enable_emoticons"}
+    boolean? enableEmoticons?;
+    @jsondata:Name {value: "synced_at"}
+    string? syncedAt?;
 };
 
 public type MentionSpamTriggerMetadataResponse record {
-    int:Signed32 mention_total_limit;
+    @jsondata:Name {value: "mention_total_limit"}
+    int:Signed32 mentionTotalLimit;
 };
 
 public type PREMIUM 6;
 
-# for local rpc server access, this allows you to read a user's voice settings and listen for voice events - requires Discord approval
-public type RPC_VOICE_READ "rpc.voice.read";
-
-public type INTEGRATION_CREATE 80;
+public type GUILDBOOST 8;
 
 public type MessageComponentActionRowResponse record {
-    1 'type;
+    #
+    MessageComponentActionRowResponseComponents[]? components?;
     int:Signed32 id;
-    # 
-    (anydata)[]? components?;
+    1 'type;
 };
-
-# for local rpc server access, this allows you to update a user's video settings - requires Discord approval
-public type RPC_VIDEO_WRITE "rpc.video.write";
 
 public type GuildWithCountsResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    string name;
+    @jsondata:Name {value: "max_stage_video_channel_users"}
+    int:Signed32? maxStageVideoChannelUsers?;
+    @jsondata:Name {value: "preferred_locale"}
+    AvailableLocalesEnum preferredLocale;
+    @jsondata:Name {value: "approximate_presence_count"}
+    int:Signed32? approximatePresenceCount?;
+    @jsondata:Name {value: "default_message_notifications"}
+    UserNotificationSettings defaultMessageNotifications;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId;
+    @jsondata:Name {value: "widget_channel_id"}
+    anydata widgetChannelId?;
+    #
+    GuildRoleResponse[] roles;
     string? icon?;
     string? description?;
-    string? home_header?;
-    string? splash?;
-    string? discovery_splash?;
-    # 
+    @jsondata:Name {value: "system_channel_id"}
+    anydata systemChannelId?;
+    @jsondata:Name {value: "rules_channel_id"}
+    anydata rulesChannelId?;
+    @jsondata:Name {value: "afk_timeout"}
+    AfkTimeouts afkTimeout;
+    #
     GuildFeatures[] features;
-    string? banner?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id;
-    anydata application_id?;
-    string region;
-    anydata afk_channel_id?;
-    AfkTimeouts afk_timeout;
-    anydata system_channel_id?;
-    int:Signed32 system_channel_flags;
-    boolean widget_enabled;
-    anydata widget_channel_id?;
-    VerificationLevels verification_level;
-    # 
-    GuildRoleResponse[] roles;
-    UserNotificationSettings default_message_notifications;
-    GuildMFALevel mfa_level;
-    GuildExplicitContentFilterTypes explicit_content_filter;
-    int:Signed32? max_presences?;
-    int:Signed32? max_members?;
-    int:Signed32? max_stage_video_channel_users?;
-    int:Signed32? max_video_channel_users?;
-    string? vanity_url_code?;
-    PremiumGuildTiers premium_tier;
-    int:Signed32 premium_subscription_count;
-    AvailableLocalesEnum preferred_locale;
-    anydata rules_channel_id?;
-    anydata safety_alerts_channel_id?;
-    anydata public_updates_channel_id?;
-    boolean premium_progress_bar_enabled;
-    boolean nsfw;
-    GuildNSFWContentLevel nsfw_level;
-    # 
-    EmojiResponse[] emojis;
-    # 
+    @jsondata:Name {value: "afk_channel_id"}
+    anydata afkChannelId?;
+    @jsondata:Name {value: "approximate_member_count"}
+    int:Signed32? approximateMemberCount?;
+    @jsondata:Name {value: "max_members"}
+    int:Signed32? maxMembers?;
+    #
     GuildStickerResponse[] stickers;
-    int:Signed32? approximate_member_count?;
-    int:Signed32? approximate_presence_count?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "widget_enabled"}
+    boolean widgetEnabled;
+    @jsondata:Name {value: "max_video_channel_users"}
+    int:Signed32? maxVideoChannelUsers?;
+    @jsondata:Name {value: "nsfw_level"}
+    GuildNSFWContentLevel nsfwLevel;
+    @jsondata:Name {value: "safety_alerts_channel_id"}
+    anydata safetyAlertsChannelId?;
+    #
+    EmojiResponse[] emojis;
+    boolean nsfw;
+    @jsondata:Name {value: "vanity_url_code"}
+    string? vanityUrlCode?;
+    @jsondata:Name {value: "system_channel_flags"}
+    int:Signed32 systemChannelFlags;
+    @jsondata:Name {value: "max_presences"}
+    int:Signed32? maxPresences?;
+    @jsondata:Name {value: "premium_progress_bar_enabled"}
+    boolean premiumProgressBarEnabled;
+    string? banner?;
+    @jsondata:Name {value: "premium_subscription_count"}
+    int:Signed32 premiumSubscriptionCount;
+    @jsondata:Name {value: "public_updates_channel_id"}
+    anydata publicUpdatesChannelId?;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    @jsondata:Name {value: "home_header"}
+    string? homeHeader?;
+    @jsondata:Name {value: "verification_level"}
+    VerificationLevels verificationLevel;
+    @jsondata:Name {value: "discovery_splash"}
+    string? discoverySplash?;
+    @jsondata:Name {value: "explicit_content_filter"}
+    GuildExplicitContentFilterTypes explicitContentFilter;
+    string name;
+    @jsondata:Name {value: "mfa_level"}
+    GuildMFALevel mfaLevel;
+    @jsondata:Name {value: "premium_tier"}
+    PremiumGuildTiers premiumTier;
+    string region;
+    string? splash?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type OnboardingPromptOptionResponseChannelidsItemsString string;
 
 public type VoiceRegionResponse record {
-    string id;
-    string name;
+    boolean optimal;
     boolean custom;
     boolean deprecated;
-    boolean optimal;
+    string name;
+    string id;
 };
 
 # allows your app to connect to voice on user's behalf and see all the voice members - requires Discord approval
 public type VOICE "voice";
 
 public type MentionableSelect record {
-    7 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    #
+    @jsondata:Name {value: "default_values"}
+    MentionableSelectDefaultValues[]? defaultValues?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
-    # 
-    (anydata)[]? default_values?;
+    string? placeholder?;
+    7 'type;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type OnboardingPromptOptionRequestRoleidsItemsString string;
 
-public type MESSAGE_UNPIN 75;
+# allows your app to read entitlements for a user's applications
+public type APPLICATIONSENTITLEMENTS "applications.entitlements";
 
 public type ApplicationCommandOptionStringChoice record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 6000}
     string value;
 };
 
-public type APPLICATION_COMMAND_AUTOCOMPLETE_RESULT 8;
-
-public type CHANNEL_UPDATE 11;
-
-public type ONBOARDING_PROMPT_CREATE 163;
-
-public type CREATOR_MONETIZATION_TERMS_ACCEPTED 151;
-
-# The pl locale
-public type pl "pl";
-
-# guild has been set as a support server on the App Directory
-public type DEVELOPER_SUPPORT_SERVER "DEVELOPER_SUPPORT_SERVER";
-
 public type ApplicationCommandStringOption record {
-    3 'type;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    boolean? autocomplete?;
+    @jsondata:Name {value: "min_length"}
+    int:Signed32? minLength?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
-    boolean? autocomplete?;
-    int:Signed32? min_length?;
-    int:Signed32? max_length?;
-    # 
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    3 'type;
+    #
     ApplicationCommandOptionStringChoice[]? choices?;
+    boolean? required?;
+    @jsondata:Name {value: "max_length"}
+    int:Signed32? maxLength?;
 };
 
-# Represents the Headers record for the operation: update_webhook_message
-public type Update_webhook_messageHeaders record {
-    # 
-    "application/x-www-form-urlencoded" Content\-Type;
+# Represents the Queries record for the operation: get_thread_member
+public type GetThreadMemberQueries record {
+    #
+    @http:Query {name: "with_member"}
+    boolean withMember?;
 };
 
-# for local rpc server access, this allows you to update a user's voice settings - requires Discord approval
-public type RPC_VOICE_WRITE "rpc.voice.write";
+public type GUILDPRODUCT 0;
 
-# Represents the Queries record for the operation: get_guild
-public type Get_guildQueries record {
-    # 
-    boolean with_counts?;
-};
+# the scheduled event is only accessible to guild members
+public type GUILDONLY 2;
 
 public type PNG 1;
 
 public type SettingsEmojiResponse record {
-    anydata id?;
     string? name?;
     boolean? animated?;
+    anydata id?;
 };
 
-# A text channel within a server
-public type GUILD_TEXT 0;
-
-public type GUILD_PRODUCT 0;
-
 public type ApplicationCommandRoleOptionResponse record {
-    8 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    8 'type;
     boolean? required?;
 };
 
-# allows your app to update permissions for its commands in a guild a user has permissions to
-public type APPLICATIONS_COMMANDS_PERMISSIONS_UPDATE "applications.commands.permissions.update";
-
-public type GuildsMembersRequest1RolesItemsnull anydata;
+public type STAGEINSTANCE 1;
 
 public type QuarantineUserActionResponse record {
-    4 'type;
     record {} metadata;
+    4 'type;
 };
 
-public type GUILD_BOOST_TIER_3 11;
-
-public type GUILD_BOOST_TIER_1 9;
-
-public type GUILD_BOOST_TIER_2 10;
-
-public type EntitlementTypes APPLICATION_SUBSCRIPTION|QUEST_REWARD;
+public type EntitlementTypes APPLICATIONSUBSCRIPTION|QUESTREWARD;
 
 public type MessageComponentRoleSelectResponse record {
-    6 'type;
-    int:Signed32 id;
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
+    int:Signed32 id;
+    string? placeholder?;
+    6 'type;
 };
-
-public type channel_id_messages_bodyStickeridsItemsString string;
 
 # Provides a set of configurations for controlling the behaviours when communicating with a remote HTTP endpoint.
 @display {label: "Connection Config"}
@@ -3955,1005 +4727,1178 @@ public type ConnectionConfig record {|
     # The HTTP version understood by the client
     http:HttpVersion httpVersion = http:HTTP_2_0;
     # Configurations related to HTTP/1.x protocol
-    ClientHttp1Settings http1Settings?;
+    http:ClientHttp1Settings http1Settings = {};
     # Configurations related to HTTP/2 protocol
-    http:ClientHttp2Settings http2Settings?;
+    http:ClientHttp2Settings http2Settings = {};
     # The maximum time to wait (in seconds) for a response before closing the connection
-    decimal timeout = 60;
+    decimal timeout = 30;
     # The choice of setting `forwarded`/`x-forwarded` header
     string forwarded = "disable";
+    # Configurations associated with Redirection
+    http:FollowRedirects followRedirects?;
     # Configurations associated with request pooling
     http:PoolConfiguration poolConfig?;
     # HTTP caching related configurations
-    http:CacheConfig cache?;
+    http:CacheConfig cache = {};
     # Specifies the way of handling compression (`accept-encoding`) header
     http:Compression compression = http:COMPRESSION_AUTO;
     # Configurations associated with the behaviour of the Circuit Breaker
     http:CircuitBreakerConfig circuitBreaker?;
     # Configurations associated with retrying
     http:RetryConfig retryConfig?;
+    # Configurations associated with cookies
+    http:CookieConfig cookieConfig?;
     # Configurations associated with inbound response size limits
-    http:ResponseLimitConfigs responseLimits?;
+    http:ResponseLimitConfigs responseLimits = {};
     # SSL/TLS-related options
     http:ClientSecureSocket secureSocket?;
     # Proxy server related options
     http:ProxyConfig proxy?;
+    # Provides settings related to client socket configuration
+    http:ClientSocketConfig socketConfig = {};
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
+    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional,
+    # and absent fields are handled as `nilable` types. Enabled by default.
+    boolean laxDataBinding = true;
 |};
+
+# allows your app to know a user's friends and implicit relationships - requires Discord approval
+public type RELATIONSHIPSREAD "relationships.read";
 
 # Controls @everyone and @here mentions
 public type EVERYONE "everyone";
 
-public type GUILD_SCHEDULED_EVENT_CREATE 100;
-
-public type WEBHOOK_UPDATE 51;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type KeywordUpsertRequestExemptrolesItemsString string;
 
+public type AUTOMODERATIONRULECREATE 140;
+
 public type RichEmbedImage record {
-    string? url?;
     int:Signed32? width?;
-    int:Signed32? height?;
+    @jsondata:Name {value: "placeholder_version"}
+    int:Signed32? placeholderVersion?;
     string? placeholder?;
-    int:Signed32? placeholder_version?;
+    string? url?;
+    int:Signed32? height?;
 };
 
 public type IntegrationApplicationResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
+    anydata bot?;
     string name;
     string? icon?;
     string description;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "cover_image"}
+    string? coverImage?;
+    @jsondata:Name {value: "primary_sku_id"}
+    anydata primarySkuId?;
     anydata 'type?;
-    string? cover_image?;
-    anydata primary_sku_id?;
-    anydata bot?;
 };
 
 # allows /users/@me/connections to return linked third-party accounts
 public type CONNECTIONS "connections";
 
 public type MessageReactionCountDetailsResponse record {
-    int:Signed32 burst;
     int:Signed32 normal;
+    int:Signed32 burst;
 };
 
 public type UpdateThreadTagRequest record {
+    boolean? moderated?;
     @constraint:String {maxLength: 20}
     string name;
-    anydata emoji_id?;
-    string? emoji_name?;
-    boolean? moderated?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
     anydata id?;
 };
 
-public type AUTO_MODERATION_RULE_DELETE 142;
+public type CHANNELOVERWRITEDELETE 15;
 
-public type THREAD_CREATED 18;
+# One hour
+public type ONEHOUR1 60;
 
-public type CHANNEL_OVERWRITE_CREATE 13;
-
-# Represents the Queries record for the operation: update_webhook_message
-public type Update_webhook_messageQueries record {
-    # 
+# Represents the Queries record for the operation: get_entitlements
+public type GetEntitlementsQueries record {
+    #
+    @http:Query {name: "exclude_ended"}
+    boolean excludeEnded?;
+    #
+    @http:Query {name: "user_id"}
+    string userId?;
+    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
+    string before?;
+    #
+    @http:Query {name: "sku_ids"}
+    SkuIds skuIds;
+    #
+    @http:Query {name: "guild_id"}
+    string guildId?;
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+    #
+    @http:Query {name: "only_active"}
+    boolean onlyActive?;
 };
 
-# The ro locale
-public type ro "ro";
-
-public type ROLE_UPDATE 31;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type CreatedThreadResponseAppliedtagsItemsString string;
 
-# The ru locale
-public type ru "ru";
-
 public type UpdateDefaultReactionEmojiRequest record {
-    anydata emoji_id?;
-    string? emoji_name?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type DefaultKeywordListUpsertRequestExemptrolesItemsString string;
 
-public type AUTO_MODERATION_BLOCK_MESSAGE 143;
+public type CHANNELUPDATE 11;
+
+public type InteractionApplicationCommandAutocompleteCallbackIntegerDataChoices ApplicationCommandOptionIntegerChoice|ChoicesOneOf2?;
 
 public type MessageReferenceResponse record {
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    @jsondata:Name {value: "message_id"}
+    anydata messageId?;
     anydata 'type?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    anydata message_id?;
-    anydata guild_id?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
 
-# Represents the Queries record for the operation: list_public_archived_threads
-public type List_public_archived_threadsQueries record {
-    # 
-    string before?;
-    # 
-    @constraint:Int {minValue: 2, maxValue: 100}
-    int:Signed32 'limit?;
-};
+public type APPLICATIONCOMMANDPERMISSIONUPDATE 121;
 
-# Represents the Headers record for the operation: update_message
-public type Update_messageHeaders record {
-    # 
-    "application/x-www-form-urlencoded" Content\-Type;
-};
+public type AvailableTagsOneOf2 anydata?;
 
-# the metadata value (integer) is greater than or equal to the guild's configured value (integer)
-public type INTEGER_GREATER_THAN_EQUAL 2;
+# Guild has unlocked Server Boost level 1 perks
+public type TIER1 1;
 
-# guild has enabled Membership Screening
-public type MEMBER_VERIFICATION_GATE_ENABLED "MEMBER_VERIFICATION_GATE_ENABLED";
+# Guild has unlocked Server Boost level 3 perks
+public type TIER3 3;
+
+public type RulesruleIdBody DefaultKeywordListUpsertRequestPartial|KeywordUpsertRequestPartial|MLSpamUpsertRequestPartial|MentionSpamUpsertRequestPartial;
+
+# Guild has unlocked Server Boost level 2 perks
+public type TIER2 2;
+
+@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type UsersOneOf1 string;
+
+# guild has enabled the welcome screen
+public type WELCOMESCREENENABLED "WELCOME_SCREEN_ENABLED";
+
+public type STICKERUPDATE 91;
 
 public type VOICE1 2;
 
-# Guild has unlocked Server Boost level 1 perks
-public type TIER_1 1;
-
-# Guild has unlocked Server Boost level 2 perks
-public type TIER_2 2;
-
-# Guild has unlocked Server Boost level 3 perks
-public type TIER_3 3;
-
-# Represents the Queries record for the operation: list_guild_audit_log_entries
-public type List_guild_audit_log_entriesQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string user_id?;
-    # 
-    int:Signed32 action_type?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 100}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string target_id?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
-};
-
 public type REPLY 19;
 
-# The th locale
-public type th "th";
+public type MentionChannelsOneOf2 anydata?;
 
-# The tr locale
-public type tr "tr";
+# Represents the Queries record for the operation: delete_webhook_message
+public type DeleteWebhookMessageQueries record {
+    #
+    @http:Query {name: "thread_id"}
+    string threadId?;
+};
 
 public type ApplicationCommandResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string application_id;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    boolean? nsfw?;
+    string description;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    ApplicationCommandType 'type;
+    @jsondata:Name {value: "application_id"}
+    string applicationId;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string version;
-    string? default_member_permissions?;
-    ApplicationCommandType 'type;
+    @jsondata:Name {value: "dm_permission"}
+    boolean? dmPermission?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    anydata guild_id?;
-    boolean? dm_permission?;
-    # 
-    (anydata)[]? options?;
-    boolean? nsfw?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    #
+    ApplicationCommandResponseOptions[]? options?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "default_member_permissions"}
+    string? defaultMemberPermissions?;
 };
 
 public type FACEBOOK "facebook";
 
-public type GUILD_INCIDENT_REPORT_RAID 38;
-
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MentionSpamUpsertRequestExemptchannelsItemsString string;
 
+public type INVITEDELETE 42;
+
 public type DefaultReactionEmojiResponse record {
-    anydata emoji_id?;
-    string? emoji_name?;
+    @jsondata:Name {value: "emoji_id"}
+    anydata emojiId?;
+    @jsondata:Name {value: "emoji_name"}
+    string? emojiName?;
 };
 
-public type en\-GB "en-GB";
+# members will receive notifications for all messages by default
+public type ALLMESSAGES 0;
 
 public type ApplicationCommandUpdateRequest record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    @jsondata:Name {value: "dm_permission"}
+    boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandUpdateRequestOptions[]? options?;
     string? description?;
-    record {|string...;|}? description_localizations?;
-    # 
-    (anydata)[]? options?;
-    int:Signed32? default_member_permissions?;
-    boolean? dm_permission?;
-    anydata 'type?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    @jsondata:Name {value: "default_member_permissions"}
+    int:Signed32? defaultMemberPermissions?;
     anydata id?;
+    anydata 'type?;
 };
 
-public type STAGE_INSTANCE 1;
+public type GUILDINCIDENTREPORTRAID 38;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type ONEMINUTE 60;
+
 public type KeywordRuleResponseExemptrolesItemsString string;
 
 public type StickerPackResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string sku_id;
+    @jsondata:Name {value: "banner_asset_id"}
+    anydata bannerAssetId?;
+    @jsondata:Name {value: "cover_sticker_id"}
+    anydata coverStickerId?;
     string name;
     string? description?;
-    # 
+    @jsondata:Name {value: "sku_id"}
+    string skuId;
+    #
     StandardStickerResponse[] stickers;
-    anydata cover_sticker_id?;
-    anydata banner_asset_id?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
 };
 
-# allows your app to update a user's activity - requires Discord approval (NOT REQUIRED FOR GAMESDK ACTIVITY MANAGER)
-public type ACTIVITIES_WRITE "activities.write";
+# A voice channel within a server
+public type GUILDVOICE 2;
 
 public type GuildsVoiceStatesRequest record {
     boolean? suppress?;
-    anydata channel_id?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
 };
+
+public type ONBOARDINGPROMPTUPDATE 164;
+
+# guild has enabled Membership Screening
+public type MEMBERVERIFICATIONGATEENABLED "MEMBER_VERIFICATION_GATE_ENABLED";
+
+public type RECIPIENTADD 1;
 
 public type MessageEmbedImageResponse record {
-    string? url?;
-    string? proxy_url?;
     anydata width?;
-    anydata height?;
+    @jsondata:Name {value: "placeholder_version"}
+    anydata placeholderVersion?;
+    @jsondata:Name {value: "proxy_url"}
+    string? proxyUrl?;
     string? placeholder?;
-    anydata placeholder_version?;
+    string? url?;
+    anydata height?;
 };
 
-# The uk locale
-public type uk "uk";
+public type ApplicationCommandSubcommandOptionResponseOptions ApplicationCommandAttachmentOptionResponse|ApplicationCommandBooleanOptionResponse|ApplicationCommandChannelOptionResponse|ApplicationCommandIntegerOptionResponse|ApplicationCommandMentionableOptionResponse|ApplicationCommandNumberOptionResponse|ApplicationCommandRoleOptionResponse|ApplicationCommandStringOptionResponse|ApplicationCommandUserOptionResponse|OptionsOneOf101?;
 
 public type UpdateGuildChannelRequestPartial record {
+    boolean? nsfw?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    int:Signed32? flags?;
+    int:Signed32? bitrate?;
     anydata 'type?;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    #
+    @jsondata:Name {value: "permission_overwrites"}
+    ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "default_thread_rate_limit_per_user"}
+    int:Signed32? defaultThreadRateLimitPerUser?;
+    @jsondata:Name {value: "default_auto_archive_duration"}
+    anydata defaultAutoArchiveDuration?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    @jsondata:Name {value: "default_reaction_emoji"}
+    anydata defaultReactionEmoji?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name?;
-    int:Signed32? position?;
     string? topic?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    boolean? nsfw?;
-    int:Signed32? rate_limit_per_user?;
-    anydata parent_id?;
-    # 
-    ChannelPermissionOverwriteRequest[]? permission_overwrites?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    anydata default_auto_archive_duration?;
-    anydata default_reaction_emoji?;
-    int:Signed32? default_thread_rate_limit_per_user?;
-    anydata default_sort_order?;
-    anydata default_forum_layout?;
-    int:Signed32? flags?;
-    # 
-    UpdateThreadTagRequest[]? available_tags?;
+    @jsondata:Name {value: "default_forum_layout"}
+    anydata defaultForumLayout?;
+    int:Signed32? position?;
+    #
+    @jsondata:Name {value: "available_tags"}
+    UpdateThreadTagRequest[]? availableTags?;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    @jsondata:Name {value: "default_sort_order"}
+    anydata defaultSortOrder?;
 };
 
-# guild has role subscriptions that can be purchased
-public type ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE "ROLE_SUBSCRIPTIONS_AVAILABLE_FOR_PURCHASE";
+public type MessagesmessageIdBodyStickeridsItemsString string;
 
-# must have a verified phone number
-public type VERY_HIGH 4;
+public type GuildTemplateChannelResponsePermissionOverwrites ChannelPermissionOverwriteResponse;
 
 public type MessageResponse record {
-    MessageType 'type;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    string content;
-    # 
+    @jsondata:Name {value: "mention_everyone"}
+    boolean mentionEveryone;
+    #
+    BasicMessageResponseComponents[] components;
+    boolean pinned;
+    #
     MessageAttachmentResponse[] attachments;
-    # 
-    MessageEmbedResponse[] embeds;
-    string timestamp;
-    string? edited_timestamp?;
+    anydata activity?;
     int:Signed32 flags;
-    # 
-    (MessageComponentActionRowResponse|MessageComponentButtonResponse|MessageComponentChannelSelectResponse|MessageComponentInputTextResponse|MessageComponentMentionableSelectResponse|MessageComponentRoleSelectResponse|MessageComponentStringSelectResponse|MessageComponentUserSelectResponse)[] components;
-    anydata resolved?;
+    MessageType 'type;
+    #
+    @jsondata:Name {value: "mention_roles"}
+    MessageResponseMentionrolesItemsString[] mentionRoles;
+    string content;
+    @jsondata:Name {value: "edited_timestamp"}
+    string? editedTimestamp?;
+    @jsondata:Name {value: "referenced_message"}
+    anydata referencedMessage?;
+    #
+    MessageResponseStickers[]? stickers?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
+    @jsondata:Name {value: "message_reference"}
+    anydata messageReference?;
+    #
+    @jsondata:Name {value: "sticker_items"}
+    MessageStickerItemResponse[]? stickerItems?;
+    string timestamp;
+    anydata resolved?;
+    @jsondata:Name {value: "role_subscription_data"}
+    anydata roleSubscriptionData?;
     UserResponse author;
-    # 
-    UserResponse[] mentions;
-    # 
-    MessageResponseMentionrolesItemsString[] mention_roles;
-    boolean pinned;
-    boolean mention_everyone;
-    boolean tts;
-    anydata call?;
-    anydata activity?;
-    anydata application?;
-    anydata application_id?;
-    anydata interaction?;
-    anydata nonce?;
-    anydata webhook_id?;
-    anydata message_reference?;
     anydata thread?;
-    # 
-    (anydata)[]? mention_channels?;
-    # 
-    (anydata)[]? stickers?;
-    # 
-    MessageStickerItemResponse[]? sticker_items?;
-    anydata role_subscription_data?;
-    anydata purchase_notification?;
-    int:Signed32? position?;
-    # 
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    anydata nonce?;
+    anydata call?;
+    boolean tts;
+    #
+    @jsondata:Name {value: "mention_channels"}
+    MessageResponseMentionChannels[]? mentionChannels?;
+    anydata application?;
+    @jsondata:Name {value: "webhook_id"}
+    anydata webhookId?;
+    #
+    UserResponse[] mentions;
+    @jsondata:Name {value: "purchase_notification"}
+    anydata purchaseNotification?;
+    anydata interaction?;
+    #
     MessageReactionResponse[]? reactions?;
-    anydata referenced_message?;
+    int:Signed32? position?;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
+    #
+    MessageEmbedResponse[] embeds;
 };
 
-public type STICKER_UPDATE 91;
-
-public type HOME_SETTINGS_UPDATE 191;
-
-# Represents the Queries record for the operation: execute_webhook
-public type Execute_webhookQueries record {
-    # 
-    boolean 'wait?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
-};
+public type HARMFULLINKSBLOCKEDMESSAGE 180;
 
 public type ApplicationCommandOptionIntegerChoice record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
     @constraint:Int {minValue: 1, maxValue: -1}
     int value;
 };
 
+public type InteractionApplicationCommandAutocompleteCallbackNumberDataChoices ApplicationCommandOptionNumberChoice|ChoicesOneOf21?;
+
 public type PAYPAL "paypal";
 
-# The vi locale
-public type vi "vi";
+# Sent when a user interacts with a message component previously sent by your application
+public type MESSAGECOMPONENT 3;
 
 public type WidgetUserDiscriminator ZEROES;
 
+public type GUILDUPDATE 1;
+
 public type UserCommunicationDisabledAction record {
-    3 'type;
     UserCommunicationDisabledActionMetadata metadata;
+    3 'type;
 };
 
 public type ApplicationOAuth2InstallParamsResponse record {
-    # 
-    OAuth2Scopes[] scopes;
     string permissions;
+    #
+    OAuth2Scopes[] scopes;
 };
-
-public type FIFTEEN_MINUTES 900;
 
 public type PLAYSTATION "playstation";
 
-public type LEAGUE_OF_LEGENDS "leagueoflegends";
-
 public type InputText record {
-    4 'type;
-    @constraint:String {maxLength: 100}
-    string custom_id;
+    @jsondata:Name {value: "min_length"}
+    int:Signed32? minLength?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
     TextStyleTypes style;
     @constraint:String {maxLength: 45}
     string label;
-    string? value?;
     string? placeholder?;
+    4 'type;
+    string? value?;
     boolean? required?;
-    int:Signed32? min_length?;
-    int:Signed32? max_length?;
+    @jsondata:Name {value: "max_length"}
+    int:Signed32? maxLength?;
 };
 
 public type DefaultKeywordListUpsertRequestPartial record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType?;
+    @jsondata:Name {value: "trigger_type"}
+    AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    AutomodEventType event_type?;
-    # 
-    (anydata)[]? actions?;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    DefaultKeywordListUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    DefaultKeywordListUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordListUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
-    # 
-    DefaultKeywordListUpsertRequestPartialExemptrolesItemsString[]? exempt_roles?;
-    # 
-    DefaultKeywordListUpsertRequestPartialExemptchannelsItemsString[]? exempt_channels?;
-    AutomodTriggerType trigger_type?;
-    DefaultKeywordListTriggerMetadata trigger_metadata?;
+    @jsondata:Name {value: "trigger_metadata"}
+    DefaultKeywordListTriggerMetadata triggerMetadata?;
 };
 
-# allows your app to see information about the user's DMs and group DMs - requires Discord approval
-public type DM_CHANNELS_READ "dm_channels.read";
+public type OAuth2Scopes IDENTIFY|EMAIL|CONNECTIONS|GUILDS|GUILDSJOIN|GUILDSMEMBERSREAD|GDMJOIN|BOT|RPC|RPCNOTIFICATIONSREAD|RPCVOICEREAD|RPCVOICEWRITE|RPCVIDEOREAD|RPCVIDEOWRITE|RPCSCREENSHAREREAD|RPCSCREENSHAREWRITE|RPCACTIVITIESWRITE|WEBHOOKINCOMING|MESSAGESREAD|APPLICATIONSBUILDSUPLOAD|APPLICATIONSBUILDSREAD|APPLICATIONSCOMMANDS|APPLICATIONSCOMMANDSPERMISSIONSUPDATE|APPLICATIONSCOMMANDSUPDATE|APPLICATIONSSTOREUPDATE|APPLICATIONSENTITLEMENTS|ACTIVITIESREAD|ACTIVITIESWRITE|RELATIONSHIPSREAD|VOICE|DMCHANNELSREAD|ROLECONNECTIONSWRITE|OPENID;
 
-public type OAuth2Scopes IDENTIFY|EMAIL|CONNECTIONS|GUILDS|GUILDS_JOIN|GUILDS_MEMBERS_READ|GDM_JOIN|BOT|RPC|RPC_NOTIFICATIONS_READ|RPC_VOICE_READ|RPC_VOICE_WRITE|RPC_VIDEO_READ|RPC_VIDEO_WRITE|RPC_SCREENSHARE_READ|RPC_SCREENSHARE_WRITE|RPC_ACTIVITIES_WRITE|WEBHOOK_INCOMING|MESSAGES_READ|APPLICATIONS_BUILDS_UPLOAD|APPLICATIONS_BUILDS_READ|APPLICATIONS_COMMANDS|APPLICATIONS_COMMANDS_PERMISSIONS_UPDATE|APPLICATIONS_COMMANDS_UPDATE|APPLICATIONS_STORE_UPDATE|APPLICATIONS_ENTITLEMENTS|ACTIVITIES_READ|ACTIVITIES_WRITE|RELATIONSHIPS_READ|VOICE|DM_CHANNELS_READ|ROLE_CONNECTIONS_WRITE|OPENID;
+public type WEBHOOKDELETE 52;
 
-public type webhook_id_webhook_token_body IncomingWebhookRequestPartial|IncomingWebhookUpdateRequestPartial;
+public type GUILDDISCOVERYGRACEPERIODFINALWARNING 17;
 
-public type ONBOARDING_CREATE 166;
+# Check if content represents generic spam
+public type MLSPAM 3;
 
-@constraint:String {maxLength: 60, minLength: 1}
 public type KeywordTriggerMetadataKeywordfilterItemsString string;
 
-# for local rpc server access, this allows you to update a user's activity - requires Discord approval
-public type RPC_ACTIVITIES_WRITE "rpc.activities.write";
+public type MEMBERBANADD 22;
 
-public type GuildNSFWContentLevel DEFAULT|EXPLICIT|SAFE|AGE_RESTRICTED;
+public type CHANNELFOLLOWADD 12;
+
+# guild is able to set role icons
+public type ROLEICONS "ROLE_ICONS";
+
+public type DEFERREDUPDATEMESSAGE 6;
+
+public type MEMBERKICK 20;
+
+public type GuildNSFWContentLevel DEFAULT|EXPLICIT|SAFE|AGERESTRICTED;
 
 public type MODAL 9;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type DefaultKeywordRuleResponseExemptrolesItemsString string;
 
 public type ChannelFollowerResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string channel_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string webhook_id;
+    @jsondata:Name {value: "webhook_id"}
+    string webhookId;
+    @jsondata:Name {value: "channel_id"}
+    string channelId;
 };
+
+public type InlineResponseItems2008 FriendInviteResponse|GroupDMInviteResponse|GuildInviteResponse|'200AnyOf41?;
 
 public type SpamLinkRuleResponse record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    2 triggerType;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    SpamLinkRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
-    string name;
-    AutomodEventType event_type;
-    # 
-    (BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse)[] actions;
-    2 trigger_type;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    SpamLinkRuleResponseExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
-    # 
-    SpamLinkRuleResponseExemptrolesItemsString[]? exempt_roles?;
-    # 
-    SpamLinkRuleResponseExemptchannelsItemsString[]? exempt_channels?;
-    record {} trigger_metadata;
+    @jsondata:Name {value: "trigger_metadata"}
+    record {} triggerMetadata;
 };
 
-# Represents the Queries record for the operation: list_guild_application_commands
-public type List_guild_application_commandsQueries record {
-    # 
-    boolean with_localizations?;
-};
+public type InlineResponseItems2006 ApplicationIncomingWebhookResponse|ChannelFollowerWebhookResponse|GuildIncomingWebhookResponse|'200OneOf43?;
 
-# the metadata value (integer) is not equal to the guild's configured value (integer)
-public type INTEGER_NOT_EQUAL 4;
+public type InlineResponseItems2007 GuildChannelResponse|PrivateChannelResponse|PrivateGroupChannelResponse|ThreadResponse|'200OneOf5?;
+
+public type InlineResponseItems2004 ExternalScheduledEventResponse|StageScheduledEventResponse|VoiceScheduledEventResponse|'200OneOf41?;
 
 public type GatewayBotResponse record {
-    string url;
-    GatewayBotSessionStartLimitResponse session_start_limit;
     int:Signed32 shards;
+    @jsondata:Name {value: "session_start_limit"}
+    GatewayBotSessionStartLimitResponse sessionStartLimit;
+    string url;
 };
+
+public type InlineResponseItems2005 DiscordIntegrationResponse|ExternalConnectionIntegrationResponse|GuildSubscriptionIntegrationResponse|'200OneOf42?;
 
 public type MessageEmbedAuthorResponse record {
+    @jsondata:Name {value: "icon_url"}
+    string? iconUrl?;
     string name;
+    @jsondata:Name {value: "proxy_icon_url"}
+    string? proxyIconUrl?;
     string? url?;
-    string? icon_url?;
-    string? proxy_icon_url?;
 };
 
-# members will receive notifications only for messages that @mention them by default
-public type ONLY_MENTIONS 1;
+public type InlineResponseItems2002 ApplicationIncomingWebhookResponse|ChannelFollowerWebhookResponse|GuildIncomingWebhookResponse|'200OneOf4?;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type InlineResponseItems2003 FriendInviteResponse|GroupDMInviteResponse|GuildInviteResponse|'200AnyOf4?;
+
+# Represents the Queries record for the operation: list_guild_scheduled_events
+public type ListGuildScheduledEventsQueries record {
+    #
+    @http:Query {name: "with_user_count"}
+    boolean withUserCount?;
+};
+
 public type DefaultKeywordListUpsertRequestExemptchannelsItemsString string;
 
-public type channel_id_invites_body CreateGroupDMInviteRequest|CreateGuildInviteRequest;
+public type InlineResponseItems2001 EntitlementResponse;
+
+# An organizational category that contains up to 50 channels
+public type GUILDCATEGORY 4;
+
+public type SkuIdsOneOf1 string;
 
 public type GuildTemplateResponse record {
-    string code;
-    string name;
-    string? description?;
-    int:Signed32 usage_count;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
+    @jsondata:Name {value: "usage_count"}
+    int:Signed32 usageCount;
     anydata creator?;
-    string created_at;
-    string updated_at;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string source_guild_id;
-    GuildTemplateSnapshotResponse serialized_source_guild;
-    boolean? is_dirty?;
+    string code;
+    @jsondata:Name {value: "source_guild_id"}
+    string sourceGuildId;
+    @jsondata:Name {value: "updated_at"}
+    string updatedAt;
+    @jsondata:Name {value: "serialized_source_guild"}
+    GuildTemplateSnapshotResponse serializedSourceGuild;
+    string name;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string? description?;
+    @jsondata:Name {value: "created_at"}
+    string createdAt;
+    @jsondata:Name {value: "is_dirty"}
+    boolean? isDirty?;
 };
 
 public type ChannelSelectDefaultValue record {
-    "channel" 'type;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-};
-
-# guild has access to set a vanity URL
-public type VANITY_URL "VANITY_URL";
-
-# Represents the Headers record for the operation: create_message
-public type Create_messageHeaders record {
-    # 
-    "application/x-www-form-urlencoded" Content\-Type;
+    "channel" 'type;
 };
 
 public type ApplicationCommandIntegerOptionResponse record {
-    4 'type;
-    string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
-    string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
-    boolean? required?;
+    @jsondata:Name {value: "min_value"}
+    anydata minValue?;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     boolean? autocomplete?;
-    # 
+    string name;
+    string description;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    4 'type;
+    #
     ApplicationCommandOptionIntegerChoiceResponse[]? choices?;
-    anydata min_value?;
-    anydata max_value?;
+    boolean? required?;
+    @jsondata:Name {value: "max_value"}
+    anydata maxValue?;
 };
 
 public type ScheduledEventResponse record {
+    string? image?;
+    anydata creator?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
+    string? description?;
+    @jsondata:Name {value: "entity_id"}
+    anydata entityId?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
+    @jsondata:Name {value: "entity_type"}
+    GuildScheduledEventEntityTypes entityType;
+    @jsondata:Name {value: "user_rsvp"}
+    anydata userRsvp?;
+    @jsondata:Name {value: "user_count"}
+    int:Signed32? userCount?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    @jsondata:Name {value: "creator_id"}
+    anydata creatorId?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    string? description?;
-    anydata channel_id?;
-    anydata creator_id?;
-    anydata creator?;
-    string? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
     GuildScheduledEventStatuses status;
-    GuildScheduledEventEntityTypes entity_type;
-    anydata entity_id?;
-    int:Signed32? user_count?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    anydata user_rsvp?;
 };
 
 public type MessageComponentUserSelectResponse record {
-    5 'type;
-    int:Signed32 id;
-    string custom_id;
-    string? placeholder?;
-    int:Signed32? min_values?;
-    int:Signed32? max_values?;
+    @jsondata:Name {value: "min_values"}
+    int:Signed32? minValues?;
+    @jsondata:Name {value: "custom_id"}
+    string customId;
+    @jsondata:Name {value: "max_values"}
+    int:Signed32? maxValues?;
     boolean? disabled?;
+    int:Signed32 id;
+    string? placeholder?;
+    5 'type;
 };
 
 public type AllowedMentionTypes USERS|ROLES|EVERYONE;
 
-public type HARMFUL_LINKS_BLOCKED_MESSAGE 180;
-
-# Sent when a user interacts with a message component previously sent by your application
-public type MESSAGE_COMPONENT 3;
-
 public type InviteApplicationResponse record {
+    #
+    @jsondata:Name {value: "rpc_origins"}
+    string[]? rpcOrigins?;
+    @jsondata:Name {value: "privacy_policy_url"}
+    string? privacyPolicyUrl?;
+    @jsondata:Name {value: "bot_require_code_grant"}
+    boolean? botRequireCodeGrant?;
+    anydata bot?;
+    string? icon?;
+    int:Signed32 flags;
+    string description;
+    @jsondata:Name {value: "verify_key"}
+    string verifyKey;
+    anydata 'type?;
+    @jsondata:Name {value: "max_participants"}
+    int:Signed32? maxParticipants?;
+    #
+    string[]? tags?;
+    @jsondata:Name {value: "custom_install_url"}
+    string? customInstallUrl?;
+    @jsondata:Name {value: "install_params"}
+    anydata installParams?;
+    string name;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string? icon?;
-    string description;
-    anydata 'type?;
-    string? cover_image?;
-    anydata primary_sku_id?;
-    anydata bot?;
+    @jsondata:Name {value: "cover_image"}
+    string? coverImage?;
+    @jsondata:Name {value: "primary_sku_id"}
+    anydata primarySkuId?;
     string? slug?;
-    anydata guild_id?;
-    # 
-    string[]? rpc_origins?;
-    boolean? bot_public?;
-    boolean? bot_require_code_grant?;
-    string? terms_of_service_url?;
-    string? privacy_policy_url?;
-    string? custom_install_url?;
-    anydata install_params?;
-    string verify_key;
-    int:Signed32 flags;
-    int:Signed32? max_participants?;
-    # 
-    string[]? tags?;
+    @jsondata:Name {value: "bot_public"}
+    boolean? botPublic?;
+    @jsondata:Name {value: "terms_of_service_url"}
+    string? termsOfServiceUrl?;
 };
 
 public type ApplicationCommandUserOptionResponse record {
-    6 'type;
+    @jsondata:Name {value: "name_localized"}
+    string? nameLocalized?;
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
     string name;
-    string? name_localized?;
-    record {|string...;|}? name_localizations?;
     string description;
-    string? description_localized?;
-    record {|string...;|}? description_localizations?;
+    @jsondata:Name {value: "description_localized"}
+    string? descriptionLocalized?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    6 'type;
     boolean? required?;
 };
 
-public type guild_id_stickers_body record {
-    @constraint:String {maxLength: 30, minLength: 2}
-    string name;
-    @constraint:String {maxLength: 200, minLength: 1}
-    string tags;
-    string? description?;
-    record {byte[] fileContent; string fileName;} file;
-};
-
 public type BaseCreateMessageCreateRequest record {
-    string? content?;
-    # 
-    RichEmbed[]? embeds?;
-    anydata allowed_mentions?;
-    # 
-    BaseCreateMessageCreateRequestStickeridsItemsString[]? sticker_ids?;
-    # 
+    #
     ActionRow[]? components?;
-    int:Signed32? flags?;
-    # 
+    #
     MessageAttachmentRequest[]? attachments?;
+    #
+    @jsondata:Name {value: "sticker_ids"}
+    BaseCreateMessageCreateRequestStickeridsItemsString[]? stickerIds?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# guild has access to set an invite splash background
+public type INVITESPLASH "INVITE_SPLASH";
+
 public type MentionSpamUpsertRequestPartialExemptrolesItemsString string;
 
 public type CreatedThreadResponse record {
+    @jsondata:Name {value: "last_pin_timestamp"}
+    string? lastPinTimestamp?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId;
+    int:Signed32 flags;
+    int:Signed32? bitrate?;
+    ChannelTypes 'type;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    @jsondata:Name {value: "message_count"}
+    int:Signed32 messageCount;
+    @jsondata:Name {value: "total_message_sent"}
+    int:Signed32 totalMessageSent;
+    @jsondata:Name {value: "last_message_id"}
+    anydata lastMessageId?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    string? permissions?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    anydata member?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    ChannelTypes 'type;
-    anydata last_message_id?;
-    int:Signed32 flags;
-    string? last_pin_timestamp?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    anydata parent_id?;
-    int:Signed32? rate_limit_per_user?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    string? permissions?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id;
-    anydata thread_metadata?;
-    int:Signed32 message_count;
-    int:Signed32 member_count;
-    int:Signed32 total_message_sent;
-    # 
-    CreatedThreadResponseAppliedtagsItemsString[]? applied_tags?;
-    anydata member?;
-};
-
-# Represents the Queries record for the operation: list_my_guilds
-public type List_my_guildsQueries record {
-    # 
-    boolean with_counts?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    @constraint:Int {minValue: 1, maxValue: 200}
-    int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
+    @jsondata:Name {value: "thread_metadata"}
+    anydata threadMetadata?;
+    @jsondata:Name {value: "member_count"}
+    int:Signed32 memberCount;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    #
+    @jsondata:Name {value: "applied_tags"}
+    CreatedThreadResponseAppliedtagsItemsString[]? appliedTags?;
 };
 
 public type NONE 0;
 
-public type BOT_ADD 28;
+public type GuildHomeSettingsResponseNewMemberActions NewMemberActionResponse|NewMemberActionsOneOf2?;
 
 public type MessageEmbedVideoResponse record {
-    string? url?;
-    string? proxy_url?;
     anydata width?;
-    anydata height?;
+    @jsondata:Name {value: "placeholder_version"}
+    anydata placeholderVersion?;
+    @jsondata:Name {value: "proxy_url"}
+    string? proxyUrl?;
     string? placeholder?;
-    anydata placeholder_version?;
+    string? url?;
+    anydata height?;
 };
-
-public type AUTO_MODERATION_FLAG_TO_CHANNEL 144;
 
 public type ThreadMemberResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string user_id;
-    string join_timestamp;
+    @jsondata:Name {value: "join_timestamp"}
+    string joinTimestamp;
+    @jsondata:Name {value: "user_id"}
+    string userId;
     int:Signed32 flags;
     anydata member?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
 };
 
+public type THIRTYMINUTES 1800;
+
 public type ScheduledEventUserResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_scheduled_event_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string user_id;
-    anydata user?;
+    @jsondata:Name {value: "user_id"}
+    string userId;
     anydata member?;
+    @jsondata:Name {value: "guild_scheduled_event_id"}
+    string guildScheduledEventId;
+    anydata user?;
 };
 
 public type ChannelsFollowersRequest record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string webhook_channel_id;
+    @jsondata:Name {value: "webhook_channel_id"}
+    string webhookChannelId;
 };
-
-public type GUILD_INCIDENT_ALERT_MODE_DISABLED 37;
-
-# this generates a webhook that is returned in the oauth token response for authorization code grants
-public type WEBHOOK_INCOMING "webhook.incoming";
 
 # must have verified email on account
 public type LOW 1;
 
-public type MEMBER_ROLE_UPDATE 25;
+public type STAGEINSTANCECREATE 83;
 
-# Check if content contains more unique mentions than allowed
-public type MENTION_SPAM 5;
+public type ONBOARDINGPROMPTCREATE 163;
 
 # Provides API key configurations needed when communicating with a remote HTTP endpoint.
 public type ApiKeysConfig record {|
     # Discord bot token
     @display {label: "", kind: "password"}
-    string Authorization;
+    string authorization;
 |};
 
 public type VanityURLErrorResponse record {
-    string message;
     int:Signed32 code;
+    string message;
 };
 
-# A temporary sub-channel within a GUILD_ANNOUNCEMENT channel
-public type ANNOUNCEMENT_THREAD 10;
+# Three days
+public type THREEDAY 4320;
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+public type EMOJIUPDATE 61;
+
 public type KeywordUpsertRequestExemptchannelsItemsString string;
 
-public type en\-US "en-US";
-
 public type ChannelsRecipientsRequest record {
-    string? access_token?;
+    @jsondata:Name {value: "access_token"}
+    string? accessToken?;
     string? nick?;
 };
 
-public type StageInstancesPrivacyLevels PUBLIC|GUILD_ONLY1;
+public type StageInstancesPrivacyLevels PUBLIC|GUILDONLY1;
 
-# guild has enabled the role subscription promo page
-public type CREATOR_STORE_PAGE "CREATOR_STORE_PAGE";
+public type MessagesmessageIdBody1 record {
+    #
+    ActionRow[]? components?;
+    #
+    MessageAttachmentRequest[]? attachments?;
+    int:Signed32? flags?;
+    @jsondata:Name {value: "allowed_mentions"}
+    anydata allowedMentions?;
+    #
+    RichEmbed[]? embeds?;
+    string? content?;
+};
 
-# guild has access to set an invite splash background
-public type INVITE_SPLASH "INVITE_SPLASH";
+public type MentionSpamUpsertRequestActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf56?;
 
 @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
 public type MessageCallResponseParticipantsItemsString string;
 
 public type KeywordRuleResponse record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    1 triggerType;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    KeywordRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
-    string name;
-    AutomodEventType event_type;
-    # 
-    (BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse)[] actions;
-    1 trigger_type;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    KeywordRuleResponseExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
-    # 
-    KeywordRuleResponseExemptrolesItemsString[]? exempt_roles?;
-    # 
-    KeywordRuleResponseExemptchannelsItemsString[]? exempt_channels?;
-    KeywordTriggerMetadataResponse trigger_metadata;
+    @jsondata:Name {value: "trigger_metadata"}
+    KeywordTriggerMetadataResponse triggerMetadata;
 };
 
-public type AutomodKeywordPresetType PROFANITY|SEXUAL_CONTENT|SLURS;
+public type AutomodKeywordPresetType PROFANITY|SEXUALCONTENT|SLURS;
+
+public type ResourceChannelsOneOf2 anydata?;
 
 public type ApplicationFormPartial record {
-    anydata description?;
+    @jsondata:Name {value: "role_connections_verification_url"}
+    string? roleConnectionsVerificationUrl?;
+    @jsondata:Name {value: "custom_install_url"}
+    string? customInstallUrl?;
+    @jsondata:Name {value: "install_params"}
+    anydata installParams?;
     record {byte[] fileContent; string fileName;}? icon?;
-    record {byte[] fileContent; string fileName;}? cover_image?;
-    anydata team_id?;
     int:Signed32? flags?;
-    string? interactions_endpoint_url?;
-    int:Signed32? max_participants?;
+    anydata description?;
+    @jsondata:Name {value: "interactions_endpoint_url"}
+    string? interactionsEndpointUrl?;
+    @jsondata:Name {value: "cover_image"}
+    record {byte[] fileContent; string fileName;}? coverImage?;
+    @jsondata:Name {value: "team_id"}
+    anydata teamId?;
     anydata 'type?;
-    # 
+    @jsondata:Name {value: "max_participants"}
+    int:Signed32? maxParticipants?;
+    #
     ApplicationFormPartialTagsItemsString[]? tags?;
-    string? custom_install_url?;
-    anydata install_params?;
-    string? role_connections_verification_url?;
 };
 
 public type PrivateGuildMemberResponse record {
-    string? avatar?;
-    anydata avatar_decoration_data?;
-    string? communication_disabled_until?;
-    int:Signed32 flags;
-    string joined_at;
-    string? nick?;
+    @jsondata:Name {value: "premium_since"}
+    string? premiumSince?;
     boolean pending;
-    string? premium_since?;
-    # 
+    #
     PrivateGuildMemberResponseRolesItemsString[] roles;
-    UserResponse user;
-    boolean mute;
+    int:Signed32 flags;
     boolean deaf;
     string? banner?;
+    boolean mute;
+    string? avatar?;
+    @jsondata:Name {value: "joined_at"}
+    string joinedAt;
+    string? nick?;
+    @jsondata:Name {value: "communication_disabled_until"}
+    string? communicationDisabledUntil?;
+    @jsondata:Name {value: "avatar_decoration_data"}
+    anydata avatarDecorationData?;
+    UserResponse user;
 };
 
-public type ONBOARDING_UPDATE 167;
-
-public type SOUNDBOARD_SOUND_CREATE 130;
+# A direct message between multiple users
+public type GROUPDM 3;
 
 public type DISCORD "discord";
 
-# guild is using the old permissions configuration behavior
-public type APPLICATION_COMMAND_PERMISSIONS_V2 "APPLICATION_COMMAND_PERMISSIONS_V2";
+public type THREADCREATE 110;
 
-public type WEBHOOK_DELETE 52;
+public type MLSpamUpsertRequestActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf54?;
 
 public type ApplicationCommandCreateRequest record {
+    @jsondata:Name {value: "name_localizations"}
+    record {|string...;|}? nameLocalizations?;
+    @jsondata:Name {value: "dm_permission"}
+    boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    record {|string...;|}? name_localizations?;
+    #
+    ApplicationCommandCreateRequestOptions[]? options?;
     string? description?;
-    record {|string...;|}? description_localizations?;
-    # 
-    (anydata)[]? options?;
-    int:Signed32? default_member_permissions?;
-    boolean? dm_permission?;
+    @jsondata:Name {value: "description_localizations"}
+    record {|string...;|}? descriptionLocalizations?;
+    @jsondata:Name {value: "default_member_permissions"}
+    int:Signed32? defaultMemberPermissions?;
     anydata 'type?;
 };
 
 public type CreateTextThreadWithMessageRequest record {
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    anydata auto_archive_duration?;
-    int:Signed32? rate_limit_per_user?;
+    @jsondata:Name {value: "auto_archive_duration"}
+    anydata autoArchiveDuration?;
 };
 
-public type INVITE_DELETE 42;
-
-public type VOICE_CHANNEL_STATUS_CREATE 192;
+# must have a verified phone number
+public type VERYHIGH 4;
 
 # guild has access to set a guild banner image
 public type BANNER "BANNER";
 
 public type AuditLogEntryResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    AuditLogActionTypes action_type;
-    anydata user_id?;
-    anydata target_id?;
-    # 
+    string? reason?;
+    @jsondata:Name {value: "action_type"}
+    AuditLogActionTypes actionType;
+    @jsondata:Name {value: "user_id"}
+    anydata userId?;
+    #
     AuditLogObjectChangeResponse[]? changes?;
     record {|string...;|}? options?;
-    string? reason?;
+    @jsondata:Name {value: "target_id"}
+    anydata targetId?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+};
+
+# Represents the Queries record for the operation: list_thread_members
+public type ListThreadMembersQueries record {
+    #
+    @constraint:Int {minValue: 1, maxValue: 100}
+    int:Signed32 'limit?;
+    #
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string after?;
+    #
+    @http:Query {name: "with_member"}
+    boolean withMember?;
 };
 
 public type PrivateApplicationResponse record {
+    @jsondata:Name {value: "privacy_policy_url"}
+    string? privacyPolicyUrl?;
+    @jsondata:Name {value: "bot_require_code_grant"}
+    boolean? botRequireCodeGrant?;
+    anydata bot?;
+    string? icon?;
+    int:Signed32 flags;
+    string description;
+    @jsondata:Name {value: "interactions_endpoint_url"}
+    string? interactionsEndpointUrl?;
+    anydata 'type?;
+    @jsondata:Name {value: "max_participants"}
+    int:Signed32? maxParticipants?;
+    @jsondata:Name {value: "custom_install_url"}
+    string? customInstallUrl?;
+    @jsondata:Name {value: "install_params"}
+    anydata installParams?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
-    string? icon?;
-    string description;
-    anydata 'type?;
-    string? cover_image?;
-    anydata primary_sku_id?;
-    anydata bot?;
+    @jsondata:Name {value: "cover_image"}
+    string? coverImage?;
     string? slug?;
-    anydata guild_id?;
-    # 
-    string[]? rpc_origins?;
-    boolean? bot_public?;
-    boolean? bot_require_code_grant?;
-    string? terms_of_service_url?;
-    string? privacy_policy_url?;
-    string? custom_install_url?;
-    anydata install_params?;
-    string verify_key;
-    int:Signed32 flags;
-    int:Signed32? max_participants?;
-    # 
-    string[]? tags?;
-    # 
-    string[] redirect_uris;
-    string? interactions_endpoint_url?;
-    string? role_connections_verification_url?;
+    @jsondata:Name {value: "bot_public"}
+    boolean? botPublic?;
+    @jsondata:Name {value: "terms_of_service_url"}
+    string? termsOfServiceUrl?;
+    #
+    @jsondata:Name {value: "rpc_origins"}
+    string[]? rpcOrigins?;
     UserResponse owner;
-    int:Signed32? approximate_guild_count?;
+    @jsondata:Name {value: "role_connections_verification_url"}
+    string? roleConnectionsVerificationUrl?;
+    @jsondata:Name {value: "verify_key"}
+    string verifyKey;
+    #
+    @jsondata:Name {value: "redirect_uris"}
+    string[] redirectUris;
     anydata team?;
+    #
+    string[]? tags?;
+    @jsondata:Name {value: "approximate_guild_count"}
+    int:Signed32? approximateGuildCount?;
+    string name;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    @jsondata:Name {value: "primary_sku_id"}
+    anydata primarySkuId?;
 };
 
-public type ONE_HOUR 3600;
+# for local rpc server access, this allows you to update a user's screenshare settings- requires Discord approval
+public type RPCSCREENSHAREWRITE "rpc.screenshare.write";
+
+public type InlineResponseItems200 DefaultKeywordRuleResponse|KeywordRuleResponse|MLSpamRuleResponse|MentionSpamRuleResponse|SpamLinkRuleResponse|'200OneOf6?;
+
+# for local rpc server access, this allows you to read a user's voice settings and listen for voice events - requires Discord approval
+public type RPCVOICEREAD "rpc.voice.read";
+
+# guild has been set as a support server on the App Directory
+public type DEVELOPERSUPPORTSERVER "DEVELOPER_SUPPORT_SERVER";
 
 public type ThreadMetadataResponse record {
     boolean archived;
-    string? archive_timestamp?;
-    ThreadAutoArchiveDuration auto_archive_duration;
-    boolean locked;
-    string? create_timestamp?;
+    @jsondata:Name {value: "archive_timestamp"}
+    string? archiveTimestamp?;
+    @jsondata:Name {value: "create_timestamp"}
+    string? createTimestamp?;
     boolean? invitable?;
+    boolean locked;
+    @jsondata:Name {value: "auto_archive_duration"}
+    ThreadAutoArchiveDuration autoArchiveDuration;
 };
 
 public type ExternalScheduledEventPatchRequestPartial record {
-    anydata status?;
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    anydata entityType?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel?;
     @constraint:String {maxLength: 100}
     string name?;
+    @jsondata:Name {value: "entity_metadata"}
+    EntityMetadataExternal entityMetadata?;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time?;
-    string? scheduled_end_time?;
-    anydata entity_type?;
-    GuildScheduledEventPrivacyLevels privacy_level?;
-    anydata channel_id?;
-    EntityMetadataExternal entity_metadata?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    anydata status?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
 
-public type GUILD_DISCOVERY_DISQUALIFIED 14;
-
 public type TIKTOK "tiktok";
-
-public type GUILD_HOME_FEATURE_ITEM 171;
 
 public type TWITCH "twitch";
 
 public type UserGuildOnboardingResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    # 
+    #
+    @jsondata:Name {value: "default_channel_ids"}
+    UserGuildOnboardingResponseDefaultchannelidsItemsString[] defaultChannelIds;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    #
     OnboardingPromptResponse[] prompts;
-    # 
-    UserGuildOnboardingResponseDefaultchannelidsItemsString[] default_channel_ids;
     boolean enabled;
 };
 
-# One hour
-public type ONE_HOUR1 60;
-
 public type PartialGuildSubscriptionIntegrationResponse record {
+    string? name?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     "guild_subscription" 'type;
-    string? name?;
     anydata account?;
 };
 
-# This permission is for a channel.
+public type BasicMessageResponseComponents MessageComponentActionRowResponse|MessageComponentButtonResponse|MessageComponentChannelSelectResponse|MessageComponentInputTextResponse|MessageComponentMentionableSelectResponse|MessageComponentRoleSelectResponse|MessageComponentStringSelectResponse|MessageComponentUserSelectResponse;
+
+public type StickersOneOf31 anydata?;
+
+public type AUTOMODERATIONFLAGTOCHANNEL 144;
+
+# This permission is for a channel
 public type CHANNEL1 3;
 
 public type StageScheduledEventCreateRequest record {
+    record {byte[] fileContent; string fileName;}? image?;
+    @jsondata:Name {value: "entity_type"}
+    1 entityType;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
     @constraint:String {maxLength: 100}
     string name;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
     string? description?;
-    record {byte[] fileContent; string fileName;}? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    1 entity_type;
-    anydata channel_id?;
-    anydata entity_metadata?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
 };
 
-# guild has enabled ticketed events
-public type TICKETED_EVENTS_ENABLED "TICKETED_EVENTS_ENABLED";
+public type GUILDINCIDENTALERTMODEENABLED 36;
 
 public type GithubAuthor record {
-    string? username?;
     @constraint:String {maxLength: 152133}
     string name;
+    string? username?;
 };
 
-# guild has disabled activity alerts in the configured safety alerts channel
-public type RAID_ALERTS_DISABLED "RAID_ALERTS_DISABLED";
-
 public type SAFE 2;
+
+public type ActionsOneOf5 anydata?;
 
 public type GuildsTemplatesRequest1 record {
     @constraint:String {maxLength: 100, minLength: 1}
@@ -4967,238 +5912,295 @@ public type GuildsTemplatesRequest2 record {
     string? description?;
 };
 
-public type GuildExplicitContentFilterTypes DISABLED|MEMBERS_WITHOUT_ROLES|ALL_MEMBERS;
-
 public type EmojiResponse record {
+    boolean managed;
+    #
+    EmojiResponseRolesItemsString[] roles;
+    string name;
+    boolean available;
+    boolean animated;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     anydata user?;
-    # 
-    EmojiResponseRolesItemsString[] roles;
-    boolean require_colons;
-    boolean managed;
-    boolean animated;
-    boolean available;
+    @jsondata:Name {value: "require_colons"}
+    boolean requireColons;
 };
 
-# Represents the Queries record for the operation: list_guild_bans
-public type List_guild_bansQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
+public type GuildExplicitContentFilterTypes DISABLED|MEMBERSWITHOUTROLES|ALLMEMBERS;
+
+# Represents the Queries record for the operation: list_guild_members
+public type ListGuildMembersQueries record {
+    #
     @constraint:Int {minValue: 1, maxValue: 1000}
     int:Signed32 'limit?;
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string after?;
+    #
+    @constraint:Int {minValue: 0}
+    int:Signed32 after?;
 };
 
-# The channel in a hub containing the listed servers
-public type GUILD_DIRECTORY 14;
-
 public type PartialDiscordIntegrationResponse record {
+    string? name?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     "discord" 'type;
-    string? name?;
+    @jsondata:Name {value: "application_id"}
+    string applicationId;
     anydata account?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string application_id;
 };
 
 # for OpenID Connect, this allows your app to receive user id and basic profile information
 public type OPENID "openid";
 
-public type AUTO_MODERATION_USER_COMM_DISABLED 145;
+public type SOUNDBOARDSOUNDUPDATE 131;
 
 public type EntityMetadataExternal record {
     @constraint:String {maxLength: 100}
     string location;
 };
 
-public type STICKER_CREATE 90;
-
 public type CreateEntitlementRequestData record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string sku_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id;
-    int:Signed32 owner_type;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId;
+    @jsondata:Name {value: "sku_id"}
+    string skuId;
+    @jsondata:Name {value: "owner_type"}
+    int:Signed32 ownerType;
 };
+
+public type BasicMessageResponseStickers GuildStickerResponse|StandardStickerResponse|StickersOneOf3?;
 
 public type UserPIIResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    string username;
-    string? avatar?;
-    string discriminator;
-    int:Signed32 public_flags;
+    boolean? bot?;
     @constraint:Int {minValue: 1, maxValue: -1}
     int flags;
-    boolean? bot?;
-    boolean? system?;
-    string? banner?;
-    int:Signed32? accent_color?;
-    string? global_name?;
-    boolean mfa_enabled;
-    AvailableLocalesEnum locale;
-    anydata premium_type?;
-    string? email?;
     boolean? verified?;
-};
-
-# Represents the Queries record for the operation: list_my_private_archived_threads
-public type List_my_private_archived_threadsQueries record {
-    # 
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string before?;
-    # 
-    @constraint:Int {minValue: 2, maxValue: 100}
-    int:Signed32 'limit?;
-};
-
-public type DefaultKeywordRuleResponse record {
+    string? banner?;
+    string? avatar?;
+    AvailableLocalesEnum locale;
+    string discriminator;
+    @jsondata:Name {value: "premium_type"}
+    anydata premiumType?;
+    @jsondata:Name {value: "accent_color"}
+    int:Signed32? accentColor?;
+    boolean? system?;
+    @jsondata:Name {value: "global_name"}
+    string? globalName?;
+    @jsondata:Name {value: "mfa_enabled"}
+    boolean mfaEnabled;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string creator_id;
-    string name;
-    AutomodEventType event_type;
-    # 
-    (BlockMessageActionResponse|FlagToChannelActionResponse|QuarantineUserActionResponse|UserCommunicationDisabledActionResponse)[] actions;
-    4 trigger_type;
-    boolean? enabled?;
-    # 
-    DefaultKeywordRuleResponseExemptrolesItemsString[]? exempt_roles?;
-    # 
-    DefaultKeywordRuleResponseExemptchannelsItemsString[]? exempt_channels?;
-    DefaultKeywordListTriggerMetadataResponse trigger_metadata;
+    @jsondata:Name {value: "public_flags"}
+    int:Signed32 publicFlags;
+    string? email?;
+    string username;
 };
 
-# Represents the Queries record for the operation: execute_github_compatible_webhook
-public type Execute_github_compatible_webhookQueries record {
-    # 
-    boolean 'wait?;
-    # 
+public type '200OneOf42 anydata?;
+
+public type DefaultKeywordListUpsertRequestPartialActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf51?;
+
+public type '200OneOf43 anydata?;
+
+# guild has increased custom sticker slots
+public type MORESTICKERS "MORE_STICKERS";
+
+public type SkuIds SkuIdsOneOf1|SkuIdsSkuIdsOneOf12;
+
+public type DefaultKeywordRuleResponse record {
+    @jsondata:Name {value: "event_type"}
+    AutomodEventType eventType;
+    @jsondata:Name {value: "trigger_type"}
+    4 triggerType;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    @jsondata:Name {value: "creator_id"}
+    string creatorId;
+    string name;
+    #
+    @jsondata:Name {value: "exempt_roles"}
+    DefaultKeywordRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string thread_id?;
+    string id;
+    #
+    @jsondata:Name {value: "exempt_channels"}
+    DefaultKeywordRuleResponseExemptchannelsItemsString[]? exemptChannels?;
+    #
+    DefaultKeywordRuleResponseActions[] actions;
+    boolean? enabled?;
+    @jsondata:Name {value: "trigger_metadata"}
+    DefaultKeywordListTriggerMetadataResponse triggerMetadata;
+};
+
+# Represents the Headers record for the operation: update_original_webhook_message
+public type UpdateOriginalWebhookMessageHeaders record {
+    #
+    @http:Header {name: "Content-Type"}
+    "application/x-www-form-urlencoded" contentType;
 };
 
 public type GuildIncomingWebhookResponse record {
-    anydata application_id?;
+    @jsondata:Name {value: "guild_id"}
+    anydata guildId?;
+    string name;
     string? avatar?;
-    anydata channel_id?;
-    anydata guild_id?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    string name;
     1 'type;
+    @jsondata:Name {value: "application_id"}
+    anydata applicationId?;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
     anydata user?;
-    string? token?;
     string? url?;
+    string? token?;
 };
 
 public type CreateGuildInviteRequest record {
-    int:Signed32? max_age?;
+    @jsondata:Name {value: "max_age"}
+    int:Signed32? maxAge?;
     boolean? temporary?;
-    int:Signed32? max_uses?;
+    @jsondata:Name {value: "max_uses"}
+    int:Signed32? maxUses?;
     boolean? unique?;
-    anydata target_user_id?;
-    anydata target_application_id?;
-    anydata target_type?;
+    @jsondata:Name {value: "target_type"}
+    anydata targetType?;
+    @jsondata:Name {value: "target_user_id"}
+    anydata targetUserId?;
+    @jsondata:Name {value: "target_application_id"}
+    anydata targetApplicationId?;
+};
+
+# allows your app to read build data for a user's applications
+public type APPLICATIONSBUILDSREAD "applications.builds.read";
+
+public type VoiceScheduledEventResponse record {
+    string? image?;
+    anydata creator?;
+    @jsondata:Name {value: "privacy_level"}
+    GuildScheduledEventPrivacyLevels privacyLevel;
+    @jsondata:Name {value: "entity_metadata"}
+    anydata entityMetadata?;
+    string? description?;
+    @jsondata:Name {value: "entity_id"}
+    anydata entityId?;
+    @jsondata:Name {value: "scheduled_end_time"}
+    string? scheduledEndTime?;
+    @jsondata:Name {value: "entity_type"}
+    2 entityType;
+    @jsondata:Name {value: "user_rsvp"}
+    anydata userRsvp?;
+    @jsondata:Name {value: "user_count"}
+    int:Signed32? userCount?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    @jsondata:Name {value: "creator_id"}
+    anydata creatorId?;
+    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+    string id;
+    @jsondata:Name {value: "channel_id"}
+    anydata channelId?;
+    @jsondata:Name {value: "scheduled_start_time"}
+    string scheduledStartTime;
+    GuildScheduledEventStatuses status;
 };
 
 public type GuildsBulkBanRequest record {
-    # 
-    @constraint:Array {maxLength: 200}
-    GuildsBulkBanRequestUseridsItemsString[] user_ids;
-    int:Signed32? delete_message_seconds?;
-};
-
-public type VoiceScheduledEventResponse record {
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string id;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    string? description?;
-    anydata channel_id?;
-    anydata creator_id?;
-    anydata creator?;
-    string? image?;
-    string scheduled_start_time;
-    string? scheduled_end_time?;
-    GuildScheduledEventStatuses status;
-    2 entity_type;
-    anydata entity_id?;
-    int:Signed32? user_count?;
-    GuildScheduledEventPrivacyLevels privacy_level;
-    anydata user_rsvp?;
-    anydata entity_metadata?;
+    #
+    @jsondata:Name {value: "user_ids"}
+    GuildsBulkBanRequestUseridsItemsString[] userIds;
+    @jsondata:Name {value: "delete_message_seconds"}
+    int:Signed32? deleteMessageSeconds?;
 };
 
 public type LINK 5;
 
 public type PONG 1;
 
+public type '200OneOf41 anydata?;
+
+public type OptionsOneOf2 anydata?;
+
+# allows your app to update permissions for its commands in a guild a user has permissions to
+public type APPLICATIONSCOMMANDSPERMISSIONSUPDATE "applications.commands.permissions.update";
+
+public type CHANNELDELETE 12;
+
 public type StickerPackCollectionResponse record {
-    # 
-    StickerPackResponse[] sticker_packs;
+    #
+    @jsondata:Name {value: "sticker_packs"}
+    StickerPackResponse[] stickerPacks;
 };
 
-@constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
+# the metadata value (ISO8601 string) is less than or equal to the guild's configured value (integer; days before current date)
+public type DATETIMELESSTHANEQUAL 5;
+
 public type SpamLinkRuleResponseExemptchannelsItemsString string;
 
 public type UserSelectDefaultValue record {
-    "user" 'type;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
+    "user" 'type;
 };
 
+public type MLSpamUpsertRequestPartialActions BlockMessageAction|FlagToChannelAction|QuarantineUserAction|UserCommunicationDisabledAction|ActionsOneOf55?;
+
 public type PartialExternalConnectionIntegrationResponse record {
+    string? name?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     IntegrationTypes 'type;
-    string? name?;
     anydata account?;
 };
 
-# A voice channel within a server
-public type GUILD_VOICE 2;
+public type STICKERCREATE 90;
 
-# allows your app to use commands in a guild
-public type APPLICATIONS_COMMANDS "applications.commands";
+public type MESSAGEBULKDELETE 73;
+
+public type '200OneOf6 anydata?;
 
 public type ThreadResponse record {
+    @jsondata:Name {value: "last_pin_timestamp"}
+    string? lastPinTimestamp?;
+    @jsondata:Name {value: "rate_limit_per_user"}
+    int:Signed32? rateLimitPerUser?;
+    @jsondata:Name {value: "owner_id"}
+    string ownerId;
+    int:Signed32 flags;
+    int:Signed32? bitrate?;
+    ChannelTypes 'type;
+    @jsondata:Name {value: "user_limit"}
+    int:Signed32? userLimit?;
+    @jsondata:Name {value: "message_count"}
+    int:Signed32 messageCount;
+    @jsondata:Name {value: "total_message_sent"}
+    int:Signed32 totalMessageSent;
+    @jsondata:Name {value: "last_message_id"}
+    anydata lastMessageId?;
+    @jsondata:Name {value: "rtc_region"}
+    string? rtcRegion?;
+    @jsondata:Name {value: "parent_id"}
+    anydata parentId?;
+    string? permissions?;
+    @jsondata:Name {value: "guild_id"}
+    string guildId;
+    string name;
+    anydata member?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    ChannelTypes 'type;
-    anydata last_message_id?;
-    int:Signed32 flags;
-    string? last_pin_timestamp?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string guild_id;
-    string name;
-    anydata parent_id?;
-    int:Signed32? rate_limit_per_user?;
-    int:Signed32? bitrate?;
-    int:Signed32? user_limit?;
-    string? rtc_region?;
-    anydata video_quality_mode?;
-    string? permissions?;
-    @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
-    string owner_id;
-    anydata thread_metadata?;
-    int:Signed32 message_count;
-    int:Signed32 member_count;
-    int:Signed32 total_message_sent;
-    # 
-    ThreadResponseAppliedtagsItemsString[]? applied_tags?;
-    anydata member?;
+    @jsondata:Name {value: "thread_metadata"}
+    anydata threadMetadata?;
+    @jsondata:Name {value: "member_count"}
+    int:Signed32 memberCount;
+    @jsondata:Name {value: "video_quality_mode"}
+    anydata videoQualityMode?;
+    #
+    @jsondata:Name {value: "applied_tags"}
+    ThreadResponseAppliedtagsItemsString[]? appliedTags?;
 };
+
+public type '200OneOf5 anydata?;
+
+public type '200OneOf4 anydata?;
 
 public type IncluderolesItemsnull string;
