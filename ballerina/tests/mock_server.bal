@@ -21,18 +21,18 @@ listener http:Listener httpServer = new (9090);
 
 http:Service mockService = service object {
 
-    resource function get users/[string userId]() returns UserResponse|http:Response => {
+    resource function get users/[string userId]() returns UserResponse|error => {
         id: userId,
         username: "exampleUser",
         discriminator: "1234",
-        public_flags: 0,
-        flags: 1,
+        publicFlags: 0,
+        flags: 0,
         bot: false,
         system: false,
         avatar: "avatar_url",
         banner: "banner_url",
-        accent_color: 16777215,
-        global_name: "globalExampleUser"
+        accentColor: 16777215,
+        globalName: "globalExampleUser"
     };
 
     resource function get channels/[string channelId]/invites() returns anydata => ["Invite1", "Invite2"];
@@ -42,7 +42,7 @@ http:Service mockService = service object {
 
 function init() returns error? {
     if isLiveServer {
-        log:printInfo("Skiping mock server initialization as the tests are running on live server");
+        log:printInfo("Skipping mock server initialization as the tests are running on live server");
         return;
     }
 
