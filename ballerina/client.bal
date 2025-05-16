@@ -41,6 +41,10 @@ public isolated client class Client {
         self.clientEp = check new (serviceUrl, httpClientConfig);
     }
 
+    # get_my_oauth2_application
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_my_oauth2_application 
     resource isolated function get oauth2/applications/\@me(map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
         string resourcePath = string `/oauth2/applications/@me`;
         map<anydata> headerValues = {...headers};
@@ -99,6 +103,10 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_my_application
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_my_application 
     resource isolated function get applications/\@me(map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
         string resourcePath = string `/applications/@me`;
         map<anydata> headerValues = {...headers};
@@ -109,6 +117,11 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # update_my_application
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_my_application 
     resource isolated function patch applications/\@me(ApplicationFormPartial payload, map<string|string[]> headers = {}) returns PrivateApplicationResponse|error {
         string resourcePath = string `/applications/@me`;
         map<anydata> headerValues = {...headers};
@@ -150,6 +163,10 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_my_oauth2_authorization
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_my_oauth2_authorization 
     resource isolated function get oauth2/\@me(map<string|string[]> headers = {}) returns OAuth2GetAuthorizationResponse|error {
         string resourcePath = string `/oauth2/@me`;
         map<anydata> headerValues = {...headers};
@@ -174,6 +191,10 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_my_user
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_my_user 
     resource isolated function get users/\@me(map<string|string[]> headers = {}) returns UserPIIResponse|error {
         string resourcePath = string `/users/@me`;
         map<anydata> headerValues = {...headers};
@@ -184,6 +205,11 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # update_my_user
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_my_user 
     resource isolated function patch users/\@me(BotAccountPatchRequest payload, map<string|string[]> headers = {}) returns UserPIIResponse|error {
         string resourcePath = string `/users/@me`;
         map<anydata> headerValues = {...headers};
@@ -197,6 +223,11 @@ public isolated client class Client {
         return self.clientEp->patch(resourcePath, request, httpHeaders);
     }
 
+    # create_stage_instance
+    #
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_stage_instance 
     resource isolated function post stage\-instances(StageInstancesRequest payload, map<string|string[]> headers = {}) returns StageInstanceResponse|error {
         string resourcePath = string `/stage-instances`;
         map<anydata> headerValues = {...headers};
@@ -210,6 +241,10 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # list_sticker_packs
+    #
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for list_sticker_packs 
     resource isolated function get sticker\-packs(map<string|string[]> headers = {}) returns StickerPackCollectionResponse|error {
         string resourcePath = string `/sticker-packs`;
         map<anydata> headerValues = {...headers};
@@ -252,6 +287,12 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # list_my_private_archived_threads
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_my_private_archived_threads 
     resource isolated function get channels/[string channelId]/users/\@me/threads/archived/'private(map<string|string[]> headers = {}, *ListMyPrivateArchivedThreadsQueries queries) returns ThreadsResponse|error {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/users/@me/threads/archived/private`;
         map<anydata> headerValues = {...headers};
@@ -317,6 +358,13 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
+    # add_my_message_reaction
+    #
+    # + channelId - Channel ID
+    # + messageId - Message ID
+    # + emojiName -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for add_my_message_reaction 
     resource isolated function put channels/[string channelId]/messages/[string messageId]/reactions/[string emojiName]/\@me(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/messages/${getEncodedUri(messageId)}/reactions/${getEncodedUri(emojiName)}/@me`;
         map<anydata> headerValues = {...headers};
@@ -328,6 +376,13 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
+    # delete_my_message_reaction
+    #
+    # + channelId - Channel ID
+    # + messageId - Message ID
+    # + emojiName -
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_my_message_reaction 
     resource isolated function delete channels/[string channelId]/messages/[string messageId]/reactions/[string emojiName]/\@me(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/messages/${getEncodedUri(messageId)}/reactions/${getEncodedUri(emojiName)}/@me`;
         map<anydata> headerValues = {...headers};
@@ -338,6 +393,12 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
+    # list_private_archived_threads
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_private_archived_threads 
     resource isolated function get channels/[string channelId]/threads/archived/'private(map<string|string[]> headers = {}, *ListPrivateArchivedThreadsQueries queries) returns ThreadsResponse|error {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/threads/archived/private`;
         map<anydata> headerValues = {...headers};
@@ -349,6 +410,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # list_public_archived_threads
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_public_archived_threads 
     resource isolated function get channels/[string channelId]/threads/archived/'public(map<string|string[]> headers = {}, *ListPublicArchivedThreadsQueries queries) returns ThreadsResponse|error {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/threads/archived/public`;
         map<anydata> headerValues = {...headers};
@@ -360,11 +427,22 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_application_user_role_connection
+    #
+    # + applicationId - Application ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_application_user_role_connection 
     resource isolated function get users/\@me/applications/[string applicationId]/role\-connection(map<string|string[]> headers = {}) returns ApplicationUserRoleConnectionResponse|error {
         string resourcePath = string `/users/@me/applications/${getEncodedUri(applicationId)}/role-connection`;
         return self.clientEp->get(resourcePath, headers);
     }
 
+    # update_application_user_role_connection
+    #
+    # + applicationId - Application ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_application_user_role_connection 
     resource isolated function put users/\@me/applications/[string applicationId]/role\-connection(UsersMeApplicationsRoleConnectionRequest payload, map<string|string[]> headers = {}) returns ApplicationUserRoleConnectionResponse|error {
         string resourcePath = string `/users/@me/applications/${getEncodedUri(applicationId)}/role-connection`;
         http:Request request = new;
@@ -547,6 +625,11 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # join_thread
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for join_thread 
     resource isolated function put channels/[string channelId]/thread\-members/\@me(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/thread-members/@me`;
         map<anydata> headerValues = {...headers};
@@ -558,6 +641,11 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
+    # leave_thread
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for leave_thread 
     resource isolated function delete channels/[string channelId]/thread\-members/\@me(map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/thread-members/@me`;
         map<anydata> headerValues = {...headers};
@@ -568,6 +656,12 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
+    # bulk_delete_messages
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for bulk_delete_messages 
     resource isolated function post channels/[string channelId]/messages/bulk\-delete(ChannelsMessagesBulkDeleteRequest payload, map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/messages/bulk-delete`;
         map<anydata> headerValues = {...headers};
@@ -688,6 +782,13 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # get_original_webhook_message
+    #
+    # + webhookId - Webhook ID
+    # + webhookToken - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_original_webhook_message 
     resource isolated function get webhooks/[string webhookId]/[string webhookToken]/messages/\@original(map<string|string[]> headers = {}, *GetOriginalWebhookMessageQueries queries) returns MessageResponse|error {
         string resourcePath = string `/webhooks/${getEncodedUri(webhookId)}/${getEncodedUri(webhookToken)}/messages/@original`;
         map<anydata> headerValues = {...headers};
@@ -699,6 +800,13 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # delete_original_webhook_message
+    #
+    # + webhookId - Webhook ID
+    # + webhookToken - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 204 response for delete_original_webhook_message 
     resource isolated function delete webhooks/[string webhookId]/[string webhookToken]/messages/\@original(map<string|string[]> headers = {}, *DeleteOriginalWebhookMessageQueries queries) returns error? {
         string resourcePath = string `/webhooks/${getEncodedUri(webhookId)}/${getEncodedUri(webhookToken)}/messages/@original`;
         map<anydata> headerValues = {...headers};
@@ -710,7 +818,14 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
-    resource isolated function patch webhooks/[string webhookId]/[string webhookToken]/messages/\@original(MessagesoriginalBody payload, UpdateOriginalWebhookMessageHeaders headers, *UpdateOriginalWebhookMessageQueries queries) returns MessageResponse|error {
+    # update_original_webhook_message
+    #
+    # + webhookId - Webhook ID
+    # + webhookToken - Webhook Token
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for update_original_webhook_message 
+    resource isolated function patch webhooks/[string webhookId]/[string webhookToken]/messages/\@original(UpdateOriginalWebhookMessageHeaders headers, MessagesoriginalBody payload, *UpdateOriginalWebhookMessageQueries queries) returns MessageResponse|error {
         string resourcePath = string `/webhooks/${getEncodedUri(webhookId)}/${getEncodedUri(webhookToken)}/messages/@original`;
         map<anydata> headerValues = {...headers};
         if self.apiKeyConfig is ApiKeysConfig {
@@ -828,6 +943,12 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # update_self_voice_state
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 204 response for update_self_voice_state 
     resource isolated function patch guilds/[string guildId]/voice\-states/\@me(GuildsVoiceStatesMeRequest payload, map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/voice-states/@me`;
         map<anydata> headerValues = {...headers};
@@ -873,6 +994,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # update_my_guild_member
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_my_guild_member 
     resource isolated function patch guilds/[string guildId]/members/\@me(GuildsMembersMeRequest payload, map<string|string[]> headers = {}) returns PrivateGuildMemberResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/members/@me`;
         map<anydata> headerValues = {...headers};
@@ -1183,6 +1310,12 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
+    # list_thread_members
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_thread_members 
     resource isolated function get channels/[string channelId]/thread\-members(map<string|string[]> headers = {}, *ListThreadMembersQueries queries) returns ThreadMemberResponse[]|error {
         string resourcePath = string `/channels/${getEncodedUri(channelId)}/thread-members`;
         map<anydata> headerValues = {...headers};
@@ -1659,6 +1792,11 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # get_guild_new_member_welcome
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_new_member_welcome 
     resource isolated function get guilds/[string guildId]/new\-member\-welcome(map<string|string[]> headers = {}) returns GuildHomeSettingsResponse|error? {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/new-member-welcome`;
         map<anydata> headerValues = {...headers};
@@ -1723,6 +1861,12 @@ public isolated client class Client {
         return self.clientEp->patch(resourcePath, request, httpHeaders);
     }
 
+    # list_guild_scheduled_events
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_scheduled_events 
     resource isolated function get guilds/[string guildId]/scheduled\-events(map<string|string[]> headers = {}, *ListGuildScheduledEventsQueries queries) returns InlineResponseItems2004[]|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/scheduled-events`;
         map<anydata> headerValues = {...headers};
@@ -1734,6 +1878,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # create_guild_scheduled_event
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for create_guild_scheduled_event 
     resource isolated function post guilds/[string guildId]/scheduled\-events(GuildIdScheduledEventsBody payload, map<string|string[]> headers = {}) returns InlineResponse2003|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/scheduled-events`;
         map<anydata> headerValues = {...headers};
@@ -1747,6 +1897,11 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # get_guild_welcome_screen
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_welcome_screen 
     resource isolated function get guilds/[string guildId]/welcome\-screen(map<string|string[]> headers = {}) returns GuildWelcomeScreenResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/welcome-screen`;
         map<anydata> headerValues = {...headers};
@@ -1757,6 +1912,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # update_guild_welcome_screen
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_guild_welcome_screen 
     resource isolated function patch guilds/[string guildId]/welcome\-screen(WelcomeScreenPatchRequestPartial payload, map<string|string[]> headers = {}) returns GuildWelcomeScreenResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/welcome-screen`;
         map<anydata> headerValues = {...headers};
@@ -1821,6 +1982,11 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_guild_widget
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_widget 
     resource isolated function get guilds/[string guildId]/widget\.json(map<string|string[]> headers = {}) returns WidgetResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/widget.json`;
         map<anydata> headerValues = {...headers};
@@ -1865,6 +2031,11 @@ public isolated client class Client {
         return self.clientEp->put(resourcePath, request, httpHeaders);
     }
 
+    # get_guild_vanity_url
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_guild_vanity_url 
     resource isolated function get guilds/[string guildId]/vanity\-url(map<string|string[]> headers = {}) returns VanityURLResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/vanity-url`;
         map<anydata> headerValues = {...headers};
@@ -1875,6 +2046,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # list_guild_audit_log_entries
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for list_guild_audit_log_entries 
     resource isolated function get guilds/[string guildId]/audit\-logs(map<string|string[]> headers = {}, *ListGuildAuditLogEntriesQueries queries) returns GuildAuditLogResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/audit-logs`;
         map<anydata> headerValues = {...headers};
@@ -1886,6 +2063,12 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # get_guild_widget_png
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + queries - Queries to be sent with the request 
+    # + return - 200 response for get_guild_widget_png 
     resource isolated function get guilds/[string guildId]/widget\.png(map<string|string[]> headers = {}, *GetGuildWidgetPngQueries queries) returns byte[]|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/widget.png`;
         map<anydata> headerValues = {...headers};
@@ -2037,6 +2220,12 @@ public isolated client class Client {
         return self.clientEp->patch(resourcePath, request, httpHeaders);
     }
 
+    # bulk_ban_users_from_guild
+    #
+    # + guildId - Guild ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for bulk_ban_users_from_guild 
     resource isolated function post guilds/[string guildId]/bulk\-ban(GuildsBulkBanRequest payload, map<string|string[]> headers = {}) returns BulkBanUsersResponse|error {
         string resourcePath = string `/guilds/${getEncodedUri(guildId)}/bulk-ban`;
         map<anydata> headerValues = {...headers};
@@ -2619,6 +2808,11 @@ public isolated client class Client {
         return self.clientEp->post(resourcePath, request, httpHeaders);
     }
 
+    # get_stage_instance
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 200 response for get_stage_instance 
     resource isolated function get stage\-instances/[string channelId](map<string|string[]> headers = {}) returns StageInstanceResponse|error {
         string resourcePath = string `/stage-instances/${getEncodedUri(channelId)}`;
         map<anydata> headerValues = {...headers};
@@ -2629,6 +2823,11 @@ public isolated client class Client {
         return self.clientEp->get(resourcePath, httpHeaders);
     }
 
+    # delete_stage_instance
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + return - 204 response for delete_stage_instance 
     resource isolated function delete stage\-instances/[string channelId](map<string|string[]> headers = {}) returns error? {
         string resourcePath = string `/stage-instances/${getEncodedUri(channelId)}`;
         map<anydata> headerValues = {...headers};
@@ -2639,6 +2838,12 @@ public isolated client class Client {
         return self.clientEp->delete(resourcePath, headers = httpHeaders);
     }
 
+    # update_stage_instance
+    #
+    # + channelId - Channel ID
+    # + headers - Headers to be sent with the request 
+    # + payload -
+    # + return - 200 response for update_stage_instance 
     resource isolated function patch stage\-instances/[string channelId](StageInstancesRequest1 payload, map<string|string[]> headers = {}) returns StageInstanceResponse|error {
         string resourcePath = string `/stage-instances/${getEncodedUri(channelId)}`;
         map<anydata> headerValues = {...headers};
