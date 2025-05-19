@@ -30,7 +30,6 @@ public type DATETIMEGREATERTHANEQUAL 6;
 
 # Represents the Headers record for the operation: update_webhook_message
 public type UpdateWebhookMessageHeaders record {
-    #
     @http:Header {name: "Content-Type"}
     "application/x-www-form-urlencoded" contentType;
 };
@@ -55,7 +54,6 @@ public type GuildCreateRequest record {
     anydata preferredLocale?;
     @jsondata:Name {value: "default_message_notifications"}
     anydata defaultMessageNotifications?;
-    #
     CreateGuildRequestRoleItem[]? roles?;
     @jsondata:Name {value: "system_channel_flags"}
     int:Signed32? systemChannelFlags?;
@@ -69,7 +67,6 @@ public type GuildCreateRequest record {
     anydata verificationLevel?;
     @jsondata:Name {value: "explicit_content_filter"}
     anydata explicitContentFilter?;
-    #
     CreateGuildRequestChannelItem[]? channels?;
     @jsondata:Name {value: "afk_channel_id"}
     anydata afkChannelId?;
@@ -83,7 +80,6 @@ public type INVITEUPDATE 41;
 public type GithubCheckSuite record {
     string? conclusion?;
     GithubCheckApp app;
-    #
     @jsondata:Name {value: "pull_requests"}
     GithubCheckPullRequest[]? pullRequests?;
     @jsondata:Name {value: "head_branch"}
@@ -99,7 +95,6 @@ public type PurchaseType GUILDPRODUCT;
 public type ROLEDELETE 32;
 
 public type UserSelect record {
-    #
     @jsondata:Name {value: "default_values"}
     UserSelectDefaultValue[]? defaultValues?;
     @jsondata:Name {value: "min_values"}
@@ -143,7 +138,6 @@ public type ApplicationCommandStringOptionResponse record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     3 'type;
-    #
     ApplicationCommandOptionStringChoiceResponse[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_length"}
@@ -203,7 +197,6 @@ public type DOMAIN "domain";
 public type INSTAGRAM "instagram";
 
 public type InviteGuildResponse record {
-    #
     GuildFeatures[] features;
     @jsondata:Name {value: "verification_level"}
     anydata verificationLevel?;
@@ -233,13 +226,10 @@ public type MLSpamUpsertRequest record {
     3 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MLSpamUpsertRequestExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MLSpamUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
-    #
     MLSpamUpsertRequestActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -252,7 +242,6 @@ public type GuildScheduledEventEntityTypes NONE|STAGEINSTANCE|VOICE1|EXTERNAL;
 
 # Represents the Queries record for the operation: update_webhook_message
 public type UpdateWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -309,7 +298,6 @@ public type WebhookIdwebhookTokenBody IncomingWebhookRequestPartial|IncomingWebh
 
 # Represents the Queries record for the operation: delete_original_webhook_message
 public type DeleteOriginalWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -320,14 +308,11 @@ public type VANITYURL "VANITY_URL";
 public type MEMBERMOVE 26;
 
 public type MessagesoriginalBody record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -342,7 +327,6 @@ public type ApplicationCommandChannelOptionResponse record {
     record {|string...;|}? nameLocalizations?;
     string name;
     string description;
-    #
     @jsondata:Name {value: "channel_types"}
     ChannelTypes[]? channelTypes?;
     @jsondata:Name {value: "description_localized"}
@@ -361,14 +345,11 @@ public type MessageEmbedProviderResponse record {
 };
 
 public type IncomingWebhookUpdateForInteractionCallbackRequestPartial record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -412,7 +393,6 @@ public type BOOLEANEQUAL 7;
 public type KeywordRuleResponseExemptchannelsItemsString string;
 
 public type OnboardingPromptOptionResponse record {
-    #
     @jsondata:Name {value: "channel_ids"}
     OnboardingPromptOptionResponseChannelidsItemsString[] channelIds;
     SettingsEmojiResponse emoji;
@@ -420,7 +400,6 @@ public type OnboardingPromptOptionResponse record {
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     string title;
-    #
     @jsondata:Name {value: "role_ids"}
     OnboardingPromptOptionResponseRoleidsItemsString[] roleIds;
 };
@@ -429,7 +408,6 @@ public type GuildsMembersRequest1 record {
     string? nick?;
     @jsondata:Name {value: "communication_disabled_until"}
     string? communicationDisabledUntil?;
-    #
     GuildsMembersRequest1Roles[]? roles?;
     boolean? deaf?;
     int:Signed32? flags?;
@@ -475,13 +453,10 @@ public type GuildWelcomeChannel record {
 public type DISCOVERABLE "DISCOVERABLE";
 
 public type KeywordTriggerMetadataResponse record {
-    #
     @jsondata:Name {value: "keyword_filter"}
     string[] keywordFilter;
-    #
     @jsondata:Name {value: "allow_list"}
     string[] allowList;
-    #
     @jsondata:Name {value: "regex_patterns"}
     string[] regexPatterns;
 };
@@ -495,22 +470,16 @@ public type '200AnyOf4 anydata?;
 
 # Represents the Queries record for the operation: list_guild_audit_log_entries
 public type ListGuildAuditLogEntriesQueries record {
-    #
     @http:Query {name: "user_id"}
     string userId?;
-    #
     @http:Query {name: "action_type"}
     int:Signed32 actionType?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @http:Query {name: "target_id"}
     string targetId?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
 };
@@ -528,7 +497,6 @@ public type ConnectedAccountResponse record {
     string id;
     ConnectedAccountProviders 'type;
     boolean? revoked?;
-    #
     ConnectedAccountIntegrationResponse[]? integrations?;
 };
 
@@ -596,7 +564,6 @@ public type GithubCheckPullRequest record {
 
 public type ApplicationOAuth2InstallParams record {
     int:Signed32? permissions?;
-    #
     OAuth2Scopes[]? scopes?;
 };
 
@@ -607,7 +574,6 @@ public type GuildTemplateSnapshotResponse record {
     UserNotificationSettings defaultMessageNotifications;
     @jsondata:Name {value: "system_channel_flags"}
     int:Signed32 systemChannelFlags;
-    #
     GuildTemplateRoleResponse[] roles;
     string? description?;
     @jsondata:Name {value: "system_channel_id"}
@@ -618,7 +584,6 @@ public type GuildTemplateSnapshotResponse record {
     VerificationLevels verificationLevel;
     @jsondata:Name {value: "explicit_content_filter"}
     GuildExplicitContentFilterTypes explicitContentFilter;
-    #
     GuildTemplateChannelResponse[] channels;
     @jsondata:Name {value: "afk_channel_id"}
     anydata afkChannelId?;
@@ -636,15 +601,12 @@ public type MentionSpamRuleResponse record {
     @jsondata:Name {value: "creator_id"}
     string creatorId;
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MentionSpamRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MentionSpamRuleResponseExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -704,7 +666,6 @@ public type DiscordIntegrationResponse record {
     string? name?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     OAuth2Scopes[] scopes;
     "discord" 'type;
     anydata user?;
@@ -732,7 +693,6 @@ public type PrivateGroupChannelResponse record {
     anydata lastMessageId?;
     @jsondata:Name {value: "last_pin_timestamp"}
     string? lastPinTimestamp?;
-    #
     UserResponse[] recipients;
     @jsondata:Name {value: "owner_id"}
     anydata ownerId?;
@@ -757,9 +717,7 @@ public type RPCNOTIFICATIONSREAD "rpc.notifications.read";
 public type WEBHOOKINCOMING "webhook.incoming";
 
 public type DefaultKeywordListTriggerMetadata record {
-    #
     AutomodKeywordPresetType[]? presets?;
-    #
     @jsondata:Name {value: "allow_list"}
     DefaultKeywordListTriggerMetadataAllowlistItemsString[]? allowList?;
 };
@@ -796,7 +754,6 @@ public type CreateTextThreadWithoutMessageRequest record {
 };
 
 public type GuildsEmojisRequest record {
-    #
     GuildsEmojisRequestRoles[]? roles?;
     @constraint:String {maxLength: 32, minLength: 2}
     string name?;
@@ -813,17 +770,13 @@ public type VERIFIED "VERIFIED";
 public type AutomodEventType MESSAGESEND|GUILDMEMBERJOINORUPDATE;
 
 public type MessagesmessageIdBody record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
-    #
     @jsondata:Name {value: "sticker_ids"}
     MessagesmessageIdBodyStickeridsItemsString[]? stickerIds?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -870,7 +823,6 @@ public type MessageComponentMentionableSelectResponse record {
 };
 
 public type ModalInteractionCallbackData record {
-    #
     @constraint:Array {maxLength: 5, minLength: 1}
     ActionRow[] components;
     @jsondata:Name {value: "custom_id"}
@@ -890,10 +842,8 @@ public type He "he";
 
 # Represents the Queries record for the operation: list_message_reactions_by_emoji
 public type ListMessageReactionsByEmojiQueries record {
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
 };
@@ -916,7 +866,6 @@ public type ApplicationCommandChannelOption record {
     string name;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
-    #
     @jsondata:Name {value: "channel_types"}
     ChannelTypes[]? channelTypes?;
     @jsondata:Name {value: "description_localizations"}
@@ -932,7 +881,6 @@ public type MessageComponentStringSelectResponse record {
     string customId;
     @jsondata:Name {value: "max_values"}
     int:Signed32? maxValues?;
-    #
     MessageComponentStringSelectResponseOptions[]? options?;
     boolean? disabled?;
     int:Signed32 id;
@@ -949,10 +897,8 @@ public type Hr "hr";
 
 # Represents the Queries record for the operation: search_guild_members
 public type SearchGuildMembersQueries record {
-    #
     @constraint:String {maxLength: 100, minLength: 1}
     string query;
-    #
     @constraint:Int {minValue: 1, maxValue: 1000}
     int:Signed32 'limit;
 };
@@ -993,7 +939,6 @@ public type ApplicationCommandNumberOptionResponse record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     10 'type;
-    #
     ApplicationCommandOptionNumberChoiceResponse[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_value"}
@@ -1032,9 +977,7 @@ public type GuildTemplateRoleResponse record {
 
 # Represents the Queries record for the operation: execute_webhook
 public type ExecuteWebhookQueries record {
-    #
     boolean 'wait?;
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -1044,7 +987,6 @@ public type ApplicationCommandSubcommandGroupOption record {
     record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    #
     ApplicationCommandSubcommandOption[]? options?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
@@ -1068,7 +1010,6 @@ public type StringSelect record {
     string customId;
     @jsondata:Name {value: "max_values"}
     int:Signed32? maxValues?;
-    #
     @constraint:Array {maxLength: 25, minLength: 1}
     SelectOption[] options;
     boolean? disabled?;
@@ -1150,15 +1091,12 @@ public type MLSpamRuleResponse record {
     @jsondata:Name {value: "creator_id"}
     string creatorId;
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MLSpamRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MLSpamRuleResponseExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -1181,7 +1119,6 @@ public type GatewayBotSessionStartLimitResponse record {
 public type GithubCheckRun record {
     string? conclusion?;
     anydata output?;
-    #
     @jsondata:Name {value: "pull_requests"}
     GithubCheckPullRequest[]? pullRequests?;
     @jsondata:Name {value: "html_url"}
@@ -1200,7 +1137,7 @@ public type ApplicationCommandOptionIntegerChoiceResponse record {
     @jsondata:Name {value: "name_localizations"}
     record {|string...;|}? nameLocalizations?;
     string name;
-    @constraint:Int {minValue: 1, maxValue: -1}
+    @constraint:Int {minValue: -9007199254740991, maxValue: 9007199254740991}
     int value;
 };
 
@@ -1255,24 +1192,16 @@ public type VoiceScheduledEventCreateRequest record {
 };
 
 public type GuildAuditLogResponse record {
-    #
     InlineResponse2004[] webhooks;
-    #
     @jsondata:Name {value: "application_commands"}
     ApplicationCommandResponse[] applicationCommands;
-    #
     ThreadResponse[] threads;
-    #
     @jsondata:Name {value: "guild_scheduled_events"}
     InlineResponse2003[] guildScheduledEvents;
-    #
     GuildAuditLogResponseIntegrations[] integrations;
-    #
     @jsondata:Name {value: "auto_moderation_rules"}
     InlineResponse2001[] autoModerationRules;
-    #
     UserResponse[] users;
-    #
     @jsondata:Name {value: "audit_log_entries"}
     AuditLogEntryResponse[] auditLogEntries;
 };
@@ -1280,9 +1209,7 @@ public type GuildAuditLogResponse record {
 public type STAGEEND 28;
 
 public type GuildPreviewResponse record {
-    #
     EmojiResponse[] emojis;
-    #
     GuildFeatures[] features;
     @jsondata:Name {value: "home_header"}
     string? homeHeader?;
@@ -1295,7 +1222,6 @@ public type GuildPreviewResponse record {
     string name;
     string? icon?;
     string? description?;
-    #
     GuildStickerResponse[] stickers;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
@@ -1323,9 +1249,7 @@ public type GUILDBOOSTTIER2 10;
 
 # Represents the Queries record for the operation: execute_github_compatible_webhook
 public type ExecuteGithubCompatibleWebhookQueries record {
-    #
     boolean 'wait?;
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -1371,7 +1295,6 @@ public type MessageComponentChannelSelectResponse record {
     string customId;
     @jsondata:Name {value: "max_values"}
     int:Signed32? maxValues?;
-    #
     @jsondata:Name {value: "channel_types"}
     ChannelTypes[]? channelTypes?;
     boolean? disabled?;
@@ -1405,7 +1328,6 @@ public type MessageAttachmentResponse record {
     decimal? durationSecs?;
     string? title?;
     string url;
-    #
     @jsondata:Name {value: "clip_participants"}
     UserResponse[]? clipParticipants?;
     string filename;
@@ -1435,7 +1357,6 @@ public type FlagToChannelAction record {
 };
 
 public type GuildWelcomeScreenResponse record {
-    #
     @jsondata:Name {value: "welcome_channels"}
     GuildWelcomeScreenChannelResponse[] welcomeChannels;
     string? description?;
@@ -1454,7 +1375,6 @@ public type GuildTemplateChannelResponse record {
     ChannelTypes 'type;
     @jsondata:Name {value: "user_limit"}
     int:Signed32 userLimit;
-    #
     @jsondata:Name {value: "permission_overwrites"}
     GuildTemplateChannelResponsePermissionOverwrites[] permissionOverwrites;
     @jsondata:Name {value: "default_thread_rate_limit_per_user"}
@@ -1471,7 +1391,6 @@ public type GuildTemplateChannelResponse record {
     anydata defaultForumLayout?;
     int:Signed32? id?;
     int:Signed32? position?;
-    #
     @jsondata:Name {value: "available_tags"}
     GuildTemplateChannelTags[]? availableTags?;
     @jsondata:Name {value: "default_sort_order"}
@@ -1506,13 +1425,10 @@ public type MentionSpamUpsertRequestPartial record {
     AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MentionSpamUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MentionSpamUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
-    #
     MentionSpamUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -1566,7 +1482,6 @@ public type MessageReactionResponse record {
     boolean meBurst;
     int:Signed32 count;
     boolean me;
-    #
     @jsondata:Name {value: "burst_colors"}
     string[] burstColors;
 };
@@ -1577,7 +1492,6 @@ public type ApplicationCommandUpdateRequestOptions ApplicationCommandAttachmentO
 
 public type GuildsEmojisRequest1 record {
     record {byte[] fileContent; string fileName;} image;
-    #
     GuildsEmojisRequest1Roles[]? roles?;
     @constraint:String {maxLength: 32, minLength: 2}
     string name;
@@ -1589,7 +1503,6 @@ public type BaseCreateMessageCreateRequestStickeridsItemsString string;
 
 # Represents the Queries record for the operation: get_guild
 public type GetGuildQueries record {
-    #
     @http:Query {name: "with_counts"}
     boolean withCounts?;
 };
@@ -1622,7 +1535,6 @@ public type GuildIdStickersBody record {
 public type UpdateGuildOnboardingRequestDefaultchannelidsItemsString string;
 
 public type OnboardingPromptOptionRequest record {
-    #
     @jsondata:Name {value: "channel_ids"}
     OnboardingPromptOptionRequestChannelidsItemsString[]? channelIds?;
     string? description?;
@@ -1635,21 +1547,17 @@ public type OnboardingPromptOptionRequest record {
     string title;
     @jsondata:Name {value: "emoji_animated"}
     boolean? emojiAnimated?;
-    #
     @jsondata:Name {value: "role_ids"}
     OnboardingPromptOptionRequestRoleidsItemsString[]? roleIds?;
 };
 
 public type IncomingWebhookInteractionRequest record {
-    #
     ActionRow[]? components?;
     boolean? tts?;
-    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -1663,13 +1571,10 @@ public type KeywordUpsertRequest record {
     1 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     KeywordUpsertRequestExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     KeywordUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
-    #
     KeywordUpsertRequestActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -1699,13 +1604,10 @@ public type KeywordUpsertRequestPartial record {
     AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    #
     @jsondata:Name {value: "exempt_roles"}
     KeywordUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     KeywordUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
-    #
     KeywordUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -1730,14 +1632,12 @@ public type MEMBERBANREMOVE 23;
 
 # Represents the Queries record for the operation: get_original_webhook_message
 public type GetOriginalWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
 
 # Represents the Headers record for the operation: create_message
 public type CreateMessageHeaders record {
-    #
     @http:Header {name: "Content-Type"}
     "application/x-www-form-urlencoded" contentType;
 };
@@ -1810,12 +1710,9 @@ public type GUILDMEMBERJOINORUPDATE 2;
 public type GuildsBulkBanRequestUseridsItemsString string;
 
 public type ChannelIdMessagesBody record {
-    #
     ActionRow[]? components?;
     boolean? tts?;
-    #
     MessageAttachmentRequest[]? attachments?;
-    #
     @jsondata:Name {value: "sticker_ids"}
     ChannelIdMessagesBodyStickeridsItemsString[]? stickerIds?;
     int:Signed32? flags?;
@@ -1823,7 +1720,6 @@ public type ChannelIdMessagesBody record {
     anydata allowedMentions?;
     @jsondata:Name {value: "message_reference"}
     anydata messageReference?;
-    #
     RichEmbed[]? embeds?;
     anydata nonce?;
     string? content?;
@@ -1837,7 +1733,6 @@ public type CALL 3;
 
 # Represents the Queries record for the operation: get_guild_widget_png
 public type GetGuildWidgetPngQueries record {
-    #
     WidgetImageStyles style?;
 };
 
@@ -1846,16 +1741,12 @@ public type INTEGERNOTEQUAL 4;
 
 # Represents the Queries record for the operation: list_messages
 public type ListMessagesQueries record {
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string around?;
 };
@@ -1925,7 +1816,6 @@ public type GithubCheckRunOutput record {
 };
 
 public type CreatePrivateChannelRequest record {
-    #
     @jsondata:Name {value: "access_tokens"}
     CreatePrivateChannelRequestAccesstokensItemsString[]? accessTokens?;
     @jsondata:Name {value: "recipient_id"}
@@ -1976,7 +1866,6 @@ public type ApplicationCommandIntegerOption record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     4 'type;
-    #
     ApplicationCommandOptionIntegerChoice[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_value"}
@@ -1996,7 +1885,6 @@ public type SkuIdsSkuIdsOneOf12 InlineArrayItemsSkuIdsSkuIdsOneOf12[];
 public type WebhookTokenSlackBody record {
     @jsondata:Name {value: "icon_url"}
     string? iconUrl?;
-    #
     WebhookSlackEmbed[]? attachments?;
     string? text?;
     string? username?;
@@ -2069,7 +1957,6 @@ public type CreateGuildChannelRequest record {
     anydata 'type?;
     @jsondata:Name {value: "user_limit"}
     int:Signed32? userLimit?;
-    #
     @jsondata:Name {value: "permission_overwrites"}
     ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
     @jsondata:Name {value: "rtc_region"}
@@ -2088,7 +1975,6 @@ public type CreateGuildChannelRequest record {
     @jsondata:Name {value: "default_forum_layout"}
     anydata defaultForumLayout?;
     int:Signed32? position?;
-    #
     @jsondata:Name {value: "available_tags"}
     CreateGuildChannelRequestAvailableTags[]? availableTags?;
     @jsondata:Name {value: "video_quality_mode"}
@@ -2120,7 +2006,6 @@ public type WidgetMember record {
 public type UserNotificationSettings ALLMESSAGES|ONLYMENTIONS;
 
 public type ChannelsMessagesBulkDeleteRequest record {
-    #
     @constraint:Array {maxLength: 100, minLength: 2}
     ChannelsMessagesBulkDeleteRequestMessagesItemsString[] messages;
 };
@@ -2165,7 +2050,6 @@ public type '200AnyOf41 anydata?;
 public type InteractionApplicationCommandAutocompleteCallbackStringDataChoices ApplicationCommandOptionStringChoice|ChoicesOneOf22?;
 
 public type WelcomeMessageResponse record {
-    #
     @jsondata:Name {value: "author_ids"}
     WelcomeMessageResponseAuthoridsItemsString[] authorIds;
     string message;
@@ -2225,7 +2109,6 @@ public type RolesRolesOneOf112 anydata?;
 
 # Represents the Queries record for the operation: get_webhook_message
 public type GetWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -2243,7 +2126,6 @@ public type GuildsMembersRequest record {
     string? nick?;
     @jsondata:Name {value: "access_token"}
     string accessToken;
-    #
     GuildsMembersRequestRoles[]? roles?;
     boolean? deaf?;
     int:Signed32? flags?;
@@ -2285,7 +2167,6 @@ public type DefaultKeywordRuleResponseActions BlockMessageActionResponse|FlagToC
 
 # Represents the Queries record for the operation: get_guild_scheduled_event
 public type GetGuildScheduledEventQueries record {
-    #
     @http:Query {name: "with_user_count"}
     boolean withUserCount?;
 };
@@ -2323,7 +2204,6 @@ public type UserResponse record {
 public type MEMBERPRUNE 21;
 
 public type ApplicationsGuildsCommandsCommandIdPermissionsRequest record {
-    #
     ApplicationCommandPermission[]? permissions?;
 };
 
@@ -2376,13 +2256,10 @@ public type DefaultKeywordListUpsertRequest record {
     4 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     DefaultKeywordListUpsertRequestExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     DefaultKeywordListUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordListUpsertRequestActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -2394,24 +2271,19 @@ public type GUILDINVITEREMINDER 22;
 public type NewMemberActionsOneOf2 anydata?;
 
 public type GuildOnboardingResponse record {
-    #
     @jsondata:Name {value: "default_channel_ids"}
     GuildOnboardingResponseDefaultchannelidsItemsString[] defaultChannelIds;
     @jsondata:Name {value: "guild_id"}
     string guildId;
-    #
     OnboardingPromptResponse[] prompts;
     boolean enabled;
 };
 
 public type MessageAllowedMentionsRequest record {
-    #
     MessageAllowedMentionsRequestRoles[]? roles?;
-    #
     AllowedMentionTypes[]? parse?;
     @jsondata:Name {value: "replied_user"}
     boolean? repliedUser?;
-    #
     MessageAllowedMentionsRequestUsers[]? users?;
 };
 
@@ -2473,7 +2345,6 @@ public type ApplicationCommandNumberOption record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     10 'type;
-    #
     ApplicationCommandOptionNumberChoice[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_value"}
@@ -2483,7 +2354,6 @@ public type ApplicationCommandNumberOption record {
 public type MessageResponseMentionChannels MessageMentionChannelResponse|MentionChannelsOneOf21?;
 
 public type GuildHomeSettingsResponse record {
-    #
     @jsondata:Name {value: "new_member_actions"}
     GuildHomeSettingsResponseNewMemberActions[]? newMemberActions?;
     @jsondata:Name {value: "guild_id"}
@@ -2491,7 +2361,6 @@ public type GuildHomeSettingsResponse record {
     @jsondata:Name {value: "welcome_message"}
     anydata welcomeMessage?;
     boolean enabled;
-    #
     @jsondata:Name {value: "resource_channels"}
     GuildHomeSettingsResponseResourceChannels[]? resourceChannels?;
 };
@@ -2507,7 +2376,6 @@ public type AUTOMODERATIONACTION 24;
 public type UpdateOnboardingPromptRequest record {
     @jsondata:Name {value: "in_onboarding"}
     boolean? inOnboarding?;
-    #
     @constraint:Array {maxLength: 50, minLength: 1}
     OnboardingPromptOptionRequest[] options;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
@@ -2554,7 +2422,6 @@ public type ApplicationCommandMentionableOption record {
 
 # Represents the Queries record for the operation: list_guild_application_commands
 public type ListGuildApplicationCommandsQueries record {
-    #
     @http:Query {name: "with_localizations"}
     boolean withLocalizations?;
 };
@@ -2593,7 +2460,6 @@ public type GuildsRolesRequest2 record {
 public type VIPREGIONS "VIP_REGIONS";
 
 public type RoleSelect record {
-    #
     @jsondata:Name {value: "default_values"}
     RoleSelectDefaultValue[]? defaultValues?;
     @jsondata:Name {value: "min_values"}
@@ -2662,13 +2528,10 @@ public type StageScheduledEventResponse record {
 public type GUILDSJOIN "guilds.join";
 
 public type KeywordTriggerMetadata record {
-    #
     @jsondata:Name {value: "keyword_filter"}
     KeywordTriggerMetadataKeywordfilterItemsString[]? keywordFilter?;
-    #
     @jsondata:Name {value: "allow_list"}
     KeywordTriggerMetadataAllowlistItemsString[]? allowList?;
-    #
     @jsondata:Name {value: "regex_patterns"}
     KeywordTriggerMetadataRegexpatternsItemsString[]? regexPatterns?;
 };
@@ -2688,7 +2551,6 @@ public type CreateGuildRequestChannelItem record {
     anydata 'type?;
     @jsondata:Name {value: "user_limit"}
     int:Signed32? userLimit?;
-    #
     @jsondata:Name {value: "permission_overwrites"}
     ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
     @jsondata:Name {value: "rtc_region"}
@@ -2708,7 +2570,6 @@ public type CreateGuildRequestChannelItem record {
     anydata defaultForumLayout?;
     int:Signed32? position?;
     anydata id?;
-    #
     @jsondata:Name {value: "available_tags"}
     CreateOrUpdateThreadTagRequest[]? availableTags?;
     @jsondata:Name {value: "video_quality_mode"}
@@ -2732,7 +2593,6 @@ public type GuildChannelResponse record {
     anydata lastMessageId?;
     @jsondata:Name {value: "rtc_region"}
     string? rtcRegion?;
-    #
     @jsondata:Name {value: "permission_overwrites"}
     ChannelPermissionOverwriteResponse[]? permissionOverwrites?;
     @jsondata:Name {value: "default_thread_rate_limit_per_user"}
@@ -2753,7 +2613,6 @@ public type GuildChannelResponse record {
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     int:Signed32 position;
-    #
     @jsondata:Name {value: "available_tags"}
     ForumTagResponse[]? availableTags?;
     @jsondata:Name {value: "video_quality_mode"}
@@ -2810,7 +2669,6 @@ public type WebhookSlackEmbed record {
     string? authorIcon?;
     string? pretext?;
     string? text?;
-    #
     WebhookSlackEmbedField[]? fields?;
     int:Signed32? ts?;
 };
@@ -2818,22 +2676,17 @@ public type WebhookSlackEmbed record {
 public type OptionsOneOf12 anydata?;
 
 public type InteractionApplicationCommandAutocompleteCallbackIntegerData record {
-    #
     InteractionApplicationCommandAutocompleteCallbackIntegerDataChoices[]? choices?;
 };
 
 # Represents the Queries record for the operation: list_guild_scheduled_event_users
 public type ListGuildScheduledEventUsersQueries record {
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
-    #
     @http:Query {name: "with_member"}
     boolean withMember?;
 };
@@ -2868,14 +2721,11 @@ public type GUILDFORUM 15;
 public type ROLEUPDATE 31;
 
 public type IncomingWebhookUpdateRequestPartial record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -2925,7 +2775,6 @@ public type GithubWebhook record {
     anydata review?;
     anydata member?;
     string? action?;
-    #
     GithubCommit[]? commits?;
     anydata comment?;
     @jsondata:Name {value: "ref_type"}
@@ -2994,7 +2843,6 @@ public type GuildsStickersRequest record {
 
 # Represents the Headers record for the operation: update_message
 public type UpdateMessageHeaders record {
-    #
     @http:Header {name: "Content-Type"}
     "application/x-www-form-urlencoded" contentType;
 };
@@ -3003,7 +2851,6 @@ public type UpdateMessageHeaders record {
 public type SEXUALCONTENT 2;
 
 public type ChannelSelect record {
-    #
     @jsondata:Name {value: "default_values"}
     ChannelSelectDefaultValue[]? defaultValues?;
     @jsondata:Name {value: "min_values"}
@@ -3012,7 +2859,6 @@ public type ChannelSelect record {
     string customId;
     @jsondata:Name {value: "max_values"}
     int:Signed32? maxValues?;
-    #
     @jsondata:Name {value: "channel_types"}
     ChannelTypes[]? channelTypes?;
     boolean? disabled?;
@@ -3055,9 +2901,7 @@ public type Emoji record {
 };
 
 public type DefaultKeywordListTriggerMetadataResponse record {
-    #
     AutomodKeywordPresetType[] presets;
-    #
     @jsondata:Name {value: "allow_list"}
     string[] allowList;
 };
@@ -3075,7 +2919,6 @@ public type GuildMemberResponse record {
     @jsondata:Name {value: "avatar_decoration_data"}
     anydata avatarDecorationData?;
     boolean pending;
-    #
     GuildMemberResponseRolesItemsString[] roles;
     int:Signed32 flags;
     boolean deaf;
@@ -3125,7 +2968,6 @@ public type ChannelPermissionOverwriteResponse record {
 public type IncomingWebhookRequestPartialAppliedtagsItemsString string;
 
 public type ApplicationResponse record {
-    #
     @jsondata:Name {value: "rpc_origins"}
     string[]? rpcOrigins?;
     @jsondata:Name {value: "privacy_policy_url"}
@@ -3141,7 +2983,6 @@ public type ApplicationResponse record {
     anydata 'type?;
     @jsondata:Name {value: "max_participants"}
     int:Signed32? maxParticipants?;
-    #
     string[]? tags?;
     @jsondata:Name {value: "custom_install_url"}
     string? customInstallUrl?;
@@ -3189,9 +3030,7 @@ public type SPAMLINK 2;
 
 # Represents the Queries record for the operation: list_private_archived_threads
 public type ListPrivateArchivedThreadsQueries record {
-    #
     string before?;
-    #
     @constraint:Int {minValue: 2, maxValue: 100}
     int:Signed32 'limit?;
 };
@@ -3199,19 +3038,15 @@ public type ListPrivateArchivedThreadsQueries record {
 public type MessageCallResponse record {
     @jsondata:Name {value: "ended_timestamp"}
     string? endedTimestamp?;
-    #
     MessageCallResponseParticipantsItemsString[] participants;
 };
 
 # Represents the Queries record for the operation: list_guild_bans
 public type ListGuildBansQueries record {
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 1, maxValue: 1000}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
 };
@@ -3222,7 +3057,6 @@ public type DefaultKeywordListUpsertRequestPartialExemptrolesItemsString string;
 
 # Represents the Queries record for the operation: list_application_commands
 public type ListApplicationCommandsQueries record {
-    #
     @http:Query {name: "with_localizations"}
     boolean withLocalizations?;
 };
@@ -3235,10 +3069,8 @@ public type SCHEDULED 1;
 
 # Represents the Queries record for the operation: list_my_private_archived_threads
 public type ListMyPrivateArchivedThreadsQueries record {
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 2, maxValue: 100}
     int:Signed32 'limit?;
 };
@@ -3279,7 +3111,6 @@ public type ApplicationCommandSubcommandOption record {
     record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    #
     ApplicationCommandSubcommandOptionOptions[]? options?;
     @constraint:String {maxLength: 100, minLength: 1}
     string description;
@@ -3397,7 +3228,6 @@ public type PrivateChannelResponse record {
     anydata lastMessageId?;
     @jsondata:Name {value: "last_pin_timestamp"}
     string? lastPinTimestamp?;
-    #
     UserResponse[] recipients;
     int:Signed32 flags;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
@@ -3410,9 +3240,7 @@ public type ONEDAY 1440;
 
 # Represents the Queries record for the operation: list_public_archived_threads
 public type ListPublicArchivedThreadsQueries record {
-    #
     string before?;
-    #
     @constraint:Int {minValue: 2, maxValue: 100}
     int:Signed32 'limit?;
 };
@@ -3429,9 +3257,7 @@ public type BotAccountPatchRequest record {
 
 # Represents the Queries record for the operation: execute_slack_compatible_webhook
 public type ExecuteSlackCompatibleWebhookQueries record {
-    #
     boolean 'wait?;
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -3439,10 +3265,8 @@ public type ExecuteSlackCompatibleWebhookQueries record {
 public type COMPLETED 3;
 
 public type BulkBanUsersResponse record {
-    #
     @jsondata:Name {value: "failed_users"}
     BulkBanUsersResponseFailedusersItemsString[] failedUsers;
-    #
     @jsondata:Name {value: "banned_users"}
     BulkBanUsersResponseBannedusersItemsString[] bannedUsers;
 };
@@ -3458,7 +3282,6 @@ public type SkuIdsSkuIdsOneOf12OneOf1 string;
 public type ApplicationCommandCreateRequestOptions ApplicationCommandAttachmentOption|ApplicationCommandBooleanOption|ApplicationCommandChannelOption|ApplicationCommandIntegerOption|ApplicationCommandMentionableOption|ApplicationCommandNumberOption|ApplicationCommandRoleOption|ApplicationCommandStringOption|ApplicationCommandSubcommandGroupOption|ApplicationCommandSubcommandOption|ApplicationCommandUserOption|OptionsOneOf12?;
 
 public type WelcomeScreenPatchRequestPartial record {
-    #
     @jsondata:Name {value: "welcome_channels"}
     GuildWelcomeChannel[]? welcomeChannels?;
     string? description?;
@@ -3486,10 +3309,8 @@ public type EntityMetadataExternalResponse record {
 
 # Represents the Queries record for the operation: preview_prune_guild
 public type PreviewPruneGuildQueries record {
-    #
     @constraint:Int {minValue: 1, maxValue: 30}
     int:Signed32 days?;
-    #
     @http:Query {name: "include_roles"}
     IncludeRoles includeRoles?;
 };
@@ -3537,10 +3358,8 @@ public type StageInstanceResponse record {
 };
 
 public type IncomingWebhookRequestPartial record {
-    #
     ActionRow[]? components?;
     boolean? tts?;
-    #
     MessageAttachmentRequest[]? attachments?;
     @jsondata:Name {value: "avatar_url"}
     string? avatarUrl?;
@@ -3549,11 +3368,9 @@ public type IncomingWebhookRequestPartial record {
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
     string? username?;
-    #
     @jsondata:Name {value: "applied_tags"}
     IncomingWebhookRequestPartialAppliedtagsItemsString[]? appliedTags?;
 };
@@ -3580,7 +3397,6 @@ public type UpdateThreadRequestPartial record {
     int:Signed32? userLimit?;
     @jsondata:Name {value: "auto_archive_duration"}
     anydata autoArchiveDuration?;
-    #
     @jsondata:Name {value: "applied_tags"}
     UpdateThreadRequestPartialAppliedtagsItemsString[]? appliedTags?;
     @jsondata:Name {value: "video_quality_mode"}
@@ -3591,7 +3407,6 @@ public type UpdateThreadRequestPartial record {
 public type MODALSUBMIT 5;
 
 public type InteractionApplicationCommandAutocompleteCallbackStringData record {
-    #
     InteractionApplicationCommandAutocompleteCallbackStringDataChoices[]? choices?;
 };
 
@@ -3628,7 +3443,6 @@ public type RichEmbedFooter record {
 
 # Represents the Queries record for the operation: update_original_webhook_message
 public type UpdateOriginalWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -3641,7 +3455,6 @@ public type TALK 1;
 
 # Represents the Headers record for the operation: execute_slack_compatible_webhook
 public type ExecuteSlackCompatibleWebhookHeaders record {
-    #
     @http:Header {name: "Content-Type"}
     "application/x-www-form-urlencoded" contentType;
 };
@@ -3650,7 +3463,6 @@ public type CREATORMONETIZATIONREQUESTCREATED 150;
 
 public type MyGuildResponse record {
     boolean owner;
-    #
     GuildFeatures[] features;
     @jsondata:Name {value: "approximate_presence_count"}
     int:Signed32? approximatePresenceCount?;
@@ -3667,7 +3479,6 @@ public type MyGuildResponse record {
 public type APPLICATIONSCOMMANDS "applications.commands";
 
 public type CommandPermissionsResponse record {
-    #
     CommandPermissionResponse[] permissions;
     @jsondata:Name {value: "guild_id"}
     string guildId;
@@ -3700,7 +3511,6 @@ public type GuildResponse record {
     string ownerId;
     @jsondata:Name {value: "widget_channel_id"}
     anydata widgetChannelId?;
-    #
     GuildRoleResponse[] roles;
     string? icon?;
     string? description?;
@@ -3710,13 +3520,11 @@ public type GuildResponse record {
     anydata rulesChannelId?;
     @jsondata:Name {value: "afk_timeout"}
     AfkTimeouts afkTimeout;
-    #
     GuildFeatures[] features;
     @jsondata:Name {value: "afk_channel_id"}
     anydata afkChannelId?;
     @jsondata:Name {value: "max_members"}
     int:Signed32? maxMembers?;
-    #
     GuildStickerResponse[] stickers;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
@@ -3728,7 +3536,6 @@ public type GuildResponse record {
     GuildNSFWContentLevel nsfwLevel;
     @jsondata:Name {value: "safety_alerts_channel_id"}
     anydata safetyAlertsChannelId?;
-    #
     EmojiResponse[] emojis;
     boolean nsfw;
     @jsondata:Name {value: "vanity_url_code"}
@@ -3766,27 +3573,22 @@ public type GuildResponse record {
 public type BasicMessageResponse record {
     @jsondata:Name {value: "mention_everyone"}
     boolean mentionEveryone;
-    #
     BasicMessageResponseComponents[] components;
     boolean pinned;
-    #
     MessageAttachmentResponse[] attachments;
     anydata activity?;
     int:Signed32 flags;
     MessageType 'type;
-    #
     @jsondata:Name {value: "mention_roles"}
     BasicMessageResponseMentionrolesItemsString[] mentionRoles;
     string content;
     @jsondata:Name {value: "edited_timestamp"}
     string? editedTimestamp?;
-    #
     BasicMessageResponseStickers[]? stickers?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     @jsondata:Name {value: "message_reference"}
     anydata messageReference?;
-    #
     @jsondata:Name {value: "sticker_items"}
     MessageStickerItemResponse[]? stickerItems?;
     string timestamp;
@@ -3800,13 +3602,11 @@ public type BasicMessageResponse record {
     anydata nonce?;
     anydata call?;
     boolean tts;
-    #
     @jsondata:Name {value: "mention_channels"}
     BasicMessageResponseMentionChannels[]? mentionChannels?;
     anydata application?;
     @jsondata:Name {value: "webhook_id"}
     anydata webhookId?;
-    #
     UserResponse[] mentions;
     @jsondata:Name {value: "purchase_notification"}
     anydata purchaseNotification?;
@@ -3814,7 +3614,6 @@ public type BasicMessageResponse record {
     int:Signed32? position?;
     @jsondata:Name {value: "channel_id"}
     string channelId;
-    #
     MessageEmbedResponse[] embeds;
 };
 
@@ -3872,7 +3671,6 @@ public type ApplicationCommandOptionStringChoiceResponse record {
 public type OAuth2GetAuthorizationResponse record {
     string expires;
     ApplicationResponse application;
-    #
     OAuth2Scopes[] scopes;
     anydata user?;
 };
@@ -3884,13 +3682,10 @@ public type MentionSpamUpsertRequest record {
     5 triggerType;
     @constraint:String {maxLength: 100}
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MentionSpamUpsertRequestExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MentionSpamUpsertRequestExemptchannelsItemsString[]? exemptChannels?;
-    #
     MentionSpamUpsertRequestActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -3902,7 +3697,6 @@ public type BATTLENET "battlenet";
 public type STAGEINSTANCEDELETE 85;
 
 public type InviteChannelResponse record {
-    #
     InviteChannelRecipientResponse[]? recipients?;
     string? name?;
     string? icon?;
@@ -3927,7 +3721,6 @@ public type GithubCommit record {
 public type TeamResponse record {
     @jsondata:Name {value: "owner_user_id"}
     string ownerUserId;
-    #
     TeamMemberResponse[] members;
     string? icon?;
     string name;
@@ -3960,7 +3753,6 @@ public type SelectOptionResponse record {
 public type STAGESTART 27;
 
 public type ActionRow record {
-    #
     @constraint:Array {maxLength: 5, minLength: 1}
     ActionRowComponents[] components;
     1 'type;
@@ -3989,7 +3781,6 @@ public type RichEmbed record {
     string? title?;
     string? url?;
     anydata provider?;
-    #
     RichEmbedField[]? fields?;
     string? timestamp?;
 };
@@ -4010,7 +3801,6 @@ public type MessageEmbedResponse record {
     string? title?;
     string? url?;
     anydata provider?;
-    #
     MessageEmbedFieldResponse[]? fields?;
     string? timestamp?;
 };
@@ -4018,7 +3808,6 @@ public type MessageEmbedResponse record {
 public type OnboardingPromptResponse record {
     @jsondata:Name {value: "in_onboarding"}
     boolean inOnboarding;
-    #
     OnboardingPromptOptionResponse[] options;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
@@ -4030,7 +3819,6 @@ public type OnboardingPromptResponse record {
 };
 
 public type InteractionApplicationCommandAutocompleteCallbackNumberData record {
-    #
     InteractionApplicationCommandAutocompleteCallbackNumberDataChoices[]? choices?;
 };
 
@@ -4075,10 +3863,8 @@ public type GuildPatchRequestPartialFeaturesItemsString string?;
 
 public type UpdateGuildOnboardingRequest record {
     anydata mode?;
-    #
     @jsondata:Name {value: "default_channel_ids"}
     UpdateGuildOnboardingRequestDefaultchannelidsItemsString[]? defaultChannelIds?;
-    #
     UpdateOnboardingPromptRequest[]? prompts?;
     boolean? enabled?;
 };
@@ -4107,10 +3893,8 @@ public type ApplicationCommandAutocompleteCallbackRequest record {
 
 # Represents the Queries record for the operation: invite_resolve
 public type InviteResolveQueries record {
-    #
     @http:Query {name: "with_counts"}
     boolean withCounts?;
-    #
     @http:Query {name: "guild_scheduled_event_id"}
     string guildScheduledEventId?;
 };
@@ -4120,7 +3904,6 @@ public type InviteStageInstanceResponse record {
     int:Signed32? speakerCount?;
     @jsondata:Name {value: "participant_count"}
     int:Signed32? participantCount?;
-    #
     GuildMemberResponse[]? members?;
     string topic;
 };
@@ -4136,7 +3919,6 @@ public type ApplicationCommandSubcommandGroupOptionResponse record {
     @jsondata:Name {value: "name_localizations"}
     record {|string...;|}? nameLocalizations?;
     string name;
-    #
     ApplicationCommandSubcommandOptionResponse[]? options?;
     string description;
     @jsondata:Name {value: "description_localized"}
@@ -4198,16 +3980,12 @@ public type ApplicationFormPartialTagsItemsString string;
 
 # Represents the Queries record for the operation: list_my_guilds
 public type ListMyGuildsQueries record {
-    #
     @http:Query {name: "with_counts"}
     boolean withCounts?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @constraint:Int {minValue: 1, maxValue: 200}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
 };
@@ -4279,7 +4057,6 @@ public type ApplicationCommandSubcommandOptionResponse record {
     @jsondata:Name {value: "name_localizations"}
     record {|string...;|}? nameLocalizations?;
     string name;
-    #
     ApplicationCommandSubcommandOptionResponseOptions[]? options?;
     string description;
     @jsondata:Name {value: "description_localized"}
@@ -4312,7 +4089,6 @@ public type GuildPatchRequestPartial record {
     anydata afkTimeout?;
     @jsondata:Name {value: "public_updates_channel_id"}
     anydata publicUpdatesChannelId?;
-    #
     GuildPatchRequestPartialFeaturesItemsString[]? features?;
     @jsondata:Name {value: "home_header"}
     record {byte[] fileContent; string fileName;}? homeHeader?;
@@ -4344,7 +4120,6 @@ public type CreateForumThreadRequest record {
     BaseCreateMessageCreateRequest message;
     @jsondata:Name {value: "auto_archive_duration"}
     anydata autoArchiveDuration?;
-    #
     @jsondata:Name {value: "applied_tags"}
     CreateForumThreadRequestAppliedtagsItemsString[]? appliedTags?;
 };
@@ -4376,7 +4151,6 @@ public type ApplicationCommandPatchRequestPartial record {
     boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name?;
-    #
     ApplicationCommandPatchRequestPartialOptions[]? options?;
     string? description?;
     @jsondata:Name {value: "description_localizations"}
@@ -4397,7 +4171,6 @@ public type EBAY "ebay";
 public type GuildScheduledEventPrivacyLevels GUILDONLY;
 
 public type OAuth2GetKeys record {
-    #
     OAuth2Key[] keys;
 };
 
@@ -4409,9 +4182,7 @@ public type SpamLinkRuleResponseExemptrolesItemsString string;
 public type RPC "rpc";
 
 public type ThreadsResponse record {
-    #
     ThreadMemberResponse[] members;
-    #
     ThreadResponse[] threads;
     @jsondata:Name {value: "has_more"}
     boolean? hasMore?;
@@ -4435,9 +4206,7 @@ public type RichEmbedVideo record {
 };
 
 public type WidgetResponse record {
-    #
     WidgetChannel[] channels;
-    #
     WidgetMember[] members;
     string name;
     @jsondata:Name {value: "presence_count"}
@@ -4468,13 +4237,10 @@ public type MLSpamUpsertRequestPartial record {
     AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    #
     @jsondata:Name {value: "exempt_roles"}
     MLSpamUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     MLSpamUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
-    #
     MLSpamUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -4516,7 +4282,6 @@ public type PREMIUM 6;
 public type GUILDBOOST 8;
 
 public type MessageComponentActionRowResponse record {
-    #
     MessageComponentActionRowResponseComponents[]? components?;
     int:Signed32 id;
     1 'type;
@@ -4535,7 +4300,6 @@ public type GuildWithCountsResponse record {
     string ownerId;
     @jsondata:Name {value: "widget_channel_id"}
     anydata widgetChannelId?;
-    #
     GuildRoleResponse[] roles;
     string? icon?;
     string? description?;
@@ -4545,7 +4309,6 @@ public type GuildWithCountsResponse record {
     anydata rulesChannelId?;
     @jsondata:Name {value: "afk_timeout"}
     AfkTimeouts afkTimeout;
-    #
     GuildFeatures[] features;
     @jsondata:Name {value: "afk_channel_id"}
     anydata afkChannelId?;
@@ -4553,7 +4316,6 @@ public type GuildWithCountsResponse record {
     int:Signed32? approximateMemberCount?;
     @jsondata:Name {value: "max_members"}
     int:Signed32? maxMembers?;
-    #
     GuildStickerResponse[] stickers;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
@@ -4565,7 +4327,6 @@ public type GuildWithCountsResponse record {
     GuildNSFWContentLevel nsfwLevel;
     @jsondata:Name {value: "safety_alerts_channel_id"}
     anydata safetyAlertsChannelId?;
-    #
     EmojiResponse[] emojis;
     boolean nsfw;
     @jsondata:Name {value: "vanity_url_code"}
@@ -4614,7 +4375,6 @@ public type VoiceRegionResponse record {
 public type VOICE "voice";
 
 public type MentionableSelect record {
-    #
     @jsondata:Name {value: "default_values"}
     MentionableSelectDefaultValues[]? defaultValues?;
     @jsondata:Name {value: "min_values"}
@@ -4655,7 +4415,6 @@ public type ApplicationCommandStringOption record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     3 'type;
-    #
     ApplicationCommandOptionStringChoice[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_length"}
@@ -4664,7 +4423,6 @@ public type ApplicationCommandStringOption record {
 
 # Represents the Queries record for the operation: get_thread_member
 public type GetThreadMemberQueries record {
-    #
     @http:Query {name: "with_member"}
     boolean withMember?;
 };
@@ -4758,7 +4516,7 @@ public type ConnectionConfig record {|
     http:ClientSocketConfig socketConfig = {};
     # Enables the inbound payload validation functionality which provided by the constraint package. Enabled by default
     boolean validation = true;
-    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional,
+    # Enables relaxed data binding on the client side. When enabled, `nil` values are treated as optional, 
     # and absent fields are handled as `nilable` types. Enabled by default.
     boolean laxDataBinding = true;
 |};
@@ -4822,28 +4580,20 @@ public type ONEHOUR1 60;
 
 # Represents the Queries record for the operation: get_entitlements
 public type GetEntitlementsQueries record {
-    #
     @http:Query {name: "exclude_ended"}
     boolean excludeEnded?;
-    #
     @http:Query {name: "user_id"}
     string userId?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string before?;
-    #
     @http:Query {name: "sku_ids"}
     SkuIds skuIds;
-    #
     @http:Query {name: "guild_id"}
     string guildId?;
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
-    #
     @http:Query {name: "only_active"}
     boolean onlyActive?;
 };
@@ -4904,7 +4654,6 @@ public type MentionChannelsOneOf2 anydata?;
 
 # Represents the Queries record for the operation: delete_webhook_message
 public type DeleteWebhookMessageQueries record {
-    #
     @http:Query {name: "thread_id"}
     string threadId?;
 };
@@ -4928,7 +4677,6 @@ public type ApplicationCommandResponse record {
     string name;
     @jsondata:Name {value: "guild_id"}
     anydata guildId?;
-    #
     ApplicationCommandResponseOptions[]? options?;
     @jsondata:Name {value: "description_localized"}
     string? descriptionLocalized?;
@@ -4961,7 +4709,6 @@ public type ApplicationCommandUpdateRequest record {
     boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    #
     ApplicationCommandUpdateRequestOptions[]? options?;
     string? description?;
     @jsondata:Name {value: "description_localizations"}
@@ -4987,7 +4734,6 @@ public type StickerPackResponse record {
     string? description?;
     @jsondata:Name {value: "sku_id"}
     string skuId;
-    #
     StandardStickerResponse[] stickers;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
@@ -5031,7 +4777,6 @@ public type UpdateGuildChannelRequestPartial record {
     anydata 'type?;
     @jsondata:Name {value: "user_limit"}
     int:Signed32? userLimit?;
-    #
     @jsondata:Name {value: "permission_overwrites"}
     ChannelPermissionOverwriteRequest[]? permissionOverwrites?;
     @jsondata:Name {value: "rtc_region"}
@@ -5050,7 +4795,6 @@ public type UpdateGuildChannelRequestPartial record {
     @jsondata:Name {value: "default_forum_layout"}
     anydata defaultForumLayout?;
     int:Signed32? position?;
-    #
     @jsondata:Name {value: "available_tags"}
     UpdateThreadTagRequest[]? availableTags?;
     @jsondata:Name {value: "video_quality_mode"}
@@ -5066,15 +4810,12 @@ public type GuildTemplateChannelResponsePermissionOverwrites ChannelPermissionOv
 public type MessageResponse record {
     @jsondata:Name {value: "mention_everyone"}
     boolean mentionEveryone;
-    #
     BasicMessageResponseComponents[] components;
     boolean pinned;
-    #
     MessageAttachmentResponse[] attachments;
     anydata activity?;
     int:Signed32 flags;
     MessageType 'type;
-    #
     @jsondata:Name {value: "mention_roles"}
     MessageResponseMentionrolesItemsString[] mentionRoles;
     string content;
@@ -5082,13 +4823,11 @@ public type MessageResponse record {
     string? editedTimestamp?;
     @jsondata:Name {value: "referenced_message"}
     anydata referencedMessage?;
-    #
     MessageResponseStickers[]? stickers?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
     @jsondata:Name {value: "message_reference"}
     anydata messageReference?;
-    #
     @jsondata:Name {value: "sticker_items"}
     MessageStickerItemResponse[]? stickerItems?;
     string timestamp;
@@ -5102,23 +4841,19 @@ public type MessageResponse record {
     anydata nonce?;
     anydata call?;
     boolean tts;
-    #
     @jsondata:Name {value: "mention_channels"}
     MessageResponseMentionChannels[]? mentionChannels?;
     anydata application?;
     @jsondata:Name {value: "webhook_id"}
     anydata webhookId?;
-    #
     UserResponse[] mentions;
     @jsondata:Name {value: "purchase_notification"}
     anydata purchaseNotification?;
     anydata interaction?;
-    #
     MessageReactionResponse[]? reactions?;
     int:Signed32? position?;
     @jsondata:Name {value: "channel_id"}
     string channelId;
-    #
     MessageEmbedResponse[] embeds;
 };
 
@@ -5129,7 +4864,7 @@ public type ApplicationCommandOptionIntegerChoice record {
     record {|string...;|}? nameLocalizations?;
     @constraint:String {maxLength: 100, minLength: 1}
     string name;
-    @constraint:Int {minValue: 1, maxValue: -1}
+    @constraint:Int {minValue: -9007199254740991, maxValue: 9007199254740991}
     int value;
 };
 
@@ -5151,7 +4886,6 @@ public type UserCommunicationDisabledAction record {
 
 public type ApplicationOAuth2InstallParamsResponse record {
     string permissions;
-    #
     OAuth2Scopes[] scopes;
 };
 
@@ -5180,13 +4914,10 @@ public type DefaultKeywordListUpsertRequestPartial record {
     AutomodTriggerType triggerType?;
     @constraint:String {maxLength: 100}
     string name?;
-    #
     @jsondata:Name {value: "exempt_roles"}
     DefaultKeywordListUpsertRequestPartialExemptrolesItemsString[]? exemptRoles?;
-    #
     @jsondata:Name {value: "exempt_channels"}
     DefaultKeywordListUpsertRequestPartialExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordListUpsertRequestPartialActions[]? actions?;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -5240,15 +4971,12 @@ public type SpamLinkRuleResponse record {
     @jsondata:Name {value: "creator_id"}
     string creatorId;
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     SpamLinkRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     @jsondata:Name {value: "exempt_channels"}
     SpamLinkRuleResponseExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -5285,7 +5013,6 @@ public type InlineResponseItems2003 FriendInviteResponse|GroupDMInviteResponse|G
 
 # Represents the Queries record for the operation: list_guild_scheduled_events
 public type ListGuildScheduledEventsQueries record {
-    #
     @http:Query {name: "with_user_count"}
     boolean withUserCount?;
 };
@@ -5341,7 +5068,6 @@ public type ApplicationCommandIntegerOptionResponse record {
     @jsondata:Name {value: "description_localizations"}
     record {|string...;|}? descriptionLocalizations?;
     4 'type;
-    #
     ApplicationCommandOptionIntegerChoiceResponse[]? choices?;
     boolean? required?;
     @jsondata:Name {value: "max_value"}
@@ -5394,7 +5120,6 @@ public type MessageComponentUserSelectResponse record {
 public type AllowedMentionTypes USERS|ROLES|EVERYONE;
 
 public type InviteApplicationResponse record {
-    #
     @jsondata:Name {value: "rpc_origins"}
     string[]? rpcOrigins?;
     @jsondata:Name {value: "privacy_policy_url"}
@@ -5410,7 +5135,6 @@ public type InviteApplicationResponse record {
     anydata 'type?;
     @jsondata:Name {value: "max_participants"}
     int:Signed32? maxParticipants?;
-    #
     string[]? tags?;
     @jsondata:Name {value: "custom_install_url"}
     string? customInstallUrl?;
@@ -5448,17 +5172,13 @@ public type ApplicationCommandUserOptionResponse record {
 };
 
 public type BaseCreateMessageCreateRequest record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
-    #
     @jsondata:Name {value: "sticker_ids"}
     BaseCreateMessageCreateRequestStickeridsItemsString[]? stickerIds?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -5503,7 +5223,6 @@ public type CreatedThreadResponse record {
     int:Signed32 memberCount;
     @jsondata:Name {value: "video_quality_mode"}
     anydata videoQualityMode?;
-    #
     @jsondata:Name {value: "applied_tags"}
     CreatedThreadResponseAppliedtagsItemsString[]? appliedTags?;
 };
@@ -5585,14 +5304,11 @@ public type ChannelsRecipientsRequest record {
 public type StageInstancesPrivacyLevels PUBLIC|GUILDONLY1;
 
 public type MessagesmessageIdBody1 record {
-    #
     ActionRow[]? components?;
-    #
     MessageAttachmentRequest[]? attachments?;
     int:Signed32? flags?;
     @jsondata:Name {value: "allowed_mentions"}
     anydata allowedMentions?;
-    #
     RichEmbed[]? embeds?;
     string? content?;
 };
@@ -5612,15 +5328,12 @@ public type KeywordRuleResponse record {
     @jsondata:Name {value: "creator_id"}
     string creatorId;
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     KeywordRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     @jsondata:Name {value: "exempt_channels"}
     KeywordRuleResponseExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -5650,7 +5363,6 @@ public type ApplicationFormPartial record {
     anydata 'type?;
     @jsondata:Name {value: "max_participants"}
     int:Signed32? maxParticipants?;
-    #
     ApplicationFormPartialTagsItemsString[]? tags?;
 };
 
@@ -5658,7 +5370,6 @@ public type PrivateGuildMemberResponse record {
     @jsondata:Name {value: "premium_since"}
     string? premiumSince?;
     boolean pending;
-    #
     PrivateGuildMemberResponseRolesItemsString[] roles;
     int:Signed32 flags;
     boolean deaf;
@@ -5691,7 +5402,6 @@ public type ApplicationCommandCreateRequest record {
     boolean? dmPermission?;
     @constraint:String {maxLength: 32, minLength: 1}
     string name;
-    #
     ApplicationCommandCreateRequestOptions[]? options?;
     string? description?;
     @jsondata:Name {value: "description_localizations"}
@@ -5722,7 +5432,6 @@ public type AuditLogEntryResponse record {
     AuditLogActionTypes actionType;
     @jsondata:Name {value: "user_id"}
     anydata userId?;
-    #
     AuditLogObjectChangeResponse[]? changes?;
     record {|string...;|}? options?;
     @jsondata:Name {value: "target_id"}
@@ -5733,13 +5442,10 @@ public type AuditLogEntryResponse record {
 
 # Represents the Queries record for the operation: list_thread_members
 public type ListThreadMembersQueries record {
-    #
     @constraint:Int {minValue: 1, maxValue: 100}
     int:Signed32 'limit?;
-    #
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string after?;
-    #
     @http:Query {name: "with_member"}
     boolean withMember?;
 };
@@ -5771,7 +5477,6 @@ public type PrivateApplicationResponse record {
     boolean? botPublic?;
     @jsondata:Name {value: "terms_of_service_url"}
     string? termsOfServiceUrl?;
-    #
     @jsondata:Name {value: "rpc_origins"}
     string[]? rpcOrigins?;
     UserResponse owner;
@@ -5779,11 +5484,9 @@ public type PrivateApplicationResponse record {
     string? roleConnectionsVerificationUrl?;
     @jsondata:Name {value: "verify_key"}
     string verifyKey;
-    #
     @jsondata:Name {value: "redirect_uris"}
     string[] redirectUris;
     anydata team?;
-    #
     string[]? tags?;
     @jsondata:Name {value: "approximate_guild_count"}
     int:Signed32? approximateGuildCount?;
@@ -5842,12 +5545,10 @@ public type TIKTOK "tiktok";
 public type TWITCH "twitch";
 
 public type UserGuildOnboardingResponse record {
-    #
     @jsondata:Name {value: "default_channel_ids"}
     UserGuildOnboardingResponseDefaultchannelidsItemsString[] defaultChannelIds;
     @jsondata:Name {value: "guild_id"}
     string guildId;
-    #
     OnboardingPromptResponse[] prompts;
     boolean enabled;
 };
@@ -5914,7 +5615,6 @@ public type GuildsTemplatesRequest2 record {
 
 public type EmojiResponse record {
     boolean managed;
-    #
     EmojiResponseRolesItemsString[] roles;
     string name;
     boolean available;
@@ -5930,10 +5630,8 @@ public type GuildExplicitContentFilterTypes DISABLED|MEMBERSWITHOUTROLES|ALLMEMB
 
 # Represents the Queries record for the operation: list_guild_members
 public type ListGuildMembersQueries record {
-    #
     @constraint:Int {minValue: 1, maxValue: 1000}
     int:Signed32 'limit?;
-    #
     @constraint:Int {minValue: 0}
     int:Signed32 after?;
 };
@@ -5971,7 +5669,7 @@ public type BasicMessageResponseStickers GuildStickerResponse|StandardStickerRes
 
 public type UserPIIResponse record {
     boolean? bot?;
-    @constraint:Int {minValue: 1, maxValue: -1}
+    @constraint:Int {minValue: -9007199254740991, maxValue: 9007199254740991}
     int flags;
     boolean? verified?;
     string? banner?;
@@ -6016,15 +5714,12 @@ public type DefaultKeywordRuleResponse record {
     @jsondata:Name {value: "creator_id"}
     string creatorId;
     string name;
-    #
     @jsondata:Name {value: "exempt_roles"}
     DefaultKeywordRuleResponseExemptrolesItemsString[]? exemptRoles?;
     @constraint:String {pattern: re `^(0|[1-9][0-9]*)$`}
     string id;
-    #
     @jsondata:Name {value: "exempt_channels"}
     DefaultKeywordRuleResponseExemptchannelsItemsString[]? exemptChannels?;
-    #
     DefaultKeywordRuleResponseActions[] actions;
     boolean? enabled?;
     @jsondata:Name {value: "trigger_metadata"}
@@ -6033,7 +5728,6 @@ public type DefaultKeywordRuleResponse record {
 
 # Represents the Headers record for the operation: update_original_webhook_message
 public type UpdateOriginalWebhookMessageHeaders record {
-    #
     @http:Header {name: "Content-Type"}
     "application/x-www-form-urlencoded" contentType;
 };
@@ -6106,7 +5800,6 @@ public type VoiceScheduledEventResponse record {
 };
 
 public type GuildsBulkBanRequest record {
-    #
     @jsondata:Name {value: "user_ids"}
     GuildsBulkBanRequestUseridsItemsString[] userIds;
     @jsondata:Name {value: "delete_message_seconds"}
@@ -6127,7 +5820,6 @@ public type APPLICATIONSCOMMANDSPERMISSIONSUPDATE "applications.commands.permiss
 public type CHANNELDELETE 12;
 
 public type StickerPackCollectionResponse record {
-    #
     @jsondata:Name {value: "sticker_packs"}
     StickerPackResponse[] stickerPacks;
 };
@@ -6194,7 +5886,6 @@ public type ThreadResponse record {
     int:Signed32 memberCount;
     @jsondata:Name {value: "video_quality_mode"}
     anydata videoQualityMode?;
-    #
     @jsondata:Name {value: "applied_tags"}
     ThreadResponseAppliedtagsItemsString[]? appliedTags?;
 };
