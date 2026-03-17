@@ -1,8 +1,15 @@
 ## Overview
 
-[Discord](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) is a popular communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions over the internet.
+[Discord](https://discord.com/) is a communication platform designed for creating communities and facilitating real-time messaging, voice, and video interactions. It serves as a hub for diverse groups, from gaming communities to professional teams.
 
-The Ballerina Discord connector offers APIs to connect and interact with the [Discord REST API v10](https://discord.com/developers/docs/reference).
+The Discord connector offers APIs to connect and interact with the Discord REST API, enabling the integration of messaging, user management, and community engagement features into applications.
+
+### Key Features
+
+- Real-time messaging and community management
+- Support for Discord REST API v10
+- Manage users, roles, and channels programmatically
+- Secure communication with OAuth2 authentication
 
 ## Setup guide
 
